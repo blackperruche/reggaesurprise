@@ -1,25 +1,26 @@
+/* ===== Style général ===== */
 body {
   margin: 0;
   font-family: 'Reggae One', cursive;
 }
 
-/* Fond décor */
+/* ===== Fond décor ===== */
 .background-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: url('decor-reggae-surprise.png') no-repeat center center fixed;
+  background: url('https://www.blackperruche.fr/reggaesurprise/decor-reggae-surprise.png?nocache=1') no-repeat center center fixed;
   background-size: cover;
   z-index: -1;
 }
 
-/* Navigation reggae */
+/* ===== Navigation ===== */
 nav {
   background: rgba(0,0,0,0.8);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  border-bottom: 3px solid #FFD700; /* jaune doré */
+  border-bottom: 3px solid #FFD700; /* Jaune doré */
 }
 nav ul {
   list-style: none;
@@ -40,11 +41,14 @@ nav ul li a:hover {
   text-shadow: 0 0 10px red;
 }
 
-/* Sections */
+/* ===== Sections ===== */
 section {
   display: none;
-  height: 100vh;
-  padding-top: 60px; /* éviter la nav */
+  min-height: 100vh;
+  padding-top: 70px; /* éviter que la nav cache le début */
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4); /* léger fond noir transparent pour lisibilité */
 }
 section.active {
   display: block;
