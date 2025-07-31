@@ -85,9 +85,6 @@ section.active {
   border-radius: 20px;
   transition: box-shadow 0.3s;
 }
-.audio-player img.playing {
-  box-shadow: 0 0 20px #FFD700;
-}
 .audio-player img.blink {
   animation: blink 2s infinite;
 }
