@@ -56,32 +56,27 @@ section.active {
   background: rgba(0, 0, 0, 0.55);
   padding: 30px;
   border-radius: 12px;
-  display: inline-block; /* S'adapte au contenu */
+  display: inline-block;
   max-width: 95%;
 }
 
-/* Concerts : plus large */
+/* Concerts */
 #concerts .overlay-content {
   max-width: 95%;
 }
-
-/* Contact : centré et plus étroit */
-#contact {
-  flex-direction: column;
-}
-#contact .overlay-content {
-  max-width: 600px;
-}
-
-/* Image programme concerts */
 .concert-img {
   width: 100%;
   border-radius: 12px;
 }
 
+/* Contact */
+#contact .overlay-content {
+  max-width: 600px;
+}
+
 /* Lecteur Audio */
 .audio-player {
-  margin-top: 100px;
+  margin-top: 50px;
   position: relative;
   display: inline-block;
 }
@@ -96,7 +91,6 @@ section.active {
 .audio-player img.blink {
   animation: blink 2s infinite;
 }
-
 @keyframes blink {
   0%, 100% { box-shadow: 0 0 20px #FFD700; }
   50% { box-shadow: none; }
@@ -112,6 +106,24 @@ section.active {
   color: #FFD700;
   pointer-events: none;
   text-shadow: 2px 2px 4px black;
+}
+
+/* Icônes réseaux */
+.reseaux-icons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 15px;
+}
+.reseaux-icons img {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 0 4px black);
+  transition: transform 0.3s, filter 0.3s;
+}
+.reseaux-icons img:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px #FFD700);
 }
 
 /* Formulaire contact */
