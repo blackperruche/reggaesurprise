@@ -3,6 +3,7 @@ body {
   font-family: 'Reggae One', cursive;
   color: white;
   text-align: center;
+  min-height: 100vh;
 }
 
 /* Fond décor */
@@ -42,28 +43,37 @@ nav a {
 section {
   display: none;
   padding-top: 80px;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 section.active {
-  display: block;
+  display: flex;
 }
 
 .overlay-content {
   background: rgba(0, 0, 0, 0.55);
   padding: 30px;
   border-radius: 12px;
-  display: block;
-  max-width: 90%;
-  margin: auto;
+  display: inline-block; /* S'adapte au contenu */
+  max-width: 95%;
 }
 
+/* Concerts : plus large */
 #concerts .overlay-content {
   max-width: 95%;
 }
 
+/* Contact : centré et plus étroit */
+#contact {
+  flex-direction: column;
+}
 #contact .overlay-content {
-  max-width: 600px; /* Contact plus étroit */
+  max-width: 600px;
 }
 
+/* Image programme concerts */
 .concert-img {
   width: 100%;
   border-radius: 12px;
@@ -108,15 +118,33 @@ section.active {
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
 }
-input, textarea, button {
+input, textarea {
+  width: 90%;
+  max-width: 500px;
   padding: 10px;
   border-radius: 8px;
-  border: none;
+  border: 2px solid #FFD700;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: 'Reggae One', cursive;
+}
+textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 button {
   background: #FFD700;
   color: black;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  border: none;
+  font-family: 'Reggae One', cursive;
+}
+button:hover {
+  background: orange;
 }
