@@ -10,13 +10,14 @@
 
 <div class="background"></div>
 
+<!-- Navigation -->
 <nav>
   <ul>
-    <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
-    <li><a href="#" onclick="showSection('origines')">Origines</a></li>
-    <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
-    <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
-    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    <li><a href="#" onclick="showSection('accueil', event)">Accueil</a></li>
+    <li><a href="#" onclick="showSection('origines', event)">Origines</a></li>
+    <li><a href="#" onclick="showSection('reseaux', event)">Réseaux</a></li>
+    <li><a href="#" onclick="showSection('concerts', event)">Concerts</a></li>
+    <li><a href="#" onclick="showSection('contact', event)">Contact</a></li>
   </ul>
 </nav>
 
@@ -76,6 +77,14 @@
 </section>
 
 <script>
+// Affichage des sections
+function showSection(id, event) {
+  if (event) event.preventDefault();
+  document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// Audio Player
 let currentAudio = 0;
 const audioFiles = [
   'audio1.mp3', 'audio2.mp3', 'audio3.mp3', 'audio4.mp3', 'audio5.mp3',
@@ -89,11 +98,7 @@ const playButtonOverlay = document.getElementById('playButtonOverlay');
 let isPlaying = false;
 let clickCount = 0;
 
-function showSection(id) {
-  document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
+// Clignotement au début
 logo.classList.add('blink');
 
 logo.addEventListener('click', () => {
