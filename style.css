@@ -65,6 +65,22 @@ section.active {
   border-radius: 12px;
 }
 
+/* Réseaux */
+.reseaux-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+.reseaux-icons img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s;
+}
+.reseaux-icons img:hover {
+  transform: scale(1.2);
+}
+
 /* Lecteur Audio */
 .audio-player {
   margin-top: 100px;
@@ -100,28 +116,12 @@ section.active {
   text-shadow: 2px 2px 4px black;
 }
 
-/* Icônes réseaux */
-.reseaux-icons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-.reseaux-icons img {
-  width: 40px;
-  height: 40px;
-  transition: transform 0.2s;
-}
-.reseaux-icons img:hover {
-  transform: scale(1.1);
-}
-
 /* Formulaire contact */
 form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 300px; /* réduit la largeur globale */
+  max-width: 350px;
   margin: auto;
 }
 input, textarea, button {
@@ -130,8 +130,7 @@ input, textarea, button {
   border: none;
 }
 textarea {
-  min-height: 120px; /* plus grande bulle message */
-  resize: vertical;  /* permet à l’utilisateur d’agrandir si besoin */
+  min-height: 150px;
 }
 button {
   background: #FFD700;
