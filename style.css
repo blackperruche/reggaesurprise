@@ -1,55 +1,157 @@
-/* ===== Style général ===== */
+/* Police et reset */
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Reggae One', cursive;
+  color: white;
+  text-align: center;
 }
 
-/* ===== Fond décor ===== */
+/* Fond décor reggae */
 .background-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://www.blackperruche.fr/reggaesurprise/decor-reggae-surprise.png?nocache=1') no-repeat center center fixed;
+  background: url("decor-reggae-surprise.png") no-repeat center center fixed;
   background-size: cover;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
 }
 
-/* ===== Navigation ===== */
+/* Menu navigation */
 nav {
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px 0;
   position: fixed;
-  top: 0;
+  top: 0; left: 0;
   width: 100%;
-  z-index: 1000;
-  border-bottom: 3px solid #FFD700; /* Jaune doré */
+  z-index: 10;
 }
+
 nav ul {
   list-style: none;
   margin: 0;
-  padding: 10px;
+  padding: 0;
   display: flex;
   justify-content: center;
-  gap: 25px;
-}
-nav ul li a {
-  color: #FFD700; /* Jaune */
-  text-decoration: none;
-  font-size: 1.3em;
-  transition: 0.3s;
-}
-nav ul li a:hover {
-  color: #00A86B; /* Vert reggae */
-  text-shadow: 0 0 10px red;
+  flex-wrap: wrap;
 }
 
-/* ===== Sections ===== */
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #FFD700;
+  font-size: 1.2em;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #FF4500;
+}
+
+/* Sections */
 section {
   display: none;
+  padding: 100px 20px 40px;
   min-height: 100vh;
-  padding-top: 70px; /* éviter que la nav cache le début */
-  color: white;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.4); /* léger fond noir transparent pour lisibilité */
+  background: rgba(0, 0, 0, 0.4);
 }
+
 section.active {
   display: block;
+}
+
+/* Lecteur audio */
+.audio-player {
+  margin-top: 90px;
+}
+
+#audioLogo {
+  width: 200px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+
+#audioLogo:hover {
+  transform: scale(1.05);
+}
+
+/* Clignotement avant lecture */
+.blinking {
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.2; }
+}
+
+/* Effet lumineux quand ça joue */
+.playing {
+  animation: glow 1.5s infinite;
+}
+@keyframes glow {
+  0% { box-shadow: 0 0 10px #FFD700; }
+  50% { box-shadow: 0 0 30px #FFD700; }
+  100% { box-shadow: 0 0 10px #FFD700; }
+}
+
+/* Réseaux sociaux */
+.reseaux-icons img {
+  width: 60px;
+  margin: 15px;
+  transition: transform 0.3s ease;
+}
+
+.reseaux-icons img:hover {
+  transform: scale(1.2);
+}
+
+/* Formulaire */
+form {
+  max-width: 400px;
+  margin: auto;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #FFD700;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  background: #FFD700;
+  color: black;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #FF4500;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #audioLogo {
+    width: 150px;
+  }
+  nav ul li {
+    margin: 5px 10px;
+  }
 }
