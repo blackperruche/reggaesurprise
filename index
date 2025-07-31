@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Reggae Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Police Reggae One -->
+  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fond décor -->
+  <div class="background-overlay"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+      <li><a href="#" onclick="showSection('origines')">Origines</a></li>
+      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
+      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Sections vides -->
+  <section id="accueil" class="active"></section>
+  <section id="origines"></section>
+  <section id="reseaux"></section>
+  <section id="concerts"></section>
+  <section id="contact"></section>
+
+  <!-- Script navigation -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    function showSection(id) {
+      sections.forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+  </script>
+
+</body>
+</html>
