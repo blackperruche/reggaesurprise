@@ -65,22 +65,6 @@ section.active {
   border-radius: 12px;
 }
 
-/* Réseaux */
-.reseaux-icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-}
-.reseaux-icons img {
-  width: 40px;
-  height: 40px;
-  transition: transform 0.2s;
-}
-.reseaux-icons img:hover {
-  transform: scale(1.2);
-}
-
 /* Lecteur Audio */
 .audio-player {
   margin-top: 100px;
@@ -121,7 +105,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 350px;
+  max-width: 400px;
   margin: auto;
 }
 input, textarea, button {
@@ -136,4 +120,22 @@ button {
   background: #FFD700;
   color: black;
   cursor: pointer;
+}
+
+/* Icônes réseaux */
+.reseaux-icons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 15px;
+}
+
+.reseaux-icons img {
+  width: 65px;
+  height: 65px;
+  transition: transform 0.2s ease;
+}
+
+.reseaux-icons img:hover {
+  transform: scale(1.15);
 }
