@@ -3,7 +3,6 @@ body {
   font-family: 'Reggae One', cursive;
   color: white;
   text-align: center;
-  min-height: 100vh;
 }
 
 /* Fond décor */
@@ -43,40 +42,32 @@ nav a {
 section {
   display: none;
   padding-top: 80px;
-  min-height: calc(100vh - 80px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 section.active {
-  display: flex;
+  display: block;
 }
 
 .overlay-content {
   background: rgba(0, 0, 0, 0.55);
   padding: 30px;
   border-radius: 12px;
-  display: inline-block;
-  max-width: 95%;
+  display: block;
+  max-width: 90%;
+  margin: auto;
 }
 
-/* Concerts */
 #concerts .overlay-content {
   max-width: 95%;
 }
+
 .concert-img {
   width: 100%;
   border-radius: 12px;
 }
 
-/* Contact */
-#contact .overlay-content {
-  max-width: 600px;
-}
-
 /* Lecteur Audio */
 .audio-player {
-  margin-top: 50px;
+  margin-top: 100px;
   position: relative;
   display: inline-block;
 }
@@ -85,9 +76,13 @@ section.active {
   border-radius: 20px;
   transition: box-shadow 0.3s;
 }
+.audio-player img.playing {
+  box-shadow: 0 0 20px #FFD700;
+}
 .audio-player img.blink {
   animation: blink 2s infinite;
 }
+
 @keyframes blink {
   0%, 100% { box-shadow: 0 0 20px #FFD700; }
   50% { box-shadow: none; }
@@ -105,55 +100,19 @@ section.active {
   text-shadow: 2px 2px 4px black;
 }
 
-/* Icônes réseaux */
-.reseaux-icons {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 15px;
-}
-.reseaux-icons img {
-  width: 40px;
-  height: 40px;
-  filter: drop-shadow(0 0 4px black);
-  transition: transform 0.3s, filter 0.3s;
-}
-.reseaux-icons img:hover {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 8px #FFD700);
-}
-
 /* Formulaire contact */
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  align-items: center;
+  gap: 10px;
 }
-input, textarea {
-  width: 90%;
-  max-width: 500px;
+input, textarea, button {
   padding: 10px;
   border-radius: 8px;
-  border: 2px solid #FFD700;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-family: 'Reggae One', cursive;
-}
-textarea {
-  resize: vertical;
-  min-height: 100px;
+  border: none;
 }
 button {
   background: #FFD700;
   color: black;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 8px;
   cursor: pointer;
-  border: none;
-  font-family: 'Reggae One', cursive;
-}
-button:hover {
-  background: orange;
 }
