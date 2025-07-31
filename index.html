@@ -27,20 +27,113 @@
     </ul>
   </nav>
 
-  <!-- Sections vides -->
-  <section id="accueil" class="active"></section>
-  <section id="origines"></section>
-  <section id="reseaux"></section>
-  <section id="concerts"></section>
-  <section id="contact"></section>
+  <!-- Lecteur audio -->
+  <div class="audio-player">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="audioLogo" class="blinking">
+  </div>
 
-  <!-- Script navigation -->
+  <audio id="audio"></audio>
+
+  <!-- Sections -->
+  <section id="accueil" class="active">
+    <h1>Bienvenue sur Reggae Surprise</h1>
+    <p>Le son du soleil et du partage 🎶</p>
+  </section>
+
+  <section id="origines">
+    <h1>Nos Origines</h1>
+    <p>Ici, tu pourras raconter l'histoire du groupe Reggae Surprise.</p>
+  </section>
+
+  <section id="reseaux">
+    <h1>Viens nous suivre 🎶</h1>
+    <div class="reseaux-icons">
+      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
+        <img src="youtube.png" alt="YouTube">
+      </a>
+      <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
+        <img src="instagram.png" alt="Instagram">
+      </a>
+    </div>
+  </section>
+
+  <section id="concerts">
+    <h1>Nos Concerts</h1>
+    <p>Les prochaines dates arrivent bientôt…</p>
+  </section>
+
+  <section id="contact">
+    <h1>Contact</h1>
+    <form action="https://formspree.io/f/mwkgnqay" method="POST">
+      <label>Nom</label>
+      <input type="text" name="nom" required>
+
+      <label>Email</label>
+      <input type="email" name="email" required>
+
+      <label>Message</label>
+      <textarea name="message" rows="5" required></textarea>
+
+      <button type="submit">Envoyer</button>
+    </form>
+  </section>
+
+  <!-- Script -->
   <script>
+    // Navigation entre sections
     const sections = document.querySelectorAll("section");
     function showSection(id) {
       sections.forEach(s => s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
+
+    // Lecteur audio avec 20 pistes
+    const audioFiles = Array.from({ length: 20 }, (_, i) => `audio${i+1}.mp3`);
+    let currentTrack = 0;
+
+    const audio = document.getElementById('audio');
+    const logo = document.getElementById('audioLogo');
+
+    let isPlaying = false;
+
+    function loadTrack(index) {
+      audio.src = audioFiles[index];
+      audio.play();
+      isPlaying = true;
+      logo.classList.remove('blinking');
+      logo.classList.add('playing');
+    }
+
+    // Clic simple → Play/Pause
+    logo.addEventListener('click', () => {
+      if (!audio.src) {
+        // 1er clic → démarre la première chanson
+        loadTrack(currentTrack);
+      } else if (isPlaying) {
+        // Pause
+        audio.pause();
+      } else {
+        // Reprise
+        audio.play();
+      }
+    });
+
+    // Double clic → chanson suivante
+    logo.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      loadTrack(currentTrack);
+    });
+
+    // Lecture automatique piste suivante
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      loadTrack(currentTrack);
+    });
+
+    // État lecture/pause
+    audio.addEventListener('play', () => { isPlaying = true; logo.classList.add('playing'); });
+    audio.addEventListener('pause', () => { isPlaying = false; logo.classList.remove('playing'); });
   </script>
 
 </body>
