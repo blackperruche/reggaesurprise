@@ -3,18 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Reggae Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Police Reggae One -->
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-  <!-- Fond décor -->
-  <div class="background-overlay"></div>
+  <!-- Décor -->
+  <div class="background"></div>
 
   <!-- Navigation -->
   <nav>
@@ -27,122 +23,128 @@
     </ul>
   </nav>
 
-  <!-- Lecteur audio -->
-  <div class="audio-player">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="audioLogo">
+  <!-- Lecteur Audio -->
+  <div class="audio-player" id="audioPlayer">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
+    <div id="playButtonOverlay">▶</div>
   </div>
 
-  <audio id="audio"></audio>
+  <audio id="audioElement"></audio>
 
   <!-- Sections -->
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
-      <p>Le son du soleil et du partage 🎶</p>
     </div>
   </section>
 
   <section id="origines">
     <div class="overlay-content">
-      <h1>Nos Origines</h1>
-      <p>Ici, tu pourras raconter l'histoire du groupe Reggae Surprise.</p>
+      <h1>Notre histoire</h1>
+      <p>Rencontre de 5 musiciens passionnés...</p>
     </div>
   </section>
 
   <section id="reseaux">
     <div class="overlay-content">
       <h1>Viens nous suivre 🎶</h1>
-      <div class="reseaux-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
-          <img src="youtube.png" alt="YouTube">
-        </a>
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
-          <img src="instagram.png" alt="Instagram">
-        </a>
-      </div>
     </div>
   </section>
 
   <section id="concerts">
     <div class="overlay-content">
-      <h1>Nos Concerts</h1>
-      <img src="programme-concerts.jpg" alt="Programme Concerts" class="concert-img">
+      <h1>Programme des concerts</h1>
+      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img">
     </div>
   </section>
 
   <section id="contact">
     <div class="overlay-content">
-      <h1>Contact</h1>
-      <form action="https://formspree.io/f/mwkgnqay" method="POST">
-        <label>Nom</label>
-        <input type="text" name="nom" required>
-
-        <label>Email</label>
-        <input type="email" name="email" required>
-
-        <label>Message</label>
-        <textarea name="message" rows="5" required></textarea>
-
+      <h1>Contactez-nous</h1>
+      <form>
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email">
+        <label for="message">Message :</label>
+        <textarea id="message" name="message"></textarea>
         <button type="submit">Envoyer</button>
       </form>
     </div>
   </section>
 
-  <!-- Script -->
   <script>
-    const sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll('section');
     function showSection(id) {
-      sections.forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
 
-    // Lecteur audio
-    const audioFiles = Array.from({ length: 20 }, (_, i) => `audio${i+1}.mp3`);
-    let currentTrack = 0;
-    const audio = document.getElementById('audio');
-    const logo = document.getElementById('audioLogo');
-    let isPlaying = false;
+    const audioFiles = [];
+    for (let i = 1; i <= 20; i++) {
+      audioFiles.push(`audio${i}.mp3`);
+    }
 
-    function loadTrack(index) {
+    let currentTrack = 0;
+    const audio = document.getElementById('audioElement');
+    const logo = document.getElementById('logo');
+    const playOverlay = document.getElementById('playButtonOverlay');
+    let isPlaying = false;
+    let firstPlay = true;
+
+    function playTrack(index) {
       audio.src = audioFiles[index];
       audio.play();
+      isPlaying = true;
+      logo.classList.remove('blink');
+      logo.classList.add('playing');
+      playOverlay.style.display = 'none';
     }
 
-    // Clic simple → Play/Pause
-    logo.addEventListener('click', () => {
-      if (!audio.src) {
-        loadTrack(currentTrack);
-      } else if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-    });
-
-    // Double clic → chanson suivante
-    logo.addEventListener('dblclick', (e) => {
-      e.preventDefault();
-      currentTrack = (currentTrack + 1) % audioFiles.length;
-      loadTrack(currentTrack);
-    });
-
-    // Lecture auto piste suivante
-    audio.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % audioFiles.length;
-      loadTrack(currentTrack);
-    });
-
-    // État lecture/pause avec clignotement seulement en pause
-    audio.addEventListener('play', () => {
-      isPlaying = true;
-      logo.classList.remove('blinking');
-      logo.classList.add('playing');
-    });
-    audio.addEventListener('pause', () => {
+    function pauseTrack() {
+      audio.pause();
       isPlaying = false;
       logo.classList.remove('playing');
-      logo.classList.add('blinking');
+      logo.classList.add('blink');
+      playOverlay.style.display = 'block';
+    }
+
+    let clickTimeout;
+    document.getElementById('audioPlayer').addEventListener('click', () => {
+      if (clickTimeout) {
+        clearTimeout(clickTimeout);
+        clickTimeout = null;
+        currentTrack = (currentTrack + 1) % audioFiles.length;
+        playTrack(currentTrack);
+        return;
+      }
+      clickTimeout = setTimeout(() => {
+        if (!isPlaying) {
+          if (firstPlay) {
+            playTrack(currentTrack);
+            firstPlay = false;
+          } else {
+            audio.play();
+            isPlaying = true;
+            logo.classList.remove('blink');
+            logo.classList.add('playing');
+            playOverlay.style.display = 'none';
+          }
+        } else {
+          pauseTrack();
+        }
+        clickTimeout = null;
+      }, 250);
     });
+
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      playTrack(currentTrack);
+    });
+
+    // Initial state
+    logo.classList.add('blink');
+    playOverlay.style.display = 'block';
   </script>
 
 </body>
