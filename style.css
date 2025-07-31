@@ -60,6 +60,10 @@ section.active {
   max-width: 95%;
 }
 
+#contact .overlay-content {
+  max-width: 600px; /* Contact plus étroit */
+}
+
 .concert-img {
   width: 100%;
   border-radius: 12px;
