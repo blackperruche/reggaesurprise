@@ -5,132 +5,147 @@
   <title>Reggae Surprise</title>
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
-<div class="background"></div>
+  <!-- Décor -->
+  <div class="background"></div>
 
-<!-- Navigation -->
-<nav>
-  <ul>
-    <li><a href="#" onclick="showSection('accueil', event)">Accueil</a></li>
-    <li><a href="#" onclick="showSection('origines', event)">Origines</a></li>
-    <li><a href="#" onclick="showSection('reseaux', event)">Réseaux</a></li>
-    <li><a href="#" onclick="showSection('concerts', event)">Concerts</a></li>
-    <li><a href="#" onclick="showSection('contact', event)">Contact</a></li>
-  </ul>
-</nav>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+      <li><a href="#" onclick="showSection('origines')">Origines</a></li>
+      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
+      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- Accueil -->
-<section id="accueil" class="active">
-  <div class="overlay-content">
-    <h1>Bienvenue sur Reggae Surprise</h1>
-    <div class="audio-player">
-      <img id="audioLogo" src="logo-reggae-surprise.png" alt="Logo lecteur">
-      <div id="playButtonOverlay">▶</div>
+  <!-- Lecteur Audio -->
+  <div class="audio-player" id="audioPlayer">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
+    <div id="playButtonOverlay">▶</div>
+  </div>
+
+  <audio id="audioElement"></audio>
+
+  <!-- Sections -->
+  <section id="accueil" class="active">
+    <div class="overlay-content">
+      <h1>Bienvenue sur Reggae Surprise</h1>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Origines -->
-<section id="origines">
-  <div class="overlay-content">
-    <h2>Notre histoire</h2>
-    <p>Ici, le texte qui racontera la rencontre des 5 musiciens...</p>
-  </div>
-</section>
-
-<!-- Réseaux -->
-<section id="reseaux">
-  <div class="overlay-content">
-    <h2>Viens nous écouter sur ton réseau préféré 🎶</h2>
-    <div class="reseaux-icons">
-      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
-        <img src="youtube.png" alt="YouTube">
-      </a>
-      <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
-        <img src="instagram.png" alt="Instagram">
-      </a>
+  <section id="origines">
+    <div class="overlay-content">
+      <h1>Notre histoire</h1>
+      <p>Rencontre de 5 musiciens passionnés...</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Concerts -->
-<section id="concerts">
-  <div class="overlay-content">
-    <h2>Nos prochains concerts</h2>
-    <img src="programme-concerts.jpg" alt="Programme Concerts" class="concert-img">
-  </div>
-</section>
+  <section id="reseaux">
+    <div class="overlay-content">
+      <h1>Viens nous suivre 🎶</h1>
+    </div>
+  </section>
 
-<!-- Contact -->
-<section id="contact">
-  <div class="overlay-content">
-    <h2>Contactez-nous</h2>
-    <form action="https://formspree.io/f/xayrnvbw" method="POST">
-      <input type="text" name="name" placeholder="Votre nom" required>
-      <input type="email" name="email" placeholder="Votre email" required>
-      <textarea name="message" placeholder="Votre message" required></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
-  </div>
-</section>
+  <section id="concerts">
+    <div class="overlay-content">
+      <h1>Programme des concerts</h1>
+      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img">
+    </div>
+  </section>
 
-<script>
-// Affichage des sections
-function showSection(id, event) {
-  if (event) event.preventDefault();
-  document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+  <section id="contact">
+    <div class="overlay-content">
+      <h1>Contactez-nous</h1>
+      <form>
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email">
+        <label for="message">Message :</label>
+        <textarea id="message" name="message"></textarea>
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+  </section>
 
-// Audio Player
-let currentAudio = 0;
-const audioFiles = [
-  'audio1.mp3', 'audio2.mp3', 'audio3.mp3', 'audio4.mp3', 'audio5.mp3',
-  'audio6.mp3', 'audio7.mp3', 'audio8.mp3', 'audio9.mp3', 'audio10.mp3',
-  'audio11.mp3', 'audio12.mp3', 'audio13.mp3', 'audio14.mp3', 'audio15.mp3',
-  'audio16.mp3', 'audio17.mp3', 'audio18.mp3', 'audio19.mp3', 'audio20.mp3'
-];
-let audio = new Audio(audioFiles[currentAudio]);
-const logo = document.getElementById('audioLogo');
-const playButtonOverlay = document.getElementById('playButtonOverlay');
-let isPlaying = false;
-let clickCount = 0;
+  <script>
+    const sections = document.querySelectorAll('section');
+    function showSection(id) {
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
-// Clignotement au début
-logo.classList.add('blink');
+    const audioFiles = [];
+    for (let i = 1; i <= 20; i++) {
+      audioFiles.push(`audio${i}.mp3`);
+    }
 
-logo.addEventListener('click', () => {
-  clickCount++;
-  if (clickCount === 1) {
-    setTimeout(() => {
-      if (clickCount === 1) {
-        if (!isPlaying) {
-          audio.play();
-          isPlaying = true;
-          logo.classList.remove('blink');
-          playButtonOverlay.style.display = 'none';
-        } else {
-          audio.pause();
-          isPlaying = false;
-          logo.classList.add('blink');
-          playButtonOverlay.style.display = 'block';
-        }
+    let currentTrack = 0;
+    const audio = document.getElementById('audioElement');
+    const logo = document.getElementById('logo');
+    const playOverlay = document.getElementById('playButtonOverlay');
+    let isPlaying = false;
+    let firstPlay = true;
+
+    function playTrack(index) {
+      audio.src = audioFiles[index];
+      audio.play();
+      isPlaying = true;
+      logo.classList.remove('blink');
+      logo.classList.add('playing');
+      playOverlay.style.display = 'none';
+    }
+
+    function pauseTrack() {
+      audio.pause();
+      isPlaying = false;
+      logo.classList.remove('playing');
+      logo.classList.add('blink');
+      playOverlay.style.display = 'block';
+    }
+
+    let clickTimeout;
+    document.getElementById('audioPlayer').addEventListener('click', () => {
+      if (clickTimeout) {
+        clearTimeout(clickTimeout);
+        clickTimeout = null;
+        currentTrack = (currentTrack + 1) % audioFiles.length;
+        playTrack(currentTrack);
+        return;
       }
-      clickCount = 0;
-    }, 250);
-  } else if (clickCount === 2) {
-    clickCount = 0;
-    currentAudio = (currentAudio + 1) % audioFiles.length;
-    audio.src = audioFiles[currentAudio];
-    audio.play();
-    isPlaying = true;
-    logo.classList.remove('blink');
-    playButtonOverlay.style.display = 'none';
-  }
-});
-</script>
+      clickTimeout = setTimeout(() => {
+        if (!isPlaying) {
+          if (firstPlay) {
+            playTrack(currentTrack);
+            firstPlay = false;
+          } else {
+            audio.play();
+            isPlaying = true;
+            logo.classList.remove('blink');
+            logo.classList.add('playing');
+            playOverlay.style.display = 'none';
+          }
+        } else {
+          pauseTrack();
+        }
+        clickTimeout = null;
+      }, 250);
+    });
+
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      playTrack(currentTrack);
+    });
+
+    // Initial state
+    logo.classList.add('blink');
+    playOverlay.style.display = 'block';
+  </script>
 
 </body>
 </html>
