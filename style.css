@@ -121,13 +121,17 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 400px; /* largeur réduite */
-  margin: auto; /* centré */
+  max-width: 300px; /* réduit la largeur globale */
+  margin: auto;
 }
 input, textarea, button {
   padding: 10px;
   border-radius: 8px;
   border: none;
+}
+textarea {
+  min-height: 120px; /* plus grande bulle message */
+  resize: vertical;  /* permet à l’utilisateur d’agrandir si besoin */
 }
 button {
   background: #FFD700;
