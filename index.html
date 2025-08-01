@@ -38,17 +38,17 @@
     </div>
   </section>
 
-  <!-- Rencontre -->
+  <!-- Rencontre (carrousel) -->
   <section id="rencontre">
     <div class="overlay-content">
       <h1>Rencontre</h1>
       <div class="carousel">
-        <button class="arrow left" onclick="prevMember()">&#9664;</button>
-        <div class="member">
-          <img id="memberPhoto" src="" alt="Membre du groupe">
-          <p id="memberText"></p>
+        <button class="carousel-btn left" onclick="prevMember()">&#9664;</button>
+        <div class="carousel-content">
+          <img id="member-photo" src="" alt="Membre du groupe">
+          <p id="member-text"></p>
         </div>
-        <button class="arrow right" onclick="nextMember()">&#9654;</button>
+        <button class="carousel-btn right" onclick="nextMember()">&#9654;</button>
       </div>
     </div>
   </section>
@@ -58,9 +58,15 @@
     <div class="overlay-content">
       <h1>Viens nous suivre 🎶</h1>
       <div class="social-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt="Facebook"></a>
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
+          <img src="youtube.png" alt="YouTube">
+        </a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
+          <img src="instagram.png" alt="Instagram">
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank">
+          <img src="facebook.png" alt="Facebook">
+        </a>
       </div>
     </div>
   </section>
@@ -97,18 +103,13 @@
       document.getElementById(id).classList.add('active');
     }
 
-    /* Lecteur Audio */
+    /* Lecteur audio */
     const audioFiles = [];
-    for (let i = 1; i <= 20; i++) {
-      audioFiles.push(`audio${i}.mp3`);
-    }
-    let currentTrack = 0;
+    for (let i = 1; i <= 20; i++) audioFiles.push(`audio${i}.mp3`);
+    let currentTrack = 0, isPlaying = false, firstPlay = true;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
     const playOverlay = document.getElementById('playButtonOverlay');
-    let isPlaying = false;
-    let firstPlay = true;
-
     function playTrack(index) {
       audio.src = audioFiles[index];
       audio.play();
@@ -135,19 +136,9 @@
       }
       clickTimeout = setTimeout(() => {
         if (!isPlaying) {
-          if (firstPlay) {
-            playTrack(currentTrack);
-            firstPlay = false;
-          } else {
-            audio.play();
-            isPlaying = true;
-            logo.classList.remove('blink');
-            logo.classList.add('playing');
-            playOverlay.style.display = 'none';
-          }
-        } else {
-          pauseTrack();
-        }
+          if (firstPlay) { playTrack(currentTrack); firstPlay = false; }
+          else { audio.play(); isPlaying = true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display = 'none'; }
+        } else pauseTrack();
         clickTimeout = null;
       }, 250);
     });
@@ -160,26 +151,22 @@
 
     /* Carrousel Rencontre */
     const members = [
-      { photo: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 Batteur et percussionniste..." },
+      { photo: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
       { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
-      { photo: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum..." },
+      { photo: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail..." },
       { photo: "Antho.jpeg", text: "…voici l’homme à la guitare magique..." },
-      { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique..." }
+      { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie..." }
     ];
     let currentMember = 0;
-    function showMember(index) {
-      document.getElementById('memberPhoto').src = members[index].photo;
-      document.getElementById('memberText').textContent = members[index].text;
+    const memberPhoto = document.getElementById("member-photo");
+    const memberText = document.getElementById("member-text");
+    function updateMember() {
+      memberPhoto.src = members[currentMember].photo;
+      memberText.innerText = members[currentMember].text;
     }
-    function prevMember() {
-      currentMember = (currentMember - 1 + members.length) % members.length;
-      showMember(currentMember);
-    }
-    function nextMember() {
-      currentMember = (currentMember + 1) % members.length;
-      showMember(currentMember);
-    }
-    showMember(currentMember);
+    function prevMember() { currentMember = (currentMember - 1 + members.length) % members.length; updateMember(); }
+    function nextMember() { currentMember = (currentMember + 1) % members.length; updateMember(); }
+    updateMember();
   </script>
 
 </body>
