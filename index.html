@@ -35,16 +35,19 @@
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
-      <p>Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
+      <img src="photoaccueil.jpg" alt="Photo accueil" class="photo-accueil">
+      <p>Vos plus grands hits prennent un virage reggae... surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
   <section id="rencontre">
     <div class="overlay-content">
       <h1>Rencontre</h1>
-      <p>Une histoire de passionnés… Avant la surprise, il y a eu une rencontre.  
-      Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae,  
-      prêts à mélanger leurs influences pour créer un son unique. Découvrez l'équipe !</p>
+      <p class="rencontre-text">
+        Une histoire de passionnés... Avant la surprise, il y a eu une rencontre.  
+        Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae,  
+        prêts à mélanger leurs influences pour créer un son unique. Découvrez l'équipe !
+      </p>
 
       <div class="carousel">
         <button class="carousel-btn prev" onclick="prevMember()">&#10094;</button>
@@ -92,7 +95,7 @@
         <label for="email">Email :</label>
         <input type="email" id="email" name="email">
         <label for="message">Message :</label>
-        <textarea id="message" name="message" style="height:150px;"></textarea>
+        <textarea id="message" name="message"></textarea>
         <button type="submit">Envoyer</button>
       </form>
     </div>
@@ -173,26 +176,11 @@
 
     // === Carrousel Membres ===
     const members = [
-      {
-        photo: "Keo Vy.jpeg",
-        text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..."
-      },
-      {
-        photo: "Thomas.jpeg",
-        text: "Aujourd’hui c’est au tour de notre Thomas..."
-      },
-      {
-        photo: "jeremy.jpeg",
-        text: "Jeremy c’est un peu comme du rhum dans un cocktail..."
-      },
-      {
-        photo: "Antho.jpeg",
-        text: "…voici l’homme à la guitare magique..."
-      },
-      {
-        photo: "Julie.jpeg",
-        text: "Julie, c’est la touche de classique et de folie..."
-      }
+      { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
+      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
+      { photo: "jeremy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail..." },
+      { photo: "Antho.jpeg", text: "…voici l’homme à la guitare magique..." },
+      { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie..." }
     ];
 
     let currentMember = 0;
