@@ -5,7 +5,6 @@ body {
   text-align: center;
 }
 
-/* Fond décor */
 .background {
   background: url('decor-reggae-surprise.png') no-repeat center center fixed;
   background-size: cover;
@@ -55,17 +54,27 @@ section.active {
   margin: auto;
 }
 
-/* Accueil - grande image seule */
-.accueil-only-image {
-  background: none;
-  padding: 0;
+/* Photo accueil */
+.photo-accueil {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 12px;
 }
-.photo-accueil-big {
-  max-width: 90%;
-  height: auto;
-  border-radius: 15px;
-  display: block;
-  margin: 0 auto;
+
+/* Photo rencontre */
+.photo-rencontre {
+  max-width: 500px;
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* Texte rencontre */
+.rencontre-text {
+  max-width: 600px;
+  margin: auto;
+  margin-bottom: 20px;
+  line-height: 1.5;
 }
 
 /* Réseaux */
@@ -76,8 +85,8 @@ section.active {
   margin-top: 15px;
 }
 .social-icons img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
 }
 
 /* Concerts */
@@ -96,7 +105,7 @@ section.active {
   display: inline-block;
 }
 .audio-player img {
-  width: 240px;
+  width: 250px;
   border-radius: 20px;
   transition: box-shadow 0.3s;
 }
@@ -112,13 +121,12 @@ section.active {
   50% { box-shadow: none; }
 }
 
-/* Bouton Play overlay */
 #playButtonOverlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 80px;
+  font-size: 70px;
   color: #FFD700;
   pointer-events: none;
   text-shadow: 2px 2px 4px black;
@@ -157,7 +165,7 @@ button {
   max-width: 500px;
 }
 .carousel-content img {
-  max-width: 300px;
+  max-width: 400px;
   border-radius: 12px;
 }
 .carousel-content p {
@@ -167,7 +175,7 @@ button {
 .carousel button {
   background: none;
   border: none;
-  font-size: 30px;
+  font-size: 40px;
   color: #FFD700;
   cursor: pointer;
 }
