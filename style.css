@@ -5,6 +5,7 @@ body {
   text-align: center;
 }
 
+/* Fond décor */
 .background {
   background: url('decor-reggae-surprise.png') no-repeat center center fixed;
   background-size: cover;
@@ -55,38 +56,55 @@ section.active {
 }
 
 /* Photo accueil */
+.photo-accueil-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
 .photo-accueil {
-  width: 100%;
-  max-width: 900px;
+  max-width: 95%;
   border-radius: 12px;
 }
 
 /* Photo rencontre */
+.photo-rencontre-container {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
 .photo-rencontre {
-  max-width: 500px;
-  width: 100%;
+  max-width: 95%;
   border-radius: 12px;
-  margin-bottom: 20px;
 }
 
-/* Texte rencontre */
+/* Image manquante */
+.missing-image {
+  background: #555;
+  color: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Texte rencontre en 4 lignes max */
 .rencontre-text {
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
-  margin-bottom: 20px;
-  line-height: 1.5;
+  text-align: center;
 }
 
 /* Réseaux */
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   margin-top: 15px;
 }
 .social-icons img {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
 }
 
 /* Concerts */
@@ -110,17 +128,17 @@ section.active {
   transition: box-shadow 0.3s;
 }
 .audio-player img.playing {
-  box-shadow: 0 0 20px #FFD700;
+  box-shadow: 0 0 25px #FFD700;
 }
 .audio-player img.blink {
   animation: blink 4s infinite;
 }
-
 @keyframes blink {
-  0%, 100% { box-shadow: 0 0 20px #FFD700; }
+  0%, 100% { box-shadow: 0 0 25px #FFD700; }
   50% { box-shadow: none; }
 }
 
+/* Bouton Play overlay */
 #playButtonOverlay {
   position: absolute;
   top: 50%;
