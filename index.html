@@ -6,23 +6,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Photo accueil plein écran */
-    #accueil img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 0;
-      margin: 0;
-    }
-    /* Enlève fond noir autour */
-    #accueil .overlay-content {
-      background: none;
-      padding: 0;
-      border-radius: 0;
-      max-width: 100%;
-    }
-  </style>
 </head>
 <body>
 
@@ -50,7 +33,7 @@
   <!-- ACCUEIL -->
   <section id="accueil" class="active">
     <div class="overlay-content">
-      <img src="accueil.png" alt="Photo Accueil" class="photo-accueil">
+      <img src="accueil.jpg?v=1" alt="Photo Accueil" class="photo-accueil">
     </div>
   </section>
 
@@ -66,7 +49,6 @@
         réunis par l'amour du groove et du reggae.
       </p>
 
-      <!-- Carousel Membres -->
       <div class="carousel">
         <button class="carousel-btn prev" onclick="prevMember()">&#10094;</button>
         <div class="carousel-content">
@@ -81,11 +63,25 @@
   <!-- RÉSEAUX -->
   <section id="reseaux">
     <div class="overlay-content">
-      <h1>Viens nous suivre 🎶</h1>
+      <h1>Viens nous écouter sur 🎶</h1>
+      <div class="social-icons">
+        <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank">
+          <img src="apple.png" alt="Apple Music">
+        </a>
+        <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank">
+          <img src="spotify.png" alt="Spotify">
+        </a>
+      </div>
+
+      <h1>Viens nous voir sur 📺</h1>
       <div class="social-icons">
         <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
           <img src="youtube.png" alt="YouTube">
         </a>
+      </div>
+
+      <h1>Viens nous suivre sur 📷</h1>
+      <div class="social-icons">
         <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
           <img src="instagram.png" alt="Instagram">
         </a>
@@ -120,9 +116,7 @@
     </div>
   </section>
 
-  <!-- SCRIPT -->
   <script>
-    // Navigation
     const sections = document.querySelectorAll('section');
     function showSection(id) {
       sections.forEach(sec => sec.classList.remove('active'));
@@ -190,7 +184,7 @@
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
 
-    // Carousel
+    // Carrousel
     const members = [
       { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
       { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
