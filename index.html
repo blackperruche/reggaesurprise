@@ -6,6 +6,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Photo accueil plein écran */
+    #accueil img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+      margin: 0;
+    }
+    /* Enlève fond noir autour */
+    #accueil .overlay-content {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      max-width: 100%;
+    }
+  </style>
 </head>
 <body>
 
@@ -33,9 +50,7 @@
   <!-- ACCUEIL -->
   <section id="accueil" class="active">
     <div class="overlay-content">
-      <h1>Bienvenue sur Reggae Surprise</h1>
       <img src="photoaccueil.jpg" alt="Photo Accueil" class="photo-accueil">
-      <p>Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
