@@ -28,53 +28,41 @@
     <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
     <div id="playButtonOverlay">▶</div>
   </div>
-
   <audio id="audioElement"></audio>
 
-  <!-- Sections -->
+  <!-- ACCUEIL -->
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
-
-      <!-- Image accueil avec vérification -->
-      <div class="photo-accueil-container">
-        <img src="photoaccueil.jpg" alt="Photo Accueil" class="photo-accueil"
-             onerror="this.onerror=null;this.parentNode.innerHTML='<div class=\'missing-image\'>Image photoaccueil.jpg introuvable</div>';">
-      </div>
-
+      <img src="photoaccueil.jpg" alt="Photo Accueil" class="photo-accueil">
       <p>Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
+  <!-- RENCONTRE -->
   <section id="rencontre">
     <div class="overlay-content">
       <h1>Rencontre</h1>
-
-      <!-- Image rencontre avec vérification -->
-      <div class="photo-rencontre-container">
-        <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre"
-             onerror="this.onerror=null;this.parentNode.innerHTML='<div class=\'missing-image\'>Image photorencontre.jpg introuvable</div>';">
-      </div>
-
+      <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre">
       <p class="rencontre-text">
-        Une histoire de passionnés… Avant la surprise, il y a eu une rencontre.  
-        Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae,  
-        prêts à mélanger leurs influences pour créer un son unique. Découvrez l'équipe !
+        Une histoire de passionnés…  
+        Avant la surprise, il y a eu une rencontre.  
+        Cinq musiciens aux univers différents,  
+        réunis par l'amour du groove et du reggae.
       </p>
 
       <div class="carousel">
         <button class="carousel-btn prev" onclick="prevMember()">&#10094;</button>
-
         <div class="carousel-content">
           <img id="member-photo" src="Keo Vy.jpeg" alt="Membre">
           <p id="member-text"></p>
         </div>
-
         <button class="carousel-btn next" onclick="nextMember()">&#10095;</button>
       </div>
     </div>
   </section>
 
+  <!-- RÉSEAUX -->
   <section id="reseaux">
     <div class="overlay-content">
       <h1>Viens nous suivre 🎶</h1>
@@ -92,6 +80,7 @@
     </div>
   </section>
 
+  <!-- CONCERTS -->
   <section id="concerts">
     <div class="overlay-content">
       <h1>Programme des concerts</h1>
@@ -99,6 +88,7 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section id="contact">
     <div class="overlay-content">
       <h1>Contactez-nous</h1>
@@ -121,11 +111,11 @@
       document.getElementById(id).classList.add('active');
     }
 
+    // Audio
     const audioFiles = [];
     for (let i = 1; i <= 20; i++) {
       audioFiles.push(`audio${i}.mp3`);
     }
-
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
@@ -141,7 +131,6 @@
       logo.classList.add('playing');
       playOverlay.style.display = 'none';
     }
-
     function pauseTrack() {
       audio.pause();
       isPlaying = false;
@@ -149,7 +138,6 @@
       logo.classList.add('blink');
       playOverlay.style.display = 'block';
     }
-
     let clickTimeout;
     document.getElementById('audioPlayer').addEventListener('click', () => {
       if (clickTimeout) {
@@ -177,17 +165,14 @@
         clickTimeout = null;
       }, 300);
     });
-
     audio.addEventListener('ended', () => {
       currentTrack = (currentTrack + 1) % audioFiles.length;
       playTrack(currentTrack);
     });
-
-    // Initial state
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
 
-    // === Carrousel Membres ===
+    // Carrousel
     const members = [
       { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
       { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
@@ -195,28 +180,22 @@
       { photo: "Antho.jpeg", text: "…voici l’homme à la guitare magique..." },
       { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie..." }
     ];
-
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
     const textEl = document.getElementById('member-text');
-
     function updateMember() {
       photoEl.src = members[currentMember].photo;
       textEl.textContent = members[currentMember].text;
     }
-
     function prevMember() {
       currentMember = (currentMember - 1 + members.length) % members.length;
       updateMember();
     }
-
     function nextMember() {
       currentMember = (currentMember + 1) % members.length;
       updateMember();
     }
-
     updateMember();
   </script>
-
 </body>
 </html>
