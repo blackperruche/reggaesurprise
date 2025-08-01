@@ -51,14 +51,20 @@ section.active {
   background: rgba(0, 0, 0, 0.55);
   padding: 30px;
   border-radius: 12px;
+  display: block;
   max-width: 90%;
   margin: auto;
 }
 
-/* Concert image */
+.tagline {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
 #concerts .overlay-content {
   max-width: 95%;
 }
+
 .concert-img {
   width: 100%;
   border-radius: 12px;
@@ -73,6 +79,7 @@ section.active {
 .audio-player img {
   width: 200px;
   border-radius: 20px;
+  transition: box-shadow 0.3s;
 }
 .audio-player img.playing {
   box-shadow: 0 0 20px #FFD700;
@@ -98,21 +105,22 @@ section.active {
 }
 
 /* Formulaire contact */
-.contact-form {
+.contact-form-wrapper {
   max-width: 400px;
+  margin: auto;
 }
 form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+textarea {
+  min-height: 120px;
+}
 input, textarea, button {
   padding: 10px;
   border-radius: 8px;
   border: none;
-}
-textarea {
-  min-height: 120px;
 }
 button {
   background: #FFD700;
@@ -120,45 +128,43 @@ button {
   cursor: pointer;
 }
 
-/* Icônes réseaux */
+/* Réseaux sociaux */
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 20px;
 }
 .social-icons img {
   width: 40px;
-  height: 40px;
+  height: auto;
 }
 
 /* Carrousel */
-.carousel img {
-  width: 160px; /* Taille medium */
-  height: auto;
-  border-radius: 10px;
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
 }
-
 .carousel-content {
-  max-width: 700px;
+  max-width: 400px;
 }
-.carousel img {
+.carousel-content img {
   width: 250px;
-  height: auto;
   border-radius: 12px;
 }
-.carousel p {
-  margin-top: 15px;
-  line-height: 1.5;
-  white-space: pre-line;
+.carousel-content p {
+  margin-top: 10px;
+  font-size: 14px;
 }
 .carousel-btn {
-  background: rgba(0,0,0,0.5);
-  border: 2px solid #FFD700;
+  background: none;
+  border: none;
+  font-size: 40px;
   color: #FFD700;
-  font-size: 30px;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
   cursor: pointer;
+}
+.carousel-btn:hover {
+  color: white;
 }
