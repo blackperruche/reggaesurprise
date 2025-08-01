@@ -51,6 +51,7 @@
         réunis par l'amour du groove et du reggae.
       </p>
 
+      <!-- Carousel Membres -->
       <div class="carousel">
         <button class="carousel-btn prev" onclick="prevMember()">&#10094;</button>
         <div class="carousel-content">
@@ -104,7 +105,9 @@
     </div>
   </section>
 
+  <!-- SCRIPT -->
   <script>
+    // Navigation
     const sections = document.querySelectorAll('section');
     function showSection(id) {
       sections.forEach(sec => sec.classList.remove('active'));
@@ -172,7 +175,7 @@
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
 
-    // Carrousel
+    // Carousel
     const members = [
       { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
       { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
