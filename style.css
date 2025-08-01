@@ -48,23 +48,31 @@ section.active {
 }
 
 .overlay-content {
-  background: rgba(0, 0, 0, 0.28); /* plus transparent */
+  background: rgba(0, 0, 0, 0.28);
   padding: 30px;
   border-radius: 12px;
   max-width: 90%;
   margin: auto;
 }
 
+/* Photo accueil */
+.photo-accueil {
+  max-width: 300px;
+  border-radius: 12px;
+  margin: 15px auto;
+  display: block;
+}
+
 /* Réseaux */
-.reseaux-icons {
+.social-icons {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-top: 15px;
 }
-.reseaux-icons img {
-  width: 50px;
-  height: 50px;
+.social-icons img {
+  width: 40px;
+  height: 40px;
 }
 
 /* Concerts */
@@ -91,7 +99,7 @@ section.active {
   box-shadow: 0 0 20px #FFD700;
 }
 .audio-player img.blink {
-  animation: blink 4s infinite; /* plus lent */
+  animation: blink 4s infinite;
 }
 
 @keyframes blink {
@@ -142,6 +150,7 @@ button {
 }
 .carousel-content {
   max-width: 500px;
+  text-align: center;
 }
 .carousel-content img {
   max-width: 300px;
@@ -157,4 +166,17 @@ button {
   font-size: 30px;
   color: #FFD700;
   cursor: pointer;
+  padding: 10px;
+}
+
+/* Texte rencontre largeur réduite */
+.rencontre-text {
+  max-width: 500px;
+  margin: 0 auto 20px auto;
+  line-height: 1.5;
+}
+
+/* Forcer flèches à être symétriques */
+.carousel-btn {
+  flex-shrink: 0;
 }
