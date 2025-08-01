@@ -55,12 +55,17 @@ section.active {
   margin: auto;
 }
 
-/* Photo accueil */
-.photo-accueil {
-  max-width: 300px;
-  border-radius: 12px;
-  margin: 15px auto;
+/* Accueil - grande image seule */
+.accueil-only-image {
+  background: none;
+  padding: 0;
+}
+.photo-accueil-big {
+  max-width: 90%;
+  height: auto;
+  border-radius: 15px;
   display: block;
+  margin: 0 auto;
 }
 
 /* Réseaux */
@@ -71,8 +76,8 @@ section.active {
   margin-top: 15px;
 }
 .social-icons img {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
 }
 
 /* Concerts */
@@ -91,7 +96,7 @@ section.active {
   display: inline-block;
 }
 .audio-player img {
-  width: 200px;
+  width: 240px;
   border-radius: 20px;
   transition: box-shadow 0.3s;
 }
@@ -113,7 +118,7 @@ section.active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 60px;
+  font-size: 80px;
   color: #FFD700;
   pointer-events: none;
   text-shadow: 2px 2px 4px black;
@@ -150,7 +155,6 @@ button {
 }
 .carousel-content {
   max-width: 500px;
-  text-align: center;
 }
 .carousel-content img {
   max-width: 300px;
@@ -166,17 +170,4 @@ button {
   font-size: 30px;
   color: #FFD700;
   cursor: pointer;
-  padding: 10px;
-}
-
-/* Texte rencontre largeur réduite */
-.rencontre-text {
-  max-width: 500px;
-  margin: 0 auto 20px auto;
-  line-height: 1.5;
-}
-
-/* Forcer flèches à être symétriques */
-.carousel-btn {
-  flex-shrink: 0;
 }
