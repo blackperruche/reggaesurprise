@@ -35,28 +35,28 @@
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
-      <p class="tagline">Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
+      <p class="slogan">Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
   <section id="rencontre">
     <div class="overlay-content">
-      <h1>Rencontre</h1>
+      <h1>La rencontre</h1>
       <p class="intro-rencontre">
-        Mais avant la surprise… il y a eu une rencontre.  
-        Une histoire de passionnés, réunis par l’amour de la musique et l’envie de partager des vibrations uniques.  
-        Cinq musiciens, cinq univers, qui se croisent et fusionnent pour créer un son reggae qui leur ressemble.  
-        Découvrez-les un par un…
+        C’est l’histoire de passionnés qui se sont croisés au détour des scènes et des répétitions,
+        chacun avec son univers, son expérience et ses influences.  
+        Ensemble, ils ont décidé de mélanger leurs styles pour créer un reggae unique et surprenant.  
+        Découvrez la famille Reggae Surprise…
       </p>
 
       <!-- Carrousel -->
       <div class="carousel">
-        <button class="carousel-btn prev">&#10094;</button>
+        <button class="carousel-btn" id="prevBtn">⬅</button>
         <div class="carousel-content">
-          <img id="carousel-image" src="Kéo Vy.jpeg" alt="Kéo Vy">
-          <p id="carousel-text"></p>
+          <img id="carouselImage" src="Kéo Vy.jpeg" alt="Membre">
+          <p id="carouselText"></p>
         </div>
-        <button class="carousel-btn next">&#10095;</button>
+        <button class="carousel-btn" id="nextBtn">➡</button>
       </div>
     </div>
   </section>
@@ -80,7 +80,7 @@
   </section>
 
   <section id="contact">
-    <div class="overlay-content contact-form-wrapper">
+    <div class="overlay-content">
       <h1>Contactez-nous</h1>
       <form>
         <label for="name">Nom :</label>
@@ -102,12 +102,11 @@
       document.getElementById(id).classList.add('active');
     }
 
-    /* Lecteur audio */
+    /* Audio Player */
     const audioFiles = [];
     for (let i = 1; i <= 20; i++) {
       audioFiles.push(`audio${i}.mp3`);
     }
-
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
@@ -165,35 +164,34 @@
       playTrack(currentTrack);
     });
 
-    /* Initial state */
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
 
     /* Carrousel */
     const members = [
-      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 ... ça vit ! 💥✌🏼" },
-      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas... groove comme jamais !" },
-      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail... Big up Jérémy ! 🔥" },
-      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique... maestro !!! ⚡️⚡️⚡️" },
-      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie... ça groove avec élégance !" }
+      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 ... (texte complet)" },
+      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas, notre maestro des claviers ! 🎹🔥 ..." },
+      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail … 🍹🤣 ..." },
+      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique : ANTHONY ! 🎸 ..." },
+      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie du groupe. 🤪 ..." }
     ];
-
     let currentMember = 0;
-    const carouselImg = document.getElementById("carousel-image");
-    const carouselText = document.getElementById("carousel-text");
+    const carouselImage = document.getElementById("carouselImage");
+    const carouselText = document.getElementById("carouselText");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
 
     function updateCarousel() {
-      carouselImg.src = members[currentMember].img;
+      carouselImage.src = members[currentMember].img;
       carouselText.textContent = members[currentMember].text;
     }
 
-    document.querySelector(".next").addEventListener("click", () => {
-      currentMember = (currentMember + 1) % members.length;
+    prevBtn.addEventListener("click", () => {
+      currentMember = (currentMember - 1 + members.length) % members.length;
       updateCarousel();
     });
-
-    document.querySelector(".prev").addEventListener("click", () => {
-      currentMember = (currentMember - 1 + members.length) % members.length;
+    nextBtn.addEventListener("click", () => {
+      currentMember = (currentMember + 1) % members.length;
       updateCarousel();
     });
 
