@@ -35,43 +35,43 @@
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
+      <p class="tagline">Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
-  <!-- Rencontre (carrousel) -->
   <section id="rencontre">
     <div class="overlay-content">
       <h1>Rencontre</h1>
+      <p class="intro-rencontre">
+        Mais avant la surprise… il y a eu une rencontre.  
+        Une histoire de passionnés, réunis par l’amour de la musique et l’envie de partager des vibrations uniques.  
+        Cinq musiciens, cinq univers, qui se croisent et fusionnent pour créer un son reggae qui leur ressemble.  
+        Découvrez-les un par un…
+      </p>
+
+      <!-- Carrousel -->
       <div class="carousel">
-        <button class="carousel-btn left" onclick="prevMember()">&#9664;</button>
+        <button class="carousel-btn prev">&#10094;</button>
         <div class="carousel-content">
-          <img id="member-photo" src="" alt="Membre du groupe">
-          <p id="member-text"></p>
+          <img id="carousel-image" src="Kéo Vy.jpeg" alt="Kéo Vy">
+          <p id="carousel-text"></p>
         </div>
-        <button class="carousel-btn right" onclick="nextMember()">&#9654;</button>
+        <button class="carousel-btn next">&#10095;</button>
       </div>
     </div>
   </section>
 
-  <!-- Réseaux -->
   <section id="reseaux">
     <div class="overlay-content">
       <h1>Viens nous suivre 🎶</h1>
       <div class="social-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
-          <img src="youtube.png" alt="YouTube">
-        </a>
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
-          <img src="instagram.png" alt="Instagram">
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank">
-          <img src="facebook.png" alt="Facebook">
-        </a>
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt="YouTube"></a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt="Facebook"></a>
       </div>
     </div>
   </section>
 
-  <!-- Concerts -->
   <section id="concerts">
     <div class="overlay-content">
       <h1>Programme des concerts</h1>
@@ -79,9 +79,8 @@
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
-    <div class="overlay-content contact-form">
+    <div class="overlay-content contact-form-wrapper">
       <h1>Contactez-nous</h1>
       <form>
         <label for="name">Nom :</label>
@@ -89,7 +88,7 @@
         <label for="email">Email :</label>
         <input type="email" id="email" name="email">
         <label for="message">Message :</label>
-        <textarea id="message" name="message" rows="6"></textarea>
+        <textarea id="message" name="message"></textarea>
         <button type="submit">Envoyer</button>
       </form>
     </div>
@@ -105,11 +104,17 @@
 
     /* Lecteur audio */
     const audioFiles = [];
-    for (let i = 1; i <= 20; i++) audioFiles.push(`audio${i}.mp3`);
-    let currentTrack = 0, isPlaying = false, firstPlay = true;
+    for (let i = 1; i <= 20; i++) {
+      audioFiles.push(`audio${i}.mp3`);
+    }
+
+    let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
     const playOverlay = document.getElementById('playButtonOverlay');
+    let isPlaying = false;
+    let firstPlay = true;
+
     function playTrack(index) {
       audio.src = audioFiles[index];
       audio.play();
@@ -118,6 +123,7 @@
       logo.classList.add('playing');
       playOverlay.style.display = 'none';
     }
+
     function pauseTrack() {
       audio.pause();
       isPlaying = false;
@@ -125,6 +131,7 @@
       logo.classList.add('blink');
       playOverlay.style.display = 'block';
     }
+
     let clickTimeout;
     document.getElementById('audioPlayer').addEventListener('click', () => {
       if (clickTimeout) {
@@ -136,37 +143,61 @@
       }
       clickTimeout = setTimeout(() => {
         if (!isPlaying) {
-          if (firstPlay) { playTrack(currentTrack); firstPlay = false; }
-          else { audio.play(); isPlaying = true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display = 'none'; }
-        } else pauseTrack();
+          if (firstPlay) {
+            playTrack(currentTrack);
+            firstPlay = false;
+          } else {
+            audio.play();
+            isPlaying = true;
+            logo.classList.remove('blink');
+            logo.classList.add('playing');
+            playOverlay.style.display = 'none';
+          }
+        } else {
+          pauseTrack();
+        }
         clickTimeout = null;
       }, 250);
     });
+
     audio.addEventListener('ended', () => {
       currentTrack = (currentTrack + 1) % audioFiles.length;
       playTrack(currentTrack);
     });
+
+    /* Initial state */
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
 
-    /* Carrousel Rencontre */
+    /* Carrousel */
     const members = [
-      { photo: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
-      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
-      { photo: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail..." },
-      { photo: "Antho.jpeg", text: "…voici l’homme à la guitare magique..." },
-      { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie..." }
+      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 ... ça vit ! 💥✌🏼" },
+      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas... groove comme jamais !" },
+      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail... Big up Jérémy ! 🔥" },
+      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique... maestro !!! ⚡️⚡️⚡️" },
+      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie... ça groove avec élégance !" }
     ];
+
     let currentMember = 0;
-    const memberPhoto = document.getElementById("member-photo");
-    const memberText = document.getElementById("member-text");
-    function updateMember() {
-      memberPhoto.src = members[currentMember].photo;
-      memberText.innerText = members[currentMember].text;
+    const carouselImg = document.getElementById("carousel-image");
+    const carouselText = document.getElementById("carousel-text");
+
+    function updateCarousel() {
+      carouselImg.src = members[currentMember].img;
+      carouselText.textContent = members[currentMember].text;
     }
-    function prevMember() { currentMember = (currentMember - 1 + members.length) % members.length; updateMember(); }
-    function nextMember() { currentMember = (currentMember + 1) % members.length; updateMember(); }
-    updateMember();
+
+    document.querySelector(".next").addEventListener("click", () => {
+      currentMember = (currentMember + 1) % members.length;
+      updateCarousel();
+    });
+
+    document.querySelector(".prev").addEventListener("click", () => {
+      currentMember = (currentMember - 1 + members.length) % members.length;
+      updateCarousel();
+    });
+
+    updateCarousel();
   </script>
 
 </body>
