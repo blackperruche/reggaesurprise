@@ -28,20 +28,21 @@
     <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
     <div id="playButtonOverlay">▶</div>
   </div>
-
   <audio id="audioElement"></audio>
 
-  <!-- Sections -->
+  <!-- Accueil -->
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
-      <p class="slogan">Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
+      <p class="accroche">Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
+  <!-- Rencontre -->
   <section id="rencontre">
     <div class="overlay-content">
       <h1>La rencontre</h1>
+      <p class="rencontre-phrase">Mais avant la surprise… une rencontre entre passionnés !</p>
       <p class="intro-rencontre">
         C’est l’histoire de passionnés qui se sont croisés au détour des scènes et des répétitions,
         chacun avec son univers, son expérience et ses influences.  
@@ -61,17 +62,25 @@
     </div>
   </section>
 
+  <!-- Réseaux -->
   <section id="reseaux">
     <div class="overlay-content">
       <h1>Viens nous suivre 🎶</h1>
       <div class="social-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt="Facebook"></a>
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
+          <img src="youtube.png" alt="YouTube">
+        </a>
+        <a href="https://www.instagram.com/reggaesurpriseoff" target="_blank">
+          <img src="instagram.png" alt="Instagram">
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank">
+          <img src="facebook.png" alt="Facebook">
+        </a>
       </div>
     </div>
   </section>
 
+  <!-- Concerts -->
   <section id="concerts">
     <div class="overlay-content">
       <h1>Programme des concerts</h1>
@@ -79,6 +88,7 @@
     </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
     <div class="overlay-content">
       <h1>Contactez-nous</h1>
@@ -88,7 +98,7 @@
         <label for="email">Email :</label>
         <input type="email" id="email" name="email">
         <label for="message">Message :</label>
-        <textarea id="message" name="message"></textarea>
+        <textarea id="message" name="message" rows="6"></textarea>
         <button type="submit">Envoyer</button>
       </form>
     </div>
@@ -107,6 +117,7 @@
     for (let i = 1; i <= 20; i++) {
       audioFiles.push(`audio${i}.mp3`);
     }
+
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
@@ -169,34 +180,33 @@
 
     /* Carrousel */
     const members = [
-      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 ... (texte complet)" },
-      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas, notre maestro des claviers ! 🎹🔥 ..." },
-      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail … 🍹🤣 ..." },
-      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique : ANTHONY ! 🎸 ..." },
-      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie du groupe. 🤪 ..." }
+      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 ..." },
+      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas ..." },
+      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum ..." },
+      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique ..." },
+      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique ..." }
     ];
+
     let currentMember = 0;
-    const carouselImage = document.getElementById("carouselImage");
-    const carouselText = document.getElementById("carouselText");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+    const carouselImage = document.getElementById('carouselImage');
+    const carouselText = document.getElementById('carouselText');
 
     function updateCarousel() {
       carouselImage.src = members[currentMember].img;
       carouselText.textContent = members[currentMember].text;
     }
 
-    prevBtn.addEventListener("click", () => {
+    document.getElementById('prevBtn').addEventListener('click', () => {
       currentMember = (currentMember - 1 + members.length) % members.length;
       updateCarousel();
     });
-    nextBtn.addEventListener("click", () => {
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
       currentMember = (currentMember + 1) % members.length;
       updateCarousel();
     });
 
     updateCarousel();
   </script>
-
 </body>
 </html>
