@@ -46,7 +46,6 @@ section {
 section.active {
   display: block;
 }
-
 .overlay-content {
   background: rgba(0, 0, 0, 0.28);
   padding: 30px;
@@ -55,65 +54,37 @@ section.active {
   margin: auto;
 }
 
-/* Photo accueil */
-.photo-accueil-container {
-  display: flex;
-  justify-content: center;
+/* Photos accueil / rencontre */
+.photo-accueil {
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 12px;
   margin: 20px 0;
 }
-.photo-accueil {
-  max-width: 95%;
-  border-radius: 12px;
-}
-
-/* Photo rencontre */
-.photo-rencontre-container {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0;
-}
 .photo-rencontre {
-  max-width: 95%;
+  width: 80%;
+  max-width: 700px;
   border-radius: 12px;
+  margin: 20px 0;
 }
 
-/* Image manquante */
-.missing-image {
-  background: #555;
-  color: white;
-  padding: 40px;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Texte rencontre en 4 lignes max */
+/* Texte rencontre */
 .rencontre-text {
-  max-width: 650px;
+  max-width: 700px;
   margin: auto;
-  text-align: center;
+  white-space: pre-line;
 }
 
 /* Réseaux */
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 30px;
   margin-top: 15px;
 }
 .social-icons img {
-  width: 70px;
-  height: 70px;
-}
-
-/* Concerts */
-#concerts .overlay-content {
-  max-width: 95%;
-}
-.concert-img {
-  width: 100%;
-  border-radius: 12px;
+  width: 80px;
+  height: 80px;
 }
 
 /* Lecteur Audio */
@@ -128,48 +99,24 @@ section.active {
   transition: box-shadow 0.3s;
 }
 .audio-player img.playing {
-  box-shadow: 0 0 25px #FFD700;
+  box-shadow: 0 0 20px #FFD700;
 }
 .audio-player img.blink {
   animation: blink 4s infinite;
 }
 @keyframes blink {
-  0%, 100% { box-shadow: 0 0 25px #FFD700; }
+  0%, 100% { box-shadow: 0 0 20px #FFD700; }
   50% { box-shadow: none; }
 }
-
-/* Bouton Play overlay */
 #playButtonOverlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 70px;
+  font-size: 60px;
   color: #FFD700;
   pointer-events: none;
   text-shadow: 2px 2px 4px black;
-}
-
-/* Formulaire contact */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 350px;
-  margin: auto;
-}
-input, textarea, button {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-}
-textarea {
-  min-height: 150px;
-}
-button {
-  background: #FFD700;
-  color: black;
-  cursor: pointer;
 }
 
 /* Carousel */
@@ -179,9 +126,6 @@ button {
   justify-content: center;
   gap: 15px;
 }
-.carousel-content {
-  max-width: 500px;
-}
 .carousel-content img {
   max-width: 400px;
   border-radius: 12px;
@@ -190,10 +134,10 @@ button {
   margin-top: 10px;
   font-size: 14px;
 }
-.carousel button {
+.carousel-btn {
   background: none;
   border: none;
-  font-size: 40px;
+  font-size: 30px;
   color: #FFD700;
   cursor: pointer;
 }
