@@ -9,196 +9,88 @@
 </head>
 <body>
 
-  <!-- Décor -->
-  <div class="background"></div>
+<!-- Fond décor -->
+<div class="background"></div>
 
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
-      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
-      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
-      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
-      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
-    </ul>
-  </nav>
+<!-- Navigation -->
+<nav>
+  <ul>
+    <li><a href="#" onclick="showSection('accueil')">Accueil</a></li>
+    <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
+    <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+    <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
+    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+  </ul>
+</nav>
 
-  <!-- Lecteur Audio -->
-  <div class="audio-player" id="audioPlayer">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
-    <div id="playButtonOverlay">▶</div>
+<!-- Accueil -->
+<section id="accueil" class="active">
+  <div class="overlay-content">
+    <h1>Reggae Surprise</h1>
+    <p>Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
+    <div class="audio-player">
+      <img id="playerImage" src="logo-reggae-surprise.png" alt="Lecteur" class="blink">
+      <div id="playButtonOverlay">▶</div>
+    </div>
   </div>
+</section>
 
-  <audio id="audioElement"></audio>
+<!-- Rencontre -->
+<section id="rencontre">
+  <div class="overlay-content">
+    <h2>Rencontre</h2>
+    <p class="intro-rencontre">
+      Une histoire de passionnés qui se sont trouvés autour d’une même vibe :
+      le reggae, les bonnes ondes et l’envie de partager.
+      <br><br>
+      Avant la surprise… il y a eu la rencontre de musiciens aux horizons variés,
+      unis par la même énergie.
+      <br><br>
+      Découvrez notre équipage musical ! 🎶
+    </p>
 
-  <!-- Accueil -->
-  <section id="accueil" class="active">
-    <div class="overlay-content">
-      <h1>Bienvenue sur Reggae Surprise</h1>
-      <p>Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
-    </div>
-  </section>
-
-  <!-- Rencontre -->
-  <section id="rencontre">
-    <div class="overlay-content">
-      <h1>Rencontre</h1>
-      <p>Une histoire de passionnés qui se sont croisés au détour des scènes, des jams et des projets musicaux.
-      Chacun avec son style, chacun avec ses influences, mais tous animés par le même amour du reggae et le plaisir de le partager.  
-      Découvrez les visages et les histoires qui font la magie de Reggae Surprise…</p>
-
-      <div class="carousel">
-        <button class="prev" onclick="prevSlide()">&#9664;</button>
-        <div class="carousel-content">
-          <img id="carouselImage" src="Kéo Vy.jpeg" alt="">
-          <p id="carouselText"></p>
-        </div>
-        <button class="next" onclick="nextSlide()">&#9654;</button>
+    <div class="carousel">
+      <button class="carousel-btn prev" onclick="prevSlide()">&#10094;</button>
+      <div class="carousel-content">
+        <img id="carouselImage" src="Kéo Vy.jpeg" alt="Membre">
+        <p id="carouselText"></p>
       </div>
+      <button class="carousel-btn next" onclick="nextSlide()">&#10095;</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Réseaux -->
-  <section id="reseaux">
-    <div class="overlay-content">
-      <h1>Viens nous suivre 🎶</h1>
-      <div class="reseaux-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt="YouTube"></a>
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt="Facebook"></a>
-      </div>
-    </div>
-  </section>
+<!-- Concerts -->
+<section id="concerts">
+  <div class="overlay-content">
+    <h2>Concerts</h2>
+    <img src="affiche-concert.jpg" alt="Affiche concert" class="concert-img">
+  </div>
+</section>
 
-  <!-- Concerts -->
-  <section id="concerts">
-    <div class="overlay-content">
-      <h1>Programme des concerts</h1>
-      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img">
-    </div>
-  </section>
+<!-- Réseaux -->
+<section id="reseaux">
+  <div class="overlay-content">
+    <h2>Réseaux</h2>
+    <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" class="reseaux-icon"></a>
+    <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" class="reseaux-icon"></a>
+    <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" class="reseaux-icon"></a>
+  </div>
+</section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <div class="overlay-content">
-      <h1>Contactez-nous</h1>
-      <form>
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name">
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email">
-        <label for="message">Message :</label>
-        <textarea id="message" name="message"></textarea>
-        <button type="submit">Envoyer</button>
-      </form>
-    </div>
-  </section>
+<!-- Contact -->
+<section id="contact">
+  <div class="overlay-content">
+    <h2>Contact</h2>
+    <form>
+      <input type="text" placeholder="Nom" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Votre message" rows="6" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </div>
+</section>
 
-  <script>
-    const sections = document.querySelectorAll('section');
-    function showSection(id) {
-      sections.forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    const audioFiles = [];
-    for (let i = 1; i <= 20; i++) {
-      audioFiles.push(`audio${i}.mp3`);
-    }
-
-    let currentTrack = 0;
-    const audio = document.getElementById('audioElement');
-    const logo = document.getElementById('logo');
-    const playOverlay = document.getElementById('playButtonOverlay');
-    let isPlaying = false;
-    let firstPlay = true;
-
-    function playTrack(index) {
-      audio.src = audioFiles[index];
-      audio.play();
-      isPlaying = true;
-      logo.classList.remove('blink');
-      logo.classList.add('playing');
-      playOverlay.style.display = 'none';
-    }
-
-    function pauseTrack() {
-      audio.pause();
-      isPlaying = false;
-      logo.classList.remove('playing');
-      logo.classList.add('blink');
-      playOverlay.style.display = 'block';
-    }
-
-    let clickTimeout;
-    document.getElementById('audioPlayer').addEventListener('click', () => {
-      if (clickTimeout) {
-        clearTimeout(clickTimeout);
-        clickTimeout = null;
-        currentTrack = (currentTrack + 1) % audioFiles.length;
-        playTrack(currentTrack);
-        return;
-      }
-      clickTimeout = setTimeout(() => {
-        if (!isPlaying) {
-          if (firstPlay) {
-            playTrack(currentTrack);
-            firstPlay = false;
-          } else {
-            audio.play();
-            isPlaying = true;
-            logo.classList.remove('blink');
-            logo.classList.add('playing');
-            playOverlay.style.display = 'none';
-          }
-        } else {
-          pauseTrack();
-        }
-        clickTimeout = null;
-      }, 250);
-    });
-
-    audio.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % audioFiles.length;
-      playTrack(currentTrack);
-    });
-
-    logo.classList.add('blink');
-    playOverlay.style.display = 'block';
-
-    const carouselData = [
-      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 Batteur et percussionniste depuis des années..." },
-      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas, notre maestro des claviers ! 🎹🔥 ..." },
-      { img: "jeremy.jpeg", text: "on met à l’honneur notre bassiste, Jérémy ! 🔥
-Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 🍹🤣
-Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 💚💛❤️
-Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe ! 🎸💥
-Big up Jérémy ! 🔥" },
-      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique, le créateur de grooves : ANTHONY ! 🎸 ..." },
-      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie du groupe. 🤪 ..." }
-    ];
-
-    let currentSlide = 0;
-    const carouselImage = document.getElementById("carouselImage");
-    const carouselText = document.getElementById("carouselText");
-
-    function updateCarousel() {
-      carouselImage.src = carouselData[currentSlide].img;
-      carouselText.textContent = carouselData[currentSlide].text;
-    }
-
-    function nextSlide() {
-      currentSlide = (currentSlide + 1) % carouselData.length;
-      updateCarousel();
-    }
-
-    function prevSlide() {
-      currentSlide = (currentSlide - 1 + carouselData.length) % carouselData.length;
-      updateCarousel();
-    }
-
-    updateCarousel();
-  </script>
-
+<script src="script.js"></script>
 </body>
 </html>
