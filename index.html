@@ -38,30 +38,34 @@
     </div>
   </section>
 
+  <!-- Rencontre -->
   <section id="rencontre">
     <div class="overlay-content">
-      <h1>Notre rencontre</h1>
-      <p>Rencontre de 5 musiciens passionnés...</p>
-    </div>
-  </section>
-
-  <section id="reseaux">
-    <div class="overlay-content">
-      <h1>Viens nous suivre 🎶</h1>
-      <div class="reseaux-icons">
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank">
-          <img src="facebook.png" alt="Facebook">
-        </a>
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
-          <img src="youtube.png" alt="YouTube">
-        </a>
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
-          <img src="instagram.png" alt="Instagram">
-        </a>
+      <h1>Rencontre</h1>
+      <div class="carousel">
+        <button class="arrow left" onclick="prevMember()">&#9664;</button>
+        <div class="member">
+          <img id="memberPhoto" src="" alt="Membre du groupe">
+          <p id="memberText"></p>
+        </div>
+        <button class="arrow right" onclick="nextMember()">&#9654;</button>
       </div>
     </div>
   </section>
 
+  <!-- Réseaux -->
+  <section id="reseaux">
+    <div class="overlay-content">
+      <h1>Viens nous suivre 🎶</h1>
+      <div class="social-icons">
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt="YouTube"></a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt="Facebook"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concerts -->
   <section id="concerts">
     <div class="overlay-content">
       <h1>Programme des concerts</h1>
@@ -69,8 +73,9 @@
     </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
-    <div class="overlay-content">
+    <div class="overlay-content contact-form">
       <h1>Contactez-nous</h1>
       <form>
         <label for="name">Nom :</label>
@@ -78,24 +83,25 @@
         <label for="email">Email :</label>
         <input type="email" id="email" name="email">
         <label for="message">Message :</label>
-        <textarea id="message" name="message"></textarea>
+        <textarea id="message" name="message" rows="6"></textarea>
         <button type="submit">Envoyer</button>
       </form>
     </div>
   </section>
 
   <script>
+    /* Navigation */
     const sections = document.querySelectorAll('section');
     function showSection(id) {
       sections.forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
+    /* Lecteur Audio */
     const audioFiles = [];
     for (let i = 1; i <= 20; i++) {
       audioFiles.push(`audio${i}.mp3`);
     }
-
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
@@ -111,7 +117,6 @@
       logo.classList.add('playing');
       playOverlay.style.display = 'none';
     }
-
     function pauseTrack() {
       audio.pause();
       isPlaying = false;
@@ -119,7 +124,6 @@
       logo.classList.add('blink');
       playOverlay.style.display = 'block';
     }
-
     let clickTimeout;
     document.getElementById('audioPlayer').addEventListener('click', () => {
       if (clickTimeout) {
@@ -147,15 +151,35 @@
         clickTimeout = null;
       }, 250);
     });
-
     audio.addEventListener('ended', () => {
       currentTrack = (currentTrack + 1) % audioFiles.length;
       playTrack(currentTrack);
     });
-
-    // Initial state
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
+
+    /* Carrousel Rencontre */
+    const members = [
+      { photo: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 Batteur et percussionniste..." },
+      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
+      { photo: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum..." },
+      { photo: "Antho.jpeg", text: "…voici l’homme à la guitare magique..." },
+      { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique..." }
+    ];
+    let currentMember = 0;
+    function showMember(index) {
+      document.getElementById('memberPhoto').src = members[index].photo;
+      document.getElementById('memberText').textContent = members[index].text;
+    }
+    function prevMember() {
+      currentMember = (currentMember - 1 + members.length) % members.length;
+      showMember(currentMember);
+    }
+    function nextMember() {
+      currentMember = (currentMember + 1) % members.length;
+      showMember(currentMember);
+    }
+    showMember(currentMember);
   </script>
 
 </body>
