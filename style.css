@@ -133,12 +133,12 @@ button {
 }
 
 /* Carrousel */
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
+.carousel img {
+  width: 160px; /* Taille medium */
+  height: auto;
+  border-radius: 10px;
 }
+
 .carousel-content {
   max-width: 700px;
 }
