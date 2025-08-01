@@ -101,12 +101,13 @@ section.active {
 }
 
 /* Formulaire contact */
+.contact-form {
+  max-width: 500px;
+}
 form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 400px;
-  margin: auto;
 }
 input, textarea, button {
   padding: 10px;
@@ -114,7 +115,7 @@ input, textarea, button {
   border: none;
 }
 textarea {
-  min-height: 150px;
+  resize: vertical;
 }
 button {
   background: #FFD700;
@@ -123,19 +124,42 @@ button {
 }
 
 /* Icônes réseaux */
-.reseaux-icons {
+.social-icons {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 20px;
   margin-top: 15px;
 }
-
-.reseaux-icons img {
-  width: 65px;
-  height: 65px;
-  transition: transform 0.2s ease;
+.social-icons img {
+  width: 40px;
+  transition: transform 0.3s;
+}
+.social-icons img:hover {
+  transform: scale(1.1);
 }
 
-.reseaux-icons img:hover {
-  transform: scale(1.15);
+/* Carrousel Rencontre */
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+.carousel .arrow {
+  background: none;
+  border: none;
+  font-size: 40px;
+  color: #FFD700;
+  cursor: pointer;
+}
+.carousel .member {
+  max-width: 600px;
+}
+.carousel img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+.carousel p {
+  margin-top: 15px;
+  text-align: justify;
 }
