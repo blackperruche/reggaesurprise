@@ -28,36 +28,32 @@
     <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
     <div id="playButtonOverlay">▶</div>
   </div>
+
   <audio id="audioElement"></audio>
 
   <!-- Accueil -->
   <section id="accueil" class="active">
     <div class="overlay-content">
       <h1>Bienvenue sur Reggae Surprise</h1>
-      <p class="accroche">Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
+      <p>Vos plus grands hits prennent un virage reggae… surprise ! 🥁🎸✌🏻</p>
     </div>
   </section>
 
   <!-- Rencontre -->
   <section id="rencontre">
     <div class="overlay-content">
-      <h1>La rencontre</h1>
-      <p class="rencontre-phrase">Mais avant la surprise… une rencontre entre passionnés !</p>
-      <p class="intro-rencontre">
-        C’est l’histoire de passionnés qui se sont croisés au détour des scènes et des répétitions,
-        chacun avec son univers, son expérience et ses influences.  
-        Ensemble, ils ont décidé de mélanger leurs styles pour créer un reggae unique et surprenant.  
-        Découvrez la famille Reggae Surprise…
-      </p>
+      <h1>Rencontre</h1>
+      <p>Une histoire de passionnés qui se sont croisés au détour des scènes, des jams et des projets musicaux.
+      Chacun avec son style, chacun avec ses influences, mais tous animés par le même amour du reggae et le plaisir de le partager.  
+      Découvrez les visages et les histoires qui font la magie de Reggae Surprise…</p>
 
-      <!-- Carrousel -->
       <div class="carousel">
-        <button class="carousel-btn" id="prevBtn">⬅</button>
+        <button class="prev" onclick="prevSlide()">&#9664;</button>
         <div class="carousel-content">
-          <img id="carouselImage" src="Kéo Vy.jpeg" alt="Membre">
+          <img id="carouselImage" src="Kéo Vy.jpeg" alt="">
           <p id="carouselText"></p>
         </div>
-        <button class="carousel-btn" id="nextBtn">➡</button>
+        <button class="next" onclick="nextSlide()">&#9654;</button>
       </div>
     </div>
   </section>
@@ -66,16 +62,10 @@
   <section id="reseaux">
     <div class="overlay-content">
       <h1>Viens nous suivre 🎶</h1>
-      <div class="social-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
-          <img src="youtube.png" alt="YouTube">
-        </a>
-        <a href="https://www.instagram.com/reggaesurpriseoff" target="_blank">
-          <img src="instagram.png" alt="Instagram">
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank">
-          <img src="facebook.png" alt="Facebook">
-        </a>
+      <div class="reseaux-icons">
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt="YouTube"></a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt="Facebook"></a>
       </div>
     </div>
   </section>
@@ -98,21 +88,19 @@
         <label for="email">Email :</label>
         <input type="email" id="email" name="email">
         <label for="message">Message :</label>
-        <textarea id="message" name="message" rows="6"></textarea>
+        <textarea id="message" name="message"></textarea>
         <button type="submit">Envoyer</button>
       </form>
     </div>
   </section>
 
   <script>
-    /* Navigation */
     const sections = document.querySelectorAll('section');
     function showSection(id) {
       sections.forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    /* Audio Player */
     const audioFiles = [];
     for (let i = 1; i <= 20; i++) {
       audioFiles.push(`audio${i}.mp3`);
@@ -178,35 +166,35 @@
     logo.classList.add('blink');
     playOverlay.style.display = 'block';
 
-    /* Carrousel */
-    const members = [
-      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 ..." },
-      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas ..." },
-      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum ..." },
-      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique ..." },
-      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique ..." }
+    const carouselData = [
+      { img: "Kéo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁 Batteur et percussionniste depuis des années..." },
+      { img: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas, notre maestro des claviers ! 🎹🔥 ..." },
+      { img: "Jérémy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail … 🍹🤣 ..." },
+      { img: "Antho.jpeg", text: "…voici l’homme à la guitare magique, le créateur de grooves : ANTHONY ! 🎸 ..." },
+      { img: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie du groupe. 🤪 ..." }
     ];
 
-    let currentMember = 0;
-    const carouselImage = document.getElementById('carouselImage');
-    const carouselText = document.getElementById('carouselText');
+    let currentSlide = 0;
+    const carouselImage = document.getElementById("carouselImage");
+    const carouselText = document.getElementById("carouselText");
 
     function updateCarousel() {
-      carouselImage.src = members[currentMember].img;
-      carouselText.textContent = members[currentMember].text;
+      carouselImage.src = carouselData[currentSlide].img;
+      carouselText.textContent = carouselData[currentSlide].text;
     }
 
-    document.getElementById('prevBtn').addEventListener('click', () => {
-      currentMember = (currentMember - 1 + members.length) % members.length;
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % carouselData.length;
       updateCarousel();
-    });
+    }
 
-    document.getElementById('nextBtn').addEventListener('click', () => {
-      currentMember = (currentMember + 1) % members.length;
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + carouselData.length) % carouselData.length;
       updateCarousel();
-    });
+    }
 
     updateCarousel();
   </script>
+
 </body>
 </html>
