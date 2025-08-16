@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <!-- Décor -->
-  <div class="background"></div>
+  <div class="background" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav>
@@ -26,125 +26,127 @@
 
   <!-- Lecteur Audio -->
   <div class="audio-player" id="audioPlayer">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
     <div id="playButtonOverlay">▶</div>
   </div>
   <audio id="audioElement"></audio>
 
-  <!-- ACCUEIL -->
-  <section id="accueil" class="active">
-    <div class="overlay-content">
-      <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false">
-    </div>
-  </section>
-
-  <!-- RENCONTRE -->
-  <section id="rencontre">
-    <div class="overlay-content">
-      <h1>Rencontre</h1>
-      <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre" draggable="false">
-      <p class="rencontre-text">
-        Une histoire de passionnés…
-        Avant la surprise, il y a eu une rencontre.
-        Cinq musiciens aux univers différents,
-        réunis par l'amour du groove et du reggae.
-      </p>
-
-      <div class="carousel">
-        <div class="carousel-content">
-          <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
-          <img id="member-photo" src="Keo Vy.jpeg" alt="Membre" draggable="false">
-          <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
+  <main>
+    <!-- ACCUEIL -->
+    <section id="accueil" class="active">
+      <div class="overlay-content">
+        <div class="container">
+          <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
         </div>
-        <p id="member-text" class="member-text"></p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- RÉSEAUX -->
-  <section id="reseaux">
-    <div class="overlay-content">
-      <h1>Réseaux</h1>
+    <!-- RENCONTRE -->
+    <section id="rencontre">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Rencontre</h1>
+          <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre" draggable="false" />
+          <p class="rencontre-text">
+            Une histoire de passionnés…
+            Avant la surprise, il y a eu une rencontre.
+            Cinq musiciens aux univers différents,
+            réunis par l'amour du groove et du reggae.
+          </p>
 
-      <h2 class="net-title">Viens nous écouter sur</h2>
-      <div class="social-icons">
-        <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener">
-          <img src="apple.png" alt="Apple Music" draggable="false">
-        </a>
-        <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener">
-          <img src="spotify.png" alt="Spotify" draggable="false">
-        </a>
+          <div class="carousel">
+            <div class="carousel-content">
+              <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
+              <img id="member-photo" src="Keo Vy.jpeg" alt="Membre" draggable="false" />
+              <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
+            </div>
+            <p id="member-text" class="member-text"></p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <h2 class="net-title">Viens nous voir sur</h2>
-      <div class="social-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener">
-          <img src="youtube.png" alt="YouTube" draggable="false">
-        </a>
+    <!-- RÉSEAUX -->
+    <section id="reseaux">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Réseaux</h1>
+
+          <h2 class="net-title">Viens nous écouter sur</h2>
+          <div class="social-icons">
+            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
+              <img src="apple.png" alt="Apple Music" draggable="false" />
+            </a>
+            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
+              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
+            </a>
+          </div>
+
+          <h2 class="net-title">Viens nous voir sur</h2>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
+              <img src="youtube.png" alt="YouTube" draggable="false" />
+            </a>
+          </div>
+
+          <h2 class="net-title">Viens nous suivre sur</h2>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
+              <img src="instagram.png" alt="Instagram" draggable="false" />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
+              <img src="facebook.png" alt="Facebook" draggable="false" />
+            </a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <h2 class="net-title">Viens nous suivre sur</h2>
-      <div class="social-icons">
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener">
-          <img src="instagram.png" alt="Instagram" draggable="false">
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener">
-          <img src="facebook.png" alt="Facebook" draggable="false">
-        </a>
+    <!-- CONCERTS -->
+    <section id="concerts">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Programme des concerts</h1>
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false" />
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONCERTS -->
-  <section id="concerts">
-    <div class="overlay-content">
-      <h1>Programme des concerts</h1>
-      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false">
-      <p class="zoom-hint">
-        Double-clic : zoom — Clic simple : taille normale. Clic en dehors : fermer.
-      </p>
-    </div>
-  </section>
-
-  <!-- MERCH -->
-  <section id="merch">
-    <div class="overlay-content">
-      <h1>Merchandising</h1>
-      <div class="merch-box">
-        <p>À venir</p>
+    <!-- MERCH -->
+    <section id="merch">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Merchandising</h1>
+          <div class="merch-box"><p>À venir</p></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="overlay-content">
-      <h1>Contactez-nous</h1>
-      <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" required>
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Contactez-nous</h1>
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required />
 
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="_replyto" required>
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="_replyto" required />
 
-        <label for="message">Message :</label>
-        <textarea id="message" name="message" style="height:150px;" required></textarea>
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
 
-        <input type="text" name="_gotcha" style="display:none">
-        <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise">
+            <input type="text" name="_gotcha" style="display:none" />
+            <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
 
-        <button type="submit">Envoyer</button>
-        <p id="formStatus" class="form-status" aria-live="polite"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- Lightbox Zoom Concerts -->
-  <div id="lightbox" class="lightbox" aria-hidden="true">
-    <div class="lightbox-content" id="lbContent">
-      <img id="lightboxImg" src="programme-concerts.jpg" alt="Programme des concerts (agrandi)" draggable="false">
-    </div>
-  </div>
+            <button type="submit">Envoyer</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
     // --- Navigation
@@ -157,72 +159,27 @@
       document.querySelectorAll('nav a').forEach(a => {
         if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
       });
-      // Fermer la lightbox si on change de section
-      closeLightbox();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // --- Audio
-    const audioFiles = [];
-    for (let i = 1; i <= 20; i++) audioFiles.push(`audio${i}.mp3`);
+    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
     const playOverlay = document.getElementById('playButtonOverlay');
-    let isPlaying = false;
-    let firstPlay = true;
-    let clickTimeout;
+    let isPlaying = false, firstPlay = true, clickTimeout;
 
-    function playTrack(index) {
-      audio.src = audioFiles[index];
-      audio.play().catch(()=>{});
-      isPlaying = true;
-      logo.classList.remove('blink');
-      logo.classList.add('playing');
-      playOverlay.style.display = 'none';
-    }
-    function pauseTrack() {
-      audio.pause();
-      isPlaying = false;
-      logo.classList.remove('playing');
-      logo.classList.add('blink');
-      playOverlay.style.display = 'block';
-    }
+    function playTrack(index){ audio.src = audioFiles[index]; audio.play().catch(()=>{}); isPlaying = true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display='none'; }
+    function pauseTrack(){ audio.pause(); isPlaying = false; logo.classList.remove('playing'); logo.classList.add('blink'); playOverlay.style.display='block'; }
     document.getElementById('audioPlayer').addEventListener('click', () => {
-      if (clickTimeout) {
-        clearTimeout(clickTimeout);
-        clickTimeout = null;
-        currentTrack = (currentTrack + 1) % audioFiles.length;
-        playTrack(currentTrack);
-        return;
-      }
-      clickTimeout = setTimeout(() => {
-        if (!isPlaying) {
-          if (firstPlay) {
-            playTrack(currentTrack);
-            firstPlay = false;
-          } else {
-            audio.play().then(()=>{
-              isPlaying = true;
-              logo.classList.remove('blink');
-              logo.classList.add('playing');
-              playOverlay.style.display = 'none';
-            }).catch(()=>{});
-          }
-        } else {
-          pauseTrack();
-        }
-        clickTimeout = null;
-      }, 250);
+      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout=null; currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); return; }
+      clickTimeout=setTimeout(()=>{ if(!isPlaying){ if(firstPlay){ playTrack(currentTrack); firstPlay=false; } else { audio.play().then(()=>{isPlaying=true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display='none';}).catch(()=>{}); } } else { pauseTrack(); } clickTimeout=null; }, 250);
     });
-    audio.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % audioFiles.length;
-      playTrack(currentTrack);
-    });
-    logo.classList.add('blink');
-    playOverlay.style.display = 'block';
+    audio.addEventListener('ended', ()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
+    logo.classList.add('blink'); playOverlay.style.display='block';
 
-    // --- Carrousel membres
+    // --- Carrousel
     const members = [
       { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise. Batteur et percussionniste depuis des années..." },
       { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de Thomas..." },
@@ -233,80 +190,10 @@
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
     const textEl = document.getElementById('member-text');
-    function updateMember() {
-      photoEl.src = members[currentMember].photo;
-      textEl.textContent = members[currentMember].text;
-    }
-    function prevMember() {
-      currentMember = (currentMember - 1 + members.length) % members.length;
-      updateMember();
-    }
-    function nextMember() {
-      currentMember = (currentMember + 1) % members.length;
-      updateMember();
-    }
+    function updateMember(){ photoEl.src = members[currentMember].photo; textEl.textContent = members[currentMember].text; }
+    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
+    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
-
-    // --- Lightbox & Zoom (double-clic = zoom / clic = 100%)
-    const concertImg = document.getElementById('concertImg');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lbContent = document.getElementById('lbContent');
-
-    let zoomed = false;
-
-    function openLightbox(e) {
-      if (e) { e.preventDefault(); e.stopPropagation(); }
-      lightbox.setAttribute('aria-hidden', 'false');
-      lightbox.classList.add('open');
-      resetZoom();
-    }
-    function closeLightbox() {
-      if (!lightbox) return;
-      lightbox.setAttribute('aria-hidden', 'true');
-      lightbox.classList.remove('open');
-      resetZoom();
-    }
-    function resetZoom() {
-      zoomed = false;
-      lightboxImg.style.transform = 'scale(1)';
-    }
-    function zoomIn() {
-      zoomed = true;
-      lightboxImg.style.transform = 'scale(2)';
-    }
-
-    // Ouvrir (clic sur l’affiche dans la section Concerts)
-    concertImg.addEventListener('click', openLightbox);
-    concertImg.addEventListener('dblclick', openLightbox);
-
-    // Empêcher toute navigation par défaut dans la lightbox
-    ['click','dblclick','mousedown','mouseup'].forEach(evt => {
-      lightboxImg.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); }, { passive: false });
-    });
-
-    // Règle demandée : dblclick = zoom, click = 100%
-    lightboxImg.addEventListener('dblclick', (e) => {
-      e.preventDefault(); e.stopPropagation();
-      zoomIn();
-    }, { passive: false });
-
-    lightboxImg.addEventListener('click', (e) => {
-      e.preventDefault(); e.stopPropagation();
-      resetZoom();
-    }, { passive: false });
-
-    // Fermer en cliquant sur l’arrière-plan
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        e.preventDefault(); e.stopPropagation();
-        closeLightbox();
-      }
-    }, { passive: false });
-
-    // Désactiver le menu contextuel sur l’image zoomée (évite “ouvrir l’image”)
-    lightboxImg.addEventListener('contextmenu', (e) => { e.preventDefault(); });
-
   </script>
 </body>
 </html>
