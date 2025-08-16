@@ -1,137 +1,241 @@
-/* Base */
-:root{
-  --gold:#FFD700;
-  --bg:#0a0a0a;
-}
-*{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; background:var(--bg); color:#fff; font-family:'Reggae One', cursive; }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reggae Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-/* Décor */
-.background{
-  position:fixed; inset:0;
-  background:url('decor-reggae-surprise.png') center/cover no-repeat fixed;
-  z-index:-1;
-}
+  <!-- Décor -->
+  <div class="background" aria-hidden="true"></div>
 
-/* Navigation (scrollable mobile, défilement complet) */
-nav{
-  position:fixed; top:0; left:0; right:0; z-index:10;
-  background: rgba(0,0,0,0.7);
-  padding:10px 0;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-x: contain;
-}
-nav ul{
-  margin:0; padding:0 12px; list-style:none;
-  display:flex; gap:20px;
-  justify-content:flex-start;      /* pas de centrage => on peut scroller jusqu'à "Accueil" */
-  min-width:max-content;           /* largeur basée sur le contenu */
-}
-nav a{
-  color:var(--gold); text-decoration:none; font-size:18px; padding:6px 2px;
-}
-nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
+  <!-- Navigation -->
+  <nav role="navigation" aria-label="Sections">
+    <ul>
+      <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
+      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
+      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
+      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+      <li><a href="#" onclick="showSection('merch')">Merchandising</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    </ul>
+  </nav>
 
-/* Sections & carte centrée (on enlève le grand fond noir plein écran) */
-section{ display:none; padding-top:90px; }
-section.active{ display:block; }
-.overlay-content{ background:transparent; padding:30px 0; }
+  <!-- Lecteur Audio -->
+  <div class="audio-player" id="audioPlayer">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
+    <div id="playButtonOverlay">▶</div>
+  </div>
+  <audio id="audioElement"></audio>
 
-.container{
-  width:min(1100px, 92vw);
-  margin:0 auto;
-  text-align:center;
-  background: rgba(0,0,0,0.28);   /* plus léger -> on voit le décor */
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  padding:24px;
-  border-radius:12px;
-}
+  <main>
+    <!-- ACCUEIL -->
+    <section id="accueil" class="active">
+      <div class="overlay-content">
+        <div class="container">
+          <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
+        </div>
+      </div>
+    </section>
 
-/* Media */
-.photo-accueil, .photo-rencontre, .concert-img{
-  width:100%;
-  max-width:1000px;
-  border-radius:12px;
-  margin:20px auto;
-  display:block;
-  user-select:none; -webkit-user-drag:none;
-}
+    <!-- RENCONTRE -->
+    <section id="rencontre">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Rencontre</h1>
+          <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre" draggable="false" />
+          <p class="rencontre-text">
+            Une histoire de passionnés…
+            Avant la surprise, il y a eu une rencontre.
+            Cinq musiciens aux univers différents,
+            réunis par l'amour du groove et du reggae.
+          </p>
 
-/* Lecteur audio — bien centré */
-.audio-player{
-  position:relative;
-  display:block;             /* block + margin auto => centrage */
-  margin:100px auto 0;
-}
-#audioPlayer img{ width:250px; border-radius:20px; transition:box-shadow .3s; }
-#audioPlayer img.playing{ box-shadow:0 0 20px var(--gold); }
-#audioPlayer img.blink{ animation:blink 4s infinite; }
-@keyframes blink{ 0%,100%{ box-shadow:0 0 20px var(--gold);} 50%{ box-shadow:none; } }
-#playButtonOverlay{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font-size:60px; color:var(--gold); pointer-events:none; text-shadow:2px 2px 4px #000;
-}
+          <div class="carousel">
+            <div class="carousel-content">
+              <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
+              <img id="member-photo" src="Keo Vy.jpeg" alt="Membre" draggable="false" />
+              <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
+            </div>
+            <p id="member-text" class="member-text"></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-/* Réseaux : centrage parfait + tailles uniformes, Spotify un peu réduit */
-.net-title{ margin-top:8px; }
-.social-icons{
-  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-  gap:22px; margin:15px 0;
-}
-.icon-frame{
-  width:72px; height:72px;
-  display:grid; place-items:center;
-  overflow:hidden;                 /* masque les marges internes des PNG */
-}
-.social-icons img{
-  width:90%; height:90%;           /* référence commune */
-  object-fit:contain; display:block;
-  transition:transform .2s;
-}
-.social-icons img:hover{ transform:scale(1.06); }
-/* Spotify : juste un petit bonus, plus discret qu’avant */
-.social-icons img.icon-boost{
-  width:95%; height:95%;
-}
+    <!-- RÉSEAUX -->
+    <section id="reseaux">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Réseaux</h1>
 
-/* Carrousel : flèches dans la photo */
-.carousel{ margin-top:20px; }
-.carousel-content{ position:relative; display:inline-block; }
-.carousel-content img{
-  max-width:400px; width:min(90vw, 400px); max-height:70vh; object-fit:cover;
-  border-radius:12px; display:block;
-}
-.carousel-btn.inside{
-  position:absolute; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,.4); border:1px solid var(--gold); color:var(--gold);
-  width:42px; height:42px; border-radius:50%; font-size:22px; line-height:38px; cursor:pointer;
-}
-.carousel-btn.inside.left{ left:8px; } .carousel-btn.inside.right{ right:8px; }
-.member-text{ max-width:700px; margin:10px auto 0; font-size:16px; line-height:1.4; }
+          <h2 class="net-title">Viens nous écouter sur</h2>
+          <div class="social-icons">
+            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
+              <img src="apple.png" alt="Apple Music" draggable="false" />
+            </a>
+            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
+              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
+            </a>
+          </div>
 
-/* Merch */
-.merch-box{
-  border:2px dashed var(--gold); padding:40px 20px;
-  max-width:600px; margin:20px auto 0; border-radius:12px; font-size:22px; letter-spacing:1px;
-}
+          <h2 class="net-title">Viens nous voir sur</h2>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
+              <img src="youtube.png" alt="YouTube" draggable="false" />
+            </a>
+          </div>
 
-/* Formulaire */
-form{ display:flex; flex-direction:column; align-items:center; max-width:500px; margin:0 auto; text-align:left; }
-form label{ align-self:flex-start; margin:5px 0; }
-form input, form textarea{
-  width:100%; padding:10px; margin-bottom:15px; border-radius:5px; border:2px solid var(--gold);
-  background:rgba(255,255,255,.9); color:#000;
-}
-form button{
-  background:linear-gradient(90deg, var(--gold), #2db84d); color:#000; font-weight:bold;
-  padding:10px 20px; border:none; cursor:pointer; border-radius:5px; transition:transform .2s;
-}
-form button:hover{ transform:scale(1.05); background:#fff; }
-.form-status{ margin-top:10px; font-size:14px; }
+          <h2 class="net-title">Viens nous suivre sur</h2>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
+              <img src="instagram.png" alt="Instagram" draggable="false" />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
+              <img src="facebook.png" alt="Facebook" draggable="false" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-/* Responsive */
-@media (max-width: 768px){
-  .icon-frame{ width:70px; height:70px; }
-}
+    <!-- CONCERTS -->
+    <section id="concerts">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Programme des concerts</h1>
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false" />
+        </div>
+      </div>
+    </section>
+
+    <!-- MERCH -->
+    <section id="merch">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Merchandising</h1>
+          <div class="merch-box"><p>À venir</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="overlay-content">
+        <div class="container">
+          <h1>Contactez-nous</h1>
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="_replyto" required />
+
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+
+            <input type="text" name="_gotcha" style="display:none" />
+            <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
+
+            <button type="submit">Envoyer</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Tout le JS démarre quand le DOM est prêt
+    (function(){
+      // --- Navigation
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav a');
+      window.showSection = function(id){
+        sections.forEach(sec => sec.classList.remove('active'));
+        navLinks.forEach(a => a.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) target.classList.add('active');
+        document.querySelectorAll('nav a').forEach(a => {
+          if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      // --- Audio
+      const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+      let currentTrack = 0;
+      const audio = document.getElementById('audioElement');
+      const logo = document.getElementById('logo');
+      const playOverlay = document.getElementById('playButtonOverlay');
+      let isPlaying = false, firstPlay = true, clickTimeout;
+
+      function playTrack(index){
+        audio.src = audioFiles[index];
+        audio.play().catch(()=>{});
+        isPlaying = true;
+        logo.classList.remove('blink');
+        logo.classList.add('playing');
+        playOverlay.style.display = 'none';
+      }
+      function pauseTrack(){
+        audio.pause();
+        isPlaying = false;
+        logo.classList.remove('playing');
+        logo.classList.add('blink');
+        playOverlay.style.display = 'block';
+      }
+      document.getElementById('audioPlayer').addEventListener('click', () => {
+        if (clickTimeout){
+          clearTimeout(clickTimeout);
+          clickTimeout = null;
+          currentTrack = (currentTrack + 1) % audioFiles.length;
+          playTrack(currentTrack);
+          return;
+        }
+        clickTimeout = setTimeout(() => {
+          if (!isPlaying){
+            if (firstPlay){ playTrack(currentTrack); firstPlay = false; }
+            else {
+              audio.play().then(()=>{
+                isPlaying = true;
+                logo.classList.remove('blink');
+                logo.classList.add('playing');
+                playOverlay.style.display = 'none';
+              }).catch(()=>{});
+            }
+          } else {
+            pauseTrack();
+          }
+          clickTimeout = null;
+        }, 250);
+      });
+      audio.addEventListener('ended', ()=> {
+        currentTrack = (currentTrack + 1) % audioFiles.length;
+        playTrack(currentTrack);
+      });
+      logo.classList.add('blink');
+      playOverlay.style.display = 'block';
+
+      // --- Carrousel
+      const members = [
+        { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise. Batteur et percussionniste depuis des années..." },
+        { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de Thomas..." },
+        { photo: "jeremy.jpeg", text: "Jeremy, comme du rhum dans un cocktail..." },
+        { photo: "Antho.jpeg", text: "L’homme à la guitare..." },
+        { photo: "Julie.jpeg", text: "Julie, la touche de classique et de folie..." }
+      ];
+      let currentMember = 0;
+      const photoEl = document.getElementById('member-photo');
+      const textEl = document.getElementById('member-text');
+      function updateMember(){ photoEl.src = members[currentMember].photo; textEl.textContent = members[currentMember].text; }
+      window.prevMember = function(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
+      window.nextMember = function(){ currentMember=(currentMember+1)%members.length; updateMember(); }
+      updateMember();
+    })();
+  </script>
+</body>
+</html>
