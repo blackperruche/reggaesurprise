@@ -2,327 +2,207 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Reggae Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
-  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=6" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reggae Surprise — Site officiel</title>
+  <meta name="description" content="Reggae Surprise — reggae moderne, groove & énergie live. Dates, vidéos, photos, contact booking." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Décor (géré par CSS via body::before) -->
-  <div class="background" aria-hidden="true"></div>
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="#accueil" class="brand">Reggae Surprise</a>
 
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
-      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
-      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
-      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
-      <li><a href="#" onclick="showSection('merch')">Merchandising</a></li>
-      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
-    </ul>
-  </nav>
+      <!-- Burger (mobile) -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Ouvrir le menu">
+      <label for="nav-toggle" class="nav-burger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
 
-  <!-- Lecteur Audio -->
-  <div class="audio-player" id="audioPlayer">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
-    <div id="playButtonOverlay">▶</div>
-  </div>
-  <audio id="audioElement"></audio>
+      <nav class="site-nav">
+        <a href="#accueil">Accueil</a>
+        <a href="#apropos">À propos</a>
+        <a href="#videos">Vidéos</a>
+        <a href="#concerts">Concerts</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-  <main>
-    <!-- ACCUEIL -->
-    <section id="accueil" class="active">
-      <div class="overlay-content">
-        <div class="container">
-          <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
+  <!-- Hero -->
+  <section id="accueil" class="hero">
+    <!-- Image de concert en fond via CSS -->
+    <div class="hero-inner container">
+      <!-- Logo au centre (image ou texte stylisé) -->
+      <!-- Remplacez src par votre logo si vous en avez un -->
+      <!-- <img src="logo-reggae-surprise.png" alt="Reggae Surprise" class="hero-logo"> -->
+      <h1 class="hero-logo-text">Reggae Surprise</h1>
+
+      <a href="#apropos" class="btn btn-primary">Découvrir le groupe</a>
+    </div>
+  </section>
+
+  <!-- À propos -->
+  <section id="apropos" class="section section-light">
+    <div class="container two-col">
+      <div class="col">
+        <h2>À propos</h2>
+        <p>
+          Reggae Surprise, c’est la rencontre de cinq musiciens passionnés qui
+          fusionnent un reggae moderne avec des touches groove et soul. Sur scène,
+          l’énergie est au cœur de chaque concert.
+        </p>
+      </div>
+      <div class="col">
+        <img src="groupe.jpg" alt="Reggae Surprise — photo du groupe" class="card-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- Vidéos -->
+  <section id="videos" class="section section-dark">
+    <div class="container">
+      <h2>Vidéos</h2>
+      <p class="section-intro">
+        Quelques extraits live et clips pour sentir l’ambiance.
+      </p>
+
+      <div class="video-grid">
+        <!-- Remplacez les src par vos liens YouTube -->
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_1"
+            title="Reggae Surprise — Clip 1" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_2"
+            title="Reggae Surprise — Live 1" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_3"
+            title="Reggae Surprise — Clip 2" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- RENCONTRE -->
-    <section id="rencontre">
-      <div class="overlay-content">
-        <div class="container">
-          <p class="rencontre-text text-slab wide">
-            Une histoire de passionnés…
-            Avant la surprise, il y a eu une rencontre.
-            Cinq musiciens aux univers différents,
-            réunis par l'amour du groove et du reggae.
-          </p>
+  <!-- Concerts -->
+  <section id="concerts" class="section section-light">
+    <div class="container">
+      <h2>Concerts</h2>
+      <p class="section-intro">Prochaines dates à ne pas manquer.</p>
 
-          <div class="carousel">
-            <div class="carousel-content">
-              <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
-              <img id="member-photo" src="Keo Vy.jpeg" alt="Membre" draggable="false" />
-              <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
-            </div>
-            <p id="member-text" class="member-text text-slab wide"></p>
+      <ul class="shows">
+        <!-- Exemple d’item : ajustez ou dupliquez -->
+        <li class="show">
+          <div class="show-date">
+            <span class="d">21</span>
+            <span class="m">SEP</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RÉSEAUX -->
-    <section id="reseaux">
-      <div class="overlay-content">
-        <div class="container">
-          <h2 class="net-title text-slab">Viens nous écouter sur</h2>
-          <div class="social-icons">
-            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
-              <img src="apple.png" alt="Apple Music" draggable="false" />
-            </a>
-            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
-              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
-            </a>
+          <div class="show-body">
+            <h3>Lyon — Ninkasi Kao</h3>
+            <p>Avec guests — ouverture des portes 20h</p>
           </div>
-
-          <h2 class="net-title text-slab">Viens nous voir sur</h2>
-          <div class="social-icons">
-            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
-              <img src="youtube.png" alt="YouTube" draggable="false" />
-            </a>
+          <div class="show-cta">
+            <a href="#" class="btn btn-outline" aria-label="Réserver pour Lyon">Réserver</a>
           </div>
+        </li>
 
-          <h2 class="net-title text-slab">Viens nous suivre sur</h2>
-          <div class="social-icons">
-            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
-              <img src="instagram.png" alt="Instagram" draggable="false" />
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
-              <img src="facebook.png" alt="Facebook" draggable="false" />
-            </a>
+        <li class="show">
+          <div class="show-date">
+            <span class="d">05</span>
+            <span class="m">OCT</span>
           </div>
-        </div>
+          <div class="show-body">
+            <h3>Dijon — La Vapeur</h3>
+            <p>Release party — ouverture des portes 19h30</p>
+          </div>
+          <div class="show-cta">
+            <a href="#" class="btn btn-outline" aria-label="Réserver pour Dijon">Réserver</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Galerie -->
+  <section id="galerie" class="section section-dark">
+    <div class="container">
+      <h2>Galerie</h2>
+      <p class="section-intro">Live, coulisses, public — l’ambiance en images.</p>
+
+      <div class="gallery">
+        <img src="gallery-1.jpg" alt="Reggae Surprise en concert" loading="lazy">
+        <img src="gallery-2.jpg" alt="Ambiance public" loading="lazy">
+        <img src="gallery-3.jpg" alt="Backstage" loading="lazy">
+        <img src="gallery-4.jpg" alt="Gros plan scène" loading="lazy">
+        <img src="gallery-5.jpg" alt="Live festival" loading="lazy">
+        <img src="gallery-6.jpg" alt="Session studio" loading="lazy">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CONCERTS -->
-    <section id="concerts">
-      <div class="overlay-content">
-        <div class="container">
-          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false" />
+  <!-- Contact -->
+  <section id="contact" class="section section-light">
+    <div class="container">
+      <h2>Contact / Booking</h2>
+      <p class="section-intro">Une date, un festival, une question ? Écrivez-nous.</p>
+
+      <form action="https://formspree.io/f/mldlkrov" method="POST" class="contact-form">
+        <!-- Anti-spam honeypot -->
+        <input type="text" name="_gotcha" class="hp" autocomplete="off" tabindex="-1" aria-hidden="true">
+
+        <div class="form-row">
+          <label for="name">Nom</label>
+          <input id="name" name="name" type="text" placeholder="Votre nom" required>
         </div>
-      </div>
-    </section>
 
-    <!-- MERCH -->
-    <section id="merch">
-      <div class="overlay-content">
-        <div class="container">
-          <p class="merch-coming">À venir ...</p>
-          <img class="merch-img" src="merch.jpg" alt="Aperçu du merchandising" loading="lazy">
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="_replyto" type="email" placeholder="votre@email.com" required>
         </div>
-      </div>
-    </section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="overlay-content">
-        <div class="container">
-          <!-- Endpoint Formspree branché -->
-          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
-            <label for="name">Nom :</label>
-            <input type="text" id="name" name="name" required />
-
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="_replyto" required />
-
-            <label for="message">Message :</label>
-            <textarea id="message" name="message" rows="6" required></textarea>
-
-            <!-- Honeypot anti-spam -->
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-            <!-- Sujet -->
-            <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
-            <!-- (Optionnel) Redirection custom si tu veux une page merci.html -->
-            <!-- <input type="hidden" name="_next" value="https://reggaesurprise.fr/merci.html"> -->
-
-            <button type="submit" id="sendBtn">Envoyer</button>
-            <p id="formStatus" class="form-status" aria-live="polite"></p>
-          </form>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Votre message…" required></textarea>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <!-- "..." fixes en bas -->
+        <input type="hidden" name="_subject" value="Nouveau message — Reggae Surprise">
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+      </form>
+
+      <div class="socials">
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" aria-disabled="true">Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Reggae Surprise — Tous droits réservés.</p>
+    </div>
+  </footer>
 
   <script>
-    // --- Navigation
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
-    function showSection(id) {
-      sections.forEach(sec => sec.classList.remove('active'));
-      navLinks.forEach(a => a.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(a => {
-        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // --- Audio
-    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
-    let currentTrack = 0;
-    const audio = document.getElementById('audioElement');
-    const logo = document.getElementById('logo');
-    const playOverlay = document.getElementById('playButtonOverlay');
-    let isPlaying = false, firstPlay = true, clickTimeout;
-
-    function playTrack(index){
-      audio.src = audioFiles[index];
-      audio.play().catch(()=>{});
-      isPlaying = true;
-      logo.classList.remove('blink');
-      logo.classList.add('playing');
-      playOverlay.style.display='none';
-    }
-    function pauseTrack(){
-      audio.pause();
-      isPlaying = false;
-      logo.classList.remove('playing');
-      logo.classList.add('blink');
-      playOverlay.style.display='block';
-    }
-    document.getElementById('audioPlayer').addEventListener('click', () => {
-      if (clickTimeout){
-        clearTimeout(clickTimeout);
-        clickTimeout=null;
-        currentTrack=(currentTrack+1)%audioFiles.length;
-        playTrack(currentTrack);
-        return;
-      }
-      clickTimeout=setTimeout(()=>{
-        if(!isPlaying){
-          if(firstPlay){
-            playTrack(currentTrack);
-            firstPlay=false;
-          } else {
-            audio.play().then(()=>{
-              isPlaying=true;
-              logo.classList.remove('blink');
-              logo.classList.add('playing');
-              playOverlay.style.display='none';
-            }).catch(()=>{});
-          }
-        } else {
-          pauseTrack();
-        }
-        clickTimeout=null;
-      }, 250);
-    });
-    audio.addEventListener('ended', ()=>{
-      currentTrack=(currentTrack+1)%audioFiles.length;
-      playTrack(currentTrack);
-    });
-    logo.classList.add('blink');
-    playOverlay.style.display='block';
-
-    // --- Carrousel (textes complets)
-    const members = [
-      { 
-        photo: "Keo Vy.jpeg",
-        text: `Le battement de cœur de Reggae Surprise Kéo Vy 
-Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
-Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
-Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
-      },
-      {
-        photo: "jeremy.jpeg",
-        text: `Notre bassiste, Jérémy ! 
-Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
-Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
-Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
-Big up Jérémy !`
-      },
-      {
-        photo: "Thomas.jpeg",
-        text: `Thomas, notre maestro des claviers !
-Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
-Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
-      },
-      {
-        photo: "Antho.jpeg",
-        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
-À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
-En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
-Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
-Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
-Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
-      },
-      {
-        photo: "Julie.jpeg",
-        text: `Notre chanteuse, Julie Marsaud !
-Julie, c’est la touche de classique et de folie du groupe.
-Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
-Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
-Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
-Bref, avec Julie, ça groove avec élégance !`
-      }
-    ];
-    let currentMember = 0;
-    const photoEl = document.getElementById('member-photo');
-    const textEl = document.getElementById('member-text');
-    function updateMember(){
-      photoEl.src = members[currentMember].photo;
-      textEl.textContent = members[currentMember].text;
-    }
-    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
-    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
-    updateMember();
-
-    // --- FORMSPREE: soumission AJAX + messages
-    (function(){
-      const form = document.getElementById('contactForm');
-      const status = document.getElementById('formStatus');
-      const sendBtn = document.getElementById('sendBtn');
-
-      function setStatus(msg, ok){
-        status.textContent = msg;
-        status.style.color = ok ? '#2db84d' : '#ffb3b3';
-      }
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // validation HTML5
-        if(!form.checkValidity()){
-          setStatus('Merci de compléter tous les champs.', false);
-          form.reportValidity();
-          return;
-        }
-
-        setStatus('Envoi en cours…', true);
-        sendBtn.disabled = true;
-
-        try{
-          const endpoint = form.action; // https://formspree.io/f/mldlkrov
-          const data = new FormData(form);
-
-          const res = await fetch(endpoint, {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
-          });
-
-          if (res.ok){
-            setStatus('Merci, votre message a été envoyé ✔', true);
-            form.reset();
-          } else {
-            // tente de lire le JSON d’erreur Formspree
-            let err = '';
-            try { const j = await res.json(); err = (j && j.error) ? ` (${j.error})` : ''; } catch(_){}
-            setStatus('Oups, impossible d’envoyer le message' + err, false);
-          }
-        } catch(err){
-          setStatus('Erreur réseau. Réessayez dans un instant.', false);
-        } finally {
-          sendBtn.disabled = false;
-        }
-      });
-    })();
+    // Année automatique dans le footer
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
