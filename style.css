@@ -2,20 +2,18 @@
 :root{
   --gold:#FFD700;
   --bg:#0a0a0a;
-  --overlay:rgba(0,0,0,0.28); /* carte translucide autour du contenu */
 }
 *{ box-sizing:border-box; }
+
+/* Fond décor PLEINE PAGE (déplacé sur body) */
 html,body{
-  margin:0; padding:0; background:var(--bg); color:#fff;
-  font-family:'Reggae One', cursive;
+  margin:0; padding:0;
+  color:#fff; font-family:'Reggae One', cursive;
+  background: var(--bg) url('decor-reggae-surprise.png') center / cover fixed no-repeat;
 }
 
-/* Décor */
-.background{
-  position:fixed; inset:0;
-  background:url('decor-reggae-surprise.png') center/cover no-repeat fixed;
-  z-index:-1;
-}
+/* On neutralise l'ancien calque de fond pour éviter tout recouvrement */
+.background{ display:none; }
 
 /* Navigation */
 nav{
@@ -33,36 +31,40 @@ nav a{
 }
 nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
 
-/* Sur mobile : laisser défiler jusqu'à "Accueil" */
+/* Sur mobile : défilement complet jusqu'à "Accueil" */
 @media (max-width: 768px){
   nav ul{ justify-content:flex-start; min-width:max-content; }
 }
 
-/* Sections & conteneur centré */
+/* Sections & conteneur */
 section{ display:none; padding-top:90px; }
 section.active{ display:block; }
 
+/* Pas de gros aplat noir : on garde le fond visible */
 .overlay-content{ background:transparent; padding:30px 0; }
 
 .container{
   width:min(1100px, 92vw);
   margin:0 auto;
   text-align:center;
-  background:var(--overlay);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  /* si tu veux un léger voile, décommente la ligne suivante */
+  /* background: rgba(0,0,0,0.18); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); */
   padding:24px;
   border-radius:12px;
 }
 
-/* Media */
-.photo-accueil, .photo-rencontre, .concert-img{
+/* Images principales + bordures dorées */
+.photo-accueil, .photo-rencontre, .concert-img, .carousel-content img{
   width:100%;
   max-width:1000px;
   border-radius:12px;
   margin:20px auto;
   display:block;
   user-select:none; -webkit-user-drag:none;
+
+  /* cadre doré + léger halo */
+  border:3px solid var(--gold);
+  box-shadow:0 0 12px rgba(255,215,0,0.28);
 }
 
 /* Lecteur audio — centré */
@@ -91,7 +93,7 @@ section.active{ display:block; }
 .carousel-content{ position:relative; display:inline-block; }
 .carousel-content img{
   max-width:400px; width:min(90vw, 400px); max-height:70vh; object-fit:cover;
-  border-radius:12px; display:block;
+  /* bordure dorée déjà appliquée au-dessus */
 }
 .carousel-btn.inside{
   position:absolute; top:50%; transform:translateY(-50%);
@@ -100,26 +102,25 @@ section.active{ display:block; }
 }
 .carousel-btn.inside.left{ left:8px; } .carousel-btn.inside.right{ right:8px; }
 
-/* Réseaux : centrage parfait + tailles uniformes */
+/* Réseaux : centrés parfaitement (flex) + cadres identiques */
 .net-title{ margin-top:8px; }
 .social-icons{
-  display:grid;
-  grid-template-columns:repeat(4, 72px);
-  gap:22px; justify-content:center; align-items:center;
-  margin:15px 0;
+  display:flex; flex-wrap:wrap;
+  justify-content:center; align-items:center;
+  gap:22px; margin:15px 0;
 }
 .icon-frame{
-  width:72px; height:72px;
-  display:grid; place-items:center;
-  overflow:hidden;                 /* masque les marges internes des PNG */
+  flex:0 0 72px; height:72px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;             /* masque les marges internes des PNG */
 }
 .social-icons img{
   width:64px; height:64px; object-fit:contain; display:block;
   transition:transform .2s; transform-origin:center;
 }
-.social-icons img:hover{ transform:scale(1.08); }
-/* Spotify : léger ajustement pour paraître au même gabarit visuel */
-.social-icons img.icon-boost{ transform:scale(1.06); }
+.social-icons img:hover{ transform:scale(1.06); }
+/* Spotify : un tout petit poil plus petit qu'avant (rendu homogène) */
+.social-icons img.icon-boost{ transform:scale(1.03); }
 
 /* Merch */
 .merch-box{
@@ -143,5 +144,5 @@ form button:hover{ transform:scale(1.05); background:#fff; }
 
 /* Responsive */
 @media (max-width: 768px){
-  .social-icons{ grid-template-columns:repeat(3,72px); gap:16px; }
+  .icon-frame{ flex-basis:70px; height:70px; }
 }
