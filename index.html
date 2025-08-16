@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Reggae Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Police Reggae -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,6 +19,7 @@
       <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
       <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
       <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+      <li><a href="#" onclick="showSection('merch')">Merchandising</a></li>
       <li><a href="#" onclick="showSection('contact')">Contact</a></li>
     </ul>
   </nav>
@@ -44,19 +44,19 @@
       <h1>Rencontre</h1>
       <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre">
       <p class="rencontre-text">
-        Une histoire de passionnés…  
-        Avant la surprise, il y a eu une rencontre.  
-        Cinq musiciens aux univers différents,  
+        Une histoire de passionnés…
+        Avant la surprise, il y a eu une rencontre.
+        Cinq musiciens aux univers différents,
         réunis par l'amour du groove et du reggae.
       </p>
 
       <div class="carousel">
-        <button class="carousel-btn prev" onclick="prevMember()">&#10094;</button>
         <div class="carousel-content">
+          <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
           <img id="member-photo" src="Keo Vy.jpeg" alt="Membre">
-          <p id="member-text"></p>
+          <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
         </div>
-        <button class="carousel-btn next" onclick="nextMember()">&#10095;</button>
+        <p id="member-text" class="member-text"></p>
       </div>
     </div>
   </section>
@@ -64,29 +64,31 @@
   <!-- RÉSEAUX -->
   <section id="reseaux">
     <div class="overlay-content">
-      <h1>Viens nous écouter sur 🎶</h1>
+      <h1>Réseaux</h1>
+
+      <h2 class="net-title">Viens nous écouter sur</h2>
       <div class="social-icons">
-        <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank">
+        <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener">
           <img src="apple.png" alt="Apple Music">
         </a>
-        <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank">
+        <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener">
           <img src="spotify.png" alt="Spotify">
         </a>
       </div>
 
-      <h1>Viens nous voir sur 📺</h1>
+      <h2 class="net-title">Viens nous voir sur</h2>
       <div class="social-icons">
-        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank">
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener">
           <img src="youtube.png" alt="YouTube">
         </a>
       </div>
 
-      <h1>Viens nous suivre sur 📷</h1>
+      <h2 class="net-title">Viens nous suivre sur</h2>
       <div class="social-icons">
-        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank">
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener">
           <img src="instagram.png" alt="Instagram">
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank">
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener">
           <img src="facebook.png" alt="Facebook">
         </a>
       </div>
@@ -97,7 +99,18 @@
   <section id="concerts">
     <div class="overlay-content">
       <h1>Programme des concerts</h1>
-      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img">
+      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg">
+      <p class="zoom-hint">Cliquez sur l'affiche pour l’agrandir (zoom disponible).</p>
+    </div>
+  </section>
+
+  <!-- MERCH -->
+  <section id="merch">
+    <div class="overlay-content">
+      <h1>Merchandising</h1>
+      <div class="merch-box">
+        <p>À venir</p>
+      </div>
     </div>
   </section>
 
@@ -117,6 +130,19 @@
     </div>
   </section>
 
+  <!-- Lightbox Zoom Concerts -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-toolbar">
+      <button id="zoomOut" aria-label="Zoom moins">–</button>
+      <button id="zoomReset" aria-label="Réinitialiser le zoom">100%</button>
+      <button id="zoomIn" aria-label="Zoom plus">+</button>
+      <button id="closeLightbox" aria-label="Fermer">Fermer</button>
+    </div>
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="programme-concerts.jpg" alt="Programme des concerts (agrandi)">
+    </div>
+  </div>
+
   <script>
     // --- Navigation
     const sections = document.querySelectorAll('section');
@@ -125,15 +151,15 @@
       sections.forEach(sec => sec.classList.remove('active'));
       navLinks.forEach(a => a.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      document.querySelector(`nav a[onclick="showSection('${id}')"]`).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => {
+        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
+      });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // --- Audio
     const audioFiles = [];
-    for (let i = 1; i <= 20; i++) {
-      audioFiles.push(`audio${i}.mp3`);
-    }
+    for (let i = 1; i <= 20; i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
@@ -144,7 +170,7 @@
 
     function playTrack(index) {
       audio.src = audioFiles[index];
-      audio.play();
+      audio.play().catch(()=>{});
       isPlaying = true;
       logo.classList.remove('blink');
       logo.classList.add('playing');
@@ -171,17 +197,18 @@
             playTrack(currentTrack);
             firstPlay = false;
           } else {
-            audio.play();
-            isPlaying = true;
-            logo.classList.remove('blink');
-            logo.classList.add('playing');
-            playOverlay.style.display = 'none';
+            audio.play().then(()=>{
+              isPlaying = true;
+              logo.classList.remove('blink');
+              logo.classList.add('playing');
+              playOverlay.style.display = 'none';
+            }).catch(()=>{});
           }
         } else {
           pauseTrack();
         }
         clickTimeout = null;
-      }, 300);
+      }, 250);
     });
     audio.addEventListener('ended', () => {
       currentTrack = (currentTrack + 1) % audioFiles.length;
@@ -192,17 +219,18 @@
 
     // --- Carrousel
     const members = [
-      { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise 🥁\nBatteur et percussionniste depuis des années..." },
-      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de notre Thomas..." },
-      { photo: "jeremy.jpeg", text: "Jeremy c’est un peu comme du rhum dans un cocktail..." },
-      { photo: "Antho.jpeg", text: "…voici l’homme à la guitare magique..." },
-      { photo: "Julie.jpeg", text: "Julie, c’est la touche de classique et de folie..." }
+      { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise. Batteur et percussionniste depuis des années..." },
+      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de Thomas..." },
+      { photo: "jeremy.jpeg", text: "Jeremy, comme du rhum dans un cocktail..." },
+      { photo: "Antho.jpeg", text: "L’homme à la guitare..." },
+      { photo: "Julie.jpeg", text: "Julie, la touche de classique et de folie..." }
     ];
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
     const textEl = document.getElementById('member-text');
     function updateMember() {
       photoEl.src = members[currentMember].photo;
+      photoEl.alt = `Membre : ${members[currentMember].photo.split('.')[0]}`;
       textEl.textContent = members[currentMember].text;
     }
     function prevMember() {
@@ -214,6 +242,76 @@
       updateMember();
     }
     updateMember();
+
+    // --- Lightbox Zoom pour l'affiche concerts
+    const concertImg = document.getElementById('concertImg');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeLightbox');
+    const zoomInBtn = document.getElementById('zoomIn');
+    const zoomOutBtn = document.getElementById('zoomOut');
+    const zoomResetBtn = document.getElementById('zoomReset');
+    let scale = 1;
+
+    function openLightbox() {
+      lightbox.setAttribute('aria-hidden', 'false');
+      lightbox.classList.add('open');
+      scale = 1;
+      applyZoom();
+    }
+    function closeLightbox() {
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.classList.remove('open');
+    }
+    function applyZoom() {
+      lightboxImg.style.transform = `scale(${scale})`;
+      zoomResetBtn.textContent = `${Math.round(scale*100)}%`;
+    }
+
+    concertImg.addEventListener('click', openLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    zoomInBtn.addEventListener('click', () => { scale = Math.min(scale + 0.2, 5); applyZoom(); });
+    zoomOutBtn.addEventListener('click', () => { scale = Math.max(scale - 0.2, 0.5); applyZoom(); });
+    zoomResetBtn.addEventListener('click', () => { scale = 1; applyZoom(); });
+
+    // Zoom molette
+    lightbox.addEventListener('wheel', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      e.preventDefault();
+      const delta = Math.sign(e.deltaY);
+      if (delta < 0) scale = Math.min(scale + 0.1, 5);
+      else scale = Math.max(scale - 0.1, 0.5);
+      applyZoom();
+    }, { passive: false });
+
+    // Drag pour déplacer quand zoomé
+    let isDragging = false, startX = 0, startY = 0, imgX = 0, imgY = 0;
+    const lbContent = document.querySelector('.lightbox-content');
+    lbContent.addEventListener('mousedown', (e) => {
+      if (scale <= 1) return;
+      isDragging = true;
+      startX = e.clientX - imgX;
+      startY = e.clientY - imgY;
+      lbContent.classList.add('grabbing');
+    });
+    lbContent.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      imgX = e.clientX - startX;
+      imgY = e.clientY - startY;
+      lightboxImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
+    });
+    lbContent.addEventListener('mouseup', () => { isDragging = false; lbContent.classList.remove('grabbing'); });
+    lbContent.addEventListener('mouseleave', () => { isDragging = false; lbContent.classList.remove('grabbing'); });
+
+    // Touches pour mobile
+    lbContent.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) e.preventDefault(); // pour pincer-zoomer nativement
+    }, { passive: false });
+
+    // Fermer sur fond noir
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
   </script>
 </body>
 </html>
