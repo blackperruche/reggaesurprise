@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- Formspree : remplacez YOUR_FORM_ID par l'ID de votre formulaire (ex: https://formspree.io/f/abcdwxyz) -->
 </head>
 <body>
 
@@ -118,15 +119,28 @@
   <section id="contact">
     <div class="overlay-content">
       <h1>Contactez-nous</h1>
-      <form>
+
+      <!-- Formspree -->
+      <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
         <label for="name">Nom :</label>
         <input type="text" id="name" name="name" required>
+
         <label for="email">Email :</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="_replyto" required>
+
         <label for="message">Message :</label>
         <textarea id="message" name="message" style="height:150px;" required></textarea>
+
+        <!-- anti-bot honeypot -->
+        <input type="text" name="_gotcha" style="display:none">
+
+        <!-- sujet de l’email reçu -->
+        <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise">
+
         <button type="submit">Envoyer</button>
+        <p id="formStatus" class="form-status" aria-live="polite"></p>
       </form>
+      <!-- Fin Formspree -->
     </div>
   </section>
 
@@ -257,14 +271,16 @@
       lightbox.setAttribute('aria-hidden', 'false');
       lightbox.classList.add('open');
       scale = 1;
-      applyZoom();
+      imgX = 0; imgY = 0;
+      lightboxImg.style.transform = `translate(0px, 0px) scale(1)`;
+      zoomResetBtn.textContent = '100%';
     }
     function closeLightbox() {
       lightbox.setAttribute('aria-hidden', 'true');
       lightbox.classList.remove('open');
     }
     function applyZoom() {
-      lightboxImg.style.transform = `scale(${scale})`;
+      lightboxImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
       zoomResetBtn.textContent = `${Math.round(scale*100)}%`;
     }
 
@@ -272,7 +288,7 @@
     closeBtn.addEventListener('click', closeLightbox);
     zoomInBtn.addEventListener('click', () => { scale = Math.min(scale + 0.2, 5); applyZoom(); });
     zoomOutBtn.addEventListener('click', () => { scale = Math.max(scale - 0.2, 0.5); applyZoom(); });
-    zoomResetBtn.addEventListener('click', () => { scale = 1; applyZoom(); });
+    zoomResetBtn.addEventListener('click', () => { scale = 1; imgX = 0; imgY = 0; applyZoom(); });
 
     // Zoom molette
     lightbox.addEventListener('wheel', (e) => {
@@ -298,19 +314,44 @@
       if (!isDragging) return;
       imgX = e.clientX - startX;
       imgY = e.clientY - startY;
-      lightboxImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
+      applyZoom();
     });
     lbContent.addEventListener('mouseup', () => { isDragging = false; lbContent.classList.remove('grabbing'); });
     lbContent.addEventListener('mouseleave', () => { isDragging = false; lbContent.classList.remove('grabbing'); });
 
-    // Touches pour mobile
-    lbContent.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 2) e.preventDefault(); // pour pincer-zoomer nativement
-    }, { passive: false });
-
     // Fermer sur fond noir
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) closeLightbox();
+    });
+
+    // --- Envoi Formspree AJAX
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Envoi en cours…';
+      status.className = 'form-status info';
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        });
+        if (res.ok) {
+          status.textContent = 'Merci, votre message a bien été envoyé.';
+          status.className = 'form-status success';
+          form.reset();
+        } else {
+          const out = await res.json().catch(()=>({}));
+          status.textContent = out.errors ? out.errors.map(e=>e.message).join(', ') : 'Une erreur est survenue. Merci de réessayer.';
+          status.className = 'form-status error';
+        }
+      } catch (err) {
+        status.textContent = 'Impossible d’envoyer le message. Vérifiez votre connexion et réessayez.';
+        status.className = 'form-status error';
+      }
     });
   </script>
 </body>
