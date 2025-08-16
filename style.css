@@ -49,13 +49,29 @@ section.active{ display:block; }
   padding:20px;
   border-radius:12px;
 
+  /* 1ère couche (carte) — on la garde */
   background: rgba(0,0,0,0.28);
   backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
   border:1px solid rgba(255,215,0,0.25);
   box-shadow:0 8px 24px rgba(0,0,0,0.35);
 }
 @media (max-width: 768px){
-  .container{ background: rgba(0,0,0,0.36); }
+  .container{ background: rgba(0, 0, 0, 0.36); }
+}
+
+/* 2e couche foncée — UNIQUEMENT autour des textes */
+.text-slab{
+  display:inline-block;
+  padding:6px 12px;
+  margin:6px auto;
+  background: rgba(0,0,0,0.55);             /* plus foncé */
+  border:1px solid rgba(255,215,0,0.28);
+  border-radius:10px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
+.text-slab.wide{
+  display:block;
+  padding:12px 16px;                         /* plus d’air pour les paragraphes */
 }
 
 /* Images + cadres dorés */
@@ -107,11 +123,11 @@ section.active{ display:block; }
   width:64px; height:64px; object-fit:contain; display:block;
   transition:transform .2s; transform-origin:center;
 }
-/* Hover générique (pour Apple, YouTube, etc.) */
+/* Hover générique */
 .social-icons img:hover{ transform:scale(1.06); }
-/* Spotify agrandi + hover plus fort (ordre important pour que le :hover s'applique) */
-.social-icons img.icon-boost{ width:70px; height:70px; }            /* base plus grande */
-.social-icons img.icon-boost:hover{ transform:scale(1.12); }        /* zoom au survol OK */
+/* Spotify agrandi + hover plus fort */
+.social-icons img.icon-boost{ width:70px; height:70px; }
+.social-icons img.icon-boost:hover{ transform:scale(1.12); }
 
 /* Merch */
 .merch-box{
@@ -142,10 +158,4 @@ form button:hover{ transform:scale(1.05); background:#fff; }
   position:fixed; left:50%; transform:translateX(-50%);
   bottom:10px; z-index:9; font-size:22px; letter-spacing:4px;
   color:rgba(255,255,255,0.85); pointer-events:none; user-select:none;
-}
-
-/* Responsive */
-@media (max-width: 768px){
-  .icon-frame{ width:70px; height:70px; }
-  .container{ background: rgba(0, 0, 0, 0.36); }
 }
