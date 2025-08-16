@@ -1,270 +1,177 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>Reggae Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
-  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=7" />
-</head>
-<body>
+/* Variables */
+:root{
+  --gold:#FFD700;
+  --bg:#0a0a0a;
+}
 
-  <!-- Décor (géré par CSS via body::before) -->
-  <div class="background" aria-hidden="true"></div>
+/* Reset de base */
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; color:#fff; font-family:'Reggae One', cursive; }
+html,body{ height:100%; }
 
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
-      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
-      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
-      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
-      <li><a href="#" onclick="showSection('merch')">Merchandising</a></li>
-      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
-    </ul>
-  </nav>
+/* FOND DÉCOR via pseudo-élément (fiable) */
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-1;
+  background: var(--bg) url('decor-reggae-surprise.png') center / cover no-repeat;
+  transform: translateZ(0);
+}
+.background{ display:none; }
 
-  <!-- Lecteur Audio -->
-  <div class="audio-player" id="audioPlayer">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
-    <div id="playButtonOverlay">▶</div>
-  </div>
-  <audio id="audioElement"></audio>
+/* "..." toujours en bas (pas d'HTML nécessaire) */
+body::after{
+  content:"...";
+  position:fixed; left:50%; transform:translateX(-50%);
+  bottom:10px; z-index:9;
+  font-size:22px; letter-spacing:4px;
+  color:rgba(255,255,255,0.85);
+  pointer-events:none; user-select:none;
+}
 
-  <main>
-    <!-- ACCUEIL -->
-    <section id="accueil" class="active">
-      <div class="overlay-content">
-        <div class="container">
-          <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-        </div>
-      </div>
-    </section>
+/* Navigation */
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  background: rgba(0,0,0,0.7);
+  padding:10px 0;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+}
+nav ul{
+  margin:0; padding:0 12px; list-style:none;
+  display:flex; justify-content:center; gap:20px; white-space:nowrap;
+}
+nav a{
+  color:var(--gold); text-decoration:none; font-size:18px; padding:6px 2px;
+}
+nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
+@media (max-width: 768px){
+  nav ul{ justify-content:flex-start; min-width:max-content; }
+}
 
-    <!-- RENCONTRE -->
-    <section id="rencontre">
-      <div class="overlay-content">
-        <div class="container">
-          <p class="rencontre-text text-slab wide">
-            Une histoire de passionnés…
-            Avant la surprise, il y a eu une rencontre.
-            Cinq musiciens aux univers différents,
-            réunis par l'amour du groove et du reggae.
-          </p>
+/* Sections & carte */
+section{ display:none; padding-top:40px; }
+section.active{ display:block; }
+.overlay-content{ background:transparent; padding:20px 0; }
 
-          <div class="carousel">
-            <div class="carousel-content">
-              <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
-              <img id="member-photo" src="Keo Vy.jpeg" alt="Membre" draggable="false" />
-              <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
-            </div>
-            <p id="member-text" class="member-text text-slab wide"></p>
-          </div>
-        </div>
-      </div>
-    </section>
+.container{
+  width:min(1100px, 92vw);
+  margin:0 auto;
+  text-align:center;
+  padding:20px;
+  border-radius:12px;
 
-    <!-- RÉSEAUX -->
-    <section id="reseaux">
-      <div class="overlay-content">
-        <div class="container">
-          <h2 class="net-title text-slab">Viens nous écouter sur</h2>
-          <div class="social-icons">
-            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
-              <img src="apple.png" alt="Apple Music" draggable="false" />
-            </a>
-            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
-              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
-            </a>
-          </div>
+  /* 1ère couche (carte translucide) */
+  background: rgba(0,0,0,0.28);
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  border:1px solid rgba(255,215,0,0.25);
+  box-shadow:0 8px 24px rgba(0,0,0,0.35);
+}
+@media (max-width: 768px){
+  .container{ background: rgba(0, 0, 0, 0.36); }
+}
 
-          <h2 class="net-title text-slab">Viens nous voir sur</h2>
-          <div class="social-icons">
-            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
-              <img src="youtube.png" alt="YouTube" draggable="false" />
-            </a>
-          </div>
+/* 2e couche — légère autour des textes */
+.text-slab{
+  display:inline-block;
+  padding:8px 14px;
+  margin:8px auto;
+  background: rgba(0,0,0,0.36);
+  border:1px solid rgba(255,215,0,0.20);
+  border-radius:10px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.28);
+  text-align:center;
+  line-height:1.6;                 /* interlignage augmenté */
+}
+.text-slab.wide{
+  display:block;
+  padding:14px 18px;
+  max-width: 760px;
+  margin-left:auto; margin-right:auto;
+}
+@media (max-width: 768px){
+  .text-slab{ background: rgba(0,0,0,0.42); }
+}
 
-          <h2 class="net-title text-slab">Viens nous suivre sur</h2>
-          <div class="social-icons">
-            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
-              <img src="instagram.png" alt="Instagram" draggable="false" />
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
-              <img src="facebook.png" alt="Facebook" draggable="false" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+/* >>> Spécifique RENCONTRE : enlever l’espace AU-DESSUS du 1er paragraphe */
+#rencontre .overlay-content{ padding-top:10px; }
+#rencontre .container{ padding-top:12px; }
+#rencontre .rencontre-text.text-slab{ margin-top:0; }  /* pas d'espace avant */
 
-    <!-- CONCERTS -->
-    <section id="concerts">
-      <div class="overlay-content">
-        <div class="container">
-          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false" />
-        </div>
-      </div>
-    </section>
+/* Texte rencontre + carrousel */
+.rencontre-text{ white-space:pre-line; }
+.member-text{ max-width:700px; margin:10px auto 0; font-size:16px; line-height:1.6; white-space:pre-line; }
 
-    <!-- MERCH -->
-    <section id="merch">
-      <div class="overlay-content">
-        <div class="container">
-          <p class="merch-coming">À venir ...</p>
-          <img class="merch-img" src="merch.jpg" alt="Aperçu du merchandising" loading="lazy">
-        </div>
-      </div>
-    </section>
+.carousel{ margin-top:16px; }
+.carousel-content{ position:relative; display:inline-block; }
+.carousel-content img{ max-width:400px; width:min(90vw, 400px); max-height:70vh; object-fit:cover; }
+.carousel-btn.inside{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.4); border:1px solid var(--gold); color:var(--gold);
+  width:42px; height:42px; border-radius:50%; font-size:22px; line-height:38px; cursor:pointer;
+}
+.carousel-btn.inside.left{ left:8px; } .carousel-btn.inside.right{ right:8px; }
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="overlay-content">
-        <div class="container">
-          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-            <label for="name">Nom :</label>
-            <input type="text" id="name" name="name" required />
+/* Images + cadres dorés */
+.photo-accueil, .photo-rencontre, .concert-img, #member-photo{
+  width:100%; max-width:1000px; margin:16px auto; display:block; border-radius:12px;
+  border:3px solid var(--gold); box-shadow:0 0 12px rgba(255,215,0,0.28);
+  user-select:none; -webkit-user-drag:none;
+}
 
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="_replyto" required />
+/* Lecteur audio (centré, espace réduit) */
+.audio-player{
+  display:block; margin:70px auto 8px; position:relative; text-align:center;
+}
+#audioPlayer img{ width:250px; border-radius:20px; transition:box-shadow .3s; }
+#audioPlayer img.playing{ box-shadow:0 0 20px var(--gold); }
+#audioPlayer img.blink{ animation:blink 4s infinite; }
+@keyframes blink{ 0%,100%{ box-shadow:0 0 20px var(--gold);} 50%{ box-shadow:none; } }
+#playButtonOverlay{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:60px; color:var(--gold); pointer-events:none; text-shadow:2px 2px 4px #000;
+}
 
-            <label for="message">Message :</label>
-            <textarea id="message" name="message" rows="6" required></textarea>
+/* Réseaux */
+.net-title{ margin-top:8px; }
+.social-icons{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:20px; margin:12px 0;
+}
+.icon-frame{
+  width:72px; height:72px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.social-icons img{
+  width:64px; height:64px; object-fit:contain; display:block;
+  transition:transform .2s; transform-origin:center;
+}
+/* Hover générique */
+.social-icons img:hover{ transform:scale(1.06); }
+/* Spotify agrandi + hover plus fort */
+.social-icons img.icon-boost{ width:70px; height:70px; }
+.social-icons img.icon-boost:hover{ transform:scale(1.12); }
 
-            <input type="text" name="_gotcha" style="display:none" />
-            <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
+/* Merch */
+.merch-coming{
+  font-size:22px;
+  margin:6px auto 0;
+  text-align:center;
+}
+.merch-img{
+  width:100%; max-width:700px; display:block; margin:14px auto 0;
+  border:3px solid var(--gold); border-radius:12px; box-shadow:0 0 12px rgba(255,215,0,0.28);
+}
 
-            <button type="submit">Envoyer</button>
-            <p id="formStatus" class="form-status" aria-live="polite"></p>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    // --- Navigation
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
-    function showSection(id) {
-      sections.forEach(sec => sec.classList.remove('active'));
-      navLinks.forEach(a => a.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(a => {
-        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // --- Audio
-    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
-    let currentTrack = 0;
-    const audio = document.getElementById('audioElement');
-    const logo = document.getElementById('logo');
-    const playOverlay = document.getElementById('playButtonOverlay');
-    let isPlaying = false, firstPlay = true, clickTimeout;
-
-    function playTrack(index){
-      audio.src = audioFiles[index];
-      audio.play().catch(()=>{});
-      isPlaying = true;
-      logo.classList.remove('blink');
-      logo.classList.add('playing');
-      playOverlay.style.display='none';
-    }
-    function pauseTrack(){
-      audio.pause();
-      isPlaying = false;
-      logo.classList.remove('playing');
-      logo.classList.add('blink');
-      playOverlay.style.display='block';
-    }
-    document.getElementById('audioPlayer').addEventListener('click', () => {
-      if (clickTimeout){
-        clearTimeout(clickTimeout);
-        clickTimeout=null;
-        currentTrack=(currentTrack+1)%audioFiles.length;
-        playTrack(currentTrack);
-        return;
-      }
-      clickTimeout=setTimeout(()=>{
-        if(!isPlaying){
-          if(firstPlay){
-            playTrack(currentTrack);
-            firstPlay=false;
-          } else {
-            audio.play().then(()=>{
-              isPlaying=true;
-              logo.classList.remove('blink');
-              logo.classList.add('playing');
-              playOverlay.style.display='none';
-            }).catch(()=>{});
-          }
-        } else {
-          pauseTrack();
-        }
-        clickTimeout=null;
-      }, 250);
-    });
-    audio.addEventListener('ended', ()=>{
-      currentTrack=(currentTrack+1)%audioFiles.length;
-      playTrack(currentTrack);
-    });
-    logo.classList.add('blink');
-    playOverlay.style.display='block';
-
-    // --- Carrousel (textes complets)
-    const members = [
-      { 
-        photo: "Keo Vy.jpeg",
-        text: `Le battement de cœur de Reggae Surprise Kéo Vy 
-Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
-Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
-Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
-      },
-      {
-        photo: "jeremy.jpeg",
-        text: `Notre bassiste, Jérémy ! 
-Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
-Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
-Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
-Big up Jérémy !`
-      },
-      {
-        photo: "Thomas.jpeg",
-        text: `Thomas, notre maestro des claviers !
-Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
-Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
-      },
-      {
-        photo: "Antho.jpeg",
-        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
-À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
-En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
-Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
-Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
-Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
-      },
-      {
-        photo: "Julie.jpeg",
-        text: `Notre chanteuse, Julie Marsaud !
-Julie, c’est la touche de classique et de folie du groupe.
-Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
-Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
-Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
-Bref, avec Julie, ça groove avec élégance !`
-      }
-    ];
-    let currentMember = 0;
-    const photoEl = document.getElementById('member-photo');
-    const textEl = document.getElementById('member-text');
-    function updateMember(){
-      photoEl.src = members[currentMember].photo;
-      textEl.textContent = members[currentMember].text;
-    }
-    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
-    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
-    updateMember();
-  </script>
-</body>
-</html>
+/* Formulaire */
+form{ display:flex; flex-direction:column; align-items:center; max-width:500px; margin:0 auto; text-align:left; }
+form label{ align-self:flex-start; margin:5px 0; }
+form input, form textarea{
+  width:100%; padding:10px; margin-bottom:12px; border-radius:5px; border:2px solid var(--gold);
+  background:rgba(255,255,255,.9); color:#000; line-height:1.4;
+}
+form button{
+  background:linear-gradient(90deg, var(--gold), #2db84d); color:#000; font-weight:bold;
+  padding:10px 20px; border:none; cursor:pointer; border-radius:5px; transition:transform .2s;
+}
+form button:hover{ transform:scale(1.05); background:#fff; }
+.form-status{ margin-top:8px; font-size:14px; }
