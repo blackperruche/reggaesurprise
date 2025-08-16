@@ -15,7 +15,7 @@ body {
   z-index: -1;
 }
 
-/* Navigation */
+/* Navigation (scrollable sur mobile) */
 nav {
   background: rgba(0,0,0,0.7);
   padding: 10px 0;
@@ -23,19 +23,24 @@ nav {
   width: 100%;
   top: 0;
   z-index: 10;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 nav ul {
   list-style: none;
-  padding: 0;
+  padding: 0 12px;
   margin: 0;
   display: flex;
   justify-content: center;
   gap: 20px;
+  white-space: nowrap;
 }
+nav li { display: inline-block; }
 nav a {
   color: #FFD700;
   text-decoration: none;
   font-size: 18px;
+  padding: 6px 2px;
 }
 nav a.active {
   border-bottom: 2px solid #FFD700;
@@ -47,9 +52,8 @@ section {
   display: none;
   padding-top: 80px;
 }
-section.active {
-  display: block;
-}
+section.active { display: block; }
+
 .overlay-content {
   background: rgba(0, 0, 0, 0.5);
   padding: 30px;
@@ -58,7 +62,7 @@ section.active {
   margin: auto;
 }
 
-/* Photos accueil / rencontre */
+/* Images */
 .photo-accueil {
   width: 90%;
   max-width: 1000px;
@@ -80,6 +84,7 @@ section.active {
 }
 
 /* Réseaux */
+.net-title { margin-top: 8px; }
 .social-icons {
   display: flex;
   justify-content: center;
@@ -92,9 +97,7 @@ section.active {
   height: 60px;
   transition: transform 0.2s;
 }
-.social-icons img:hover {
-  transform: scale(1.15);
-}
+.social-icons img:hover { transform: scale(1.15); }
 
 /* Lecteur Audio */
 .audio-player {
@@ -107,20 +110,15 @@ section.active {
   border-radius: 20px;
   transition: box-shadow 0.3s;
 }
-.audio-player img.playing {
-  box-shadow: 0 0 20px #FFD700;
-}
-.audio-player img.blink {
-  animation: blink 4s infinite;
-}
+.audio-player img.playing { box-shadow: 0 0 20px #FFD700; }
+.audio-player img.blink { animation: blink 4s infinite; }
 @keyframes blink {
   0%, 100% { box-shadow: 0 0 20px #FFD700; }
   50% { box-shadow: none; }
 }
 #playButtonOverlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   font-size: 60px;
   color: #FFD700;
@@ -128,35 +126,49 @@ section.active {
   text-shadow: 2px 2px 4px black;
 }
 
-/* Carousel */
+/* Carrousel : flèches à l'intérieur de la photo */
 .carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-.carousel-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 500px;
+  gap: 12px;
+  margin-top: 20px;
+}
+.carousel-content {
+  position: relative;
+  display: inline-block;
 }
 .carousel-content img {
   max-width: 400px;
+  width: 90vw;
+  max-height: 70vh;
+  object-fit: cover;
   border-radius: 12px;
+  display: block;
 }
-.carousel-content p {
-  margin-top: 15px;
-  font-size: 16px;
-  line-height: 1.4;
-}
-.carousel-btn {
-  background: none;
-  border: none;
-  font-size: 30px;
+.carousel-btn.inside {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid #FFD700;
   color: #FFD700;
   cursor: pointer;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 38px;
+  user-select: none;
+}
+.carousel-btn.inside:hover { background: rgba(0,0,0,0.65); }
+.carousel-btn.inside.left  { left: 8px; }
+.carousel-btn.inside.right { right: 8px; }
+.member-text {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 /* Programme concerts */
@@ -164,8 +176,62 @@ section.active {
   width: 90%;
   max-width: 1000px;
   display: block;
-  margin: 20px auto;
+  margin: 20px auto 8px;
   border-radius: 12px;
+  cursor: zoom-in;
+}
+.zoom-hint { opacity: 0.8; font-size: 14px; }
+
+/* Lightbox pour zoom */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  z-index: 1000;
+}
+.lightbox.open { display: block; }
+.lightbox-toolbar {
+  position: absolute;
+  top: 12px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 8px;
+}
+.lightbox-toolbar button {
+  background: rgba(255,255,255,0.1);
+  color: #FFD700;
+  border: 1px solid #FFD700;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.lightbox-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.lightbox-content img {
+  max-width: none; /* pour autoriser le zoom au-delà du viewport */
+  width: auto;
+  height: auto;
+  transform-origin: center center;
+  transition: transform 0.05s linear;
+  will-change: transform;
+}
+.lightbox-content.grabbing { cursor: grabbing; }
+
+/* Merch */
+.merch-box {
+  border: 2px dashed #FFD700;
+  padding: 40px 20px;
+  max-width: 600px;
+  margin: 20px auto 0;
+  border-radius: 12px;
+  font-size: 22px;
+  letter-spacing: 1px;
 }
 
 /* Formulaire */
@@ -207,14 +273,7 @@ form button:hover {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .photo-accueil, .photo-rencontre, .concert-img {
-    width: 100%;
-  }
-  .social-icons img {
-    width: 45px;
-    height: 45px;
-  }
-  nav a {
-    font-size: 16px;
-  }
+  nav a { font-size: 16px; }
+  .photo-accueil, .photo-rencontre, .concert-img { width: 100%; }
+  .social-icons img { width: 45px; height: 45px; }
 }
