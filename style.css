@@ -2,10 +2,13 @@
 :root{
   --gold:#FFD700;
   --bg:#0a0a0a;
-  --overlay:rgba(0,0,0,0.5);
+  --overlay:rgba(0,0,0,0.28); /* plus léger pour la carte */
 }
 *{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; background:var(--bg); color:#fff; font-family:'Reggae One', cursive; }
+html,body{
+  margin:0; padding:0; background:var(--bg); color:#fff;
+  font-family:'Reggae One', cursive;
+}
 
 /* Décor */
 .background{
@@ -14,7 +17,7 @@ html,body{ margin:0; padding:0; background:var(--bg); color:#fff; font-family:'R
   z-index:-1;
 }
 
-/* Navigation (centrée & scrollable mobile) */
+/* Navigation */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:10;
   background: rgba(0,0,0,0.7);
@@ -30,11 +33,29 @@ nav a{
 }
 nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
 
+/* Sur mobile : laisser défiler jusqu'à "Accueil" */
+@media (max-width: 768px){
+  nav ul{ justify-content:flex-start; min-width:max-content; }
+}
+
 /* Sections & conteneur centré */
 section{ display:none; padding-top:90px; }
 section.active{ display:block; }
-.overlay-content{ background:var(--overlay); padding:30px 0; }
-.container{ width:min(1100px, 92vw); margin:0 auto; text-align:center; }
+
+/* IMPORTANT : on enlève le grand fond noir plein écran ici,
+   et on le met seulement autour du contenu via .container */
+.overlay-content{ background:transparent; padding:30px 0; }
+
+.container{
+  width:min(1100px, 92vw);
+  margin:0 auto;
+  text-align:center;
+  background:var(--overlay);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  padding:24px;
+  border-radius:12px;
+}
 
 /* Media */
 .photo-accueil, .photo-rencontre, .concert-img{
@@ -46,10 +67,29 @@ section.active{ display:block; }
   user-select:none; -webkit-user-drag:none;
 }
 
+/* Lecteur audio — centré */
+.audio-player{
+  position:relative;
+  display:block;
+  margin:100px auto 0;  /* centre le bloc */
+  text-align:center;
+}
+#audioPlayer img{
+  width:250px; border-radius:20px; transition:box-shadow .3s;
+}
+#audioPlayer img.playing{ box-shadow:0 0 20px var(--gold); }
+#audioPlayer img.blink{ animation:blink 4s infinite; }
+@keyframes blink{ 0%,100%{ box-shadow:0 0 20px var(--gold);} 50%{ box-shadow:none; } }
+#playButtonOverlay{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:60px; color:var(--gold); pointer-events:none; text-shadow:2px 2px 4px #000;
+}
+
 /* Texte rencontre */
 .rencontre-text{ max-width:700px; margin:0 auto; white-space:pre-line; }
 
-/* Réseaux : toutes les icônes même taille, parfaitement centrées */
+/* Réseaux : centrage parfait + tailles uniformes */
+/* Cadres carrés, overflow hidden -> compense les marges internes de certains PNG */
 .net-title{ margin-top:8px; }
 .social-icons{
   display:grid;
@@ -60,26 +100,15 @@ section.active{ display:block; }
 .icon-frame{
   width:72px; height:72px;
   display:grid; place-items:center;
+  overflow:hidden;
 }
 .social-icons img{
   width:64px; height:64px; object-fit:contain; display:block;
-  transition:transform .2s;
+  transition:transform .2s; transform-origin:center;
 }
 .social-icons img:hover{ transform:scale(1.08); }
-/* Compensation visuelle pour Spotify (logo souvent avec marges internes) */
-.social-icons img.icon-boost{ transform:scale(1.12); }
-.social-icons img.icon-boost:hover{ transform:scale(1.2); }
-
-/* Lecteur audio */
-.audio-player{ margin-top:100px; position:relative; display:inline-block; }
-#audioPlayer img{ width:250px; border-radius:20px; transition:box-shadow .3s; }
-#audioPlayer img.playing{ box-shadow:0 0 20px var(--gold); }
-#audioPlayer img.blink{ animation:blink 4s infinite; }
-@keyframes blink{ 0%,100%{ box-shadow:0 0 20px var(--gold);} 50%{ box-shadow:none; } }
-#playButtonOverlay{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font-size:60px; color:var(--gold); pointer-events:none; text-shadow:2px 2px 4px #000;
-}
+/* Spotify un POIL plus petit qu'avant (et toujours centré) */
+.social-icons img.icon-boost{ transform:scale(1.06); }
 
 /* Carrousel : flèches dans la photo */
 .carousel{ margin-top:20px; }
