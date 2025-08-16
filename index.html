@@ -26,7 +26,7 @@
 
   <!-- Lecteur Audio -->
   <div class="audio-player" id="audioPlayer">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false">
     <div id="playButtonOverlay">▶</div>
   </div>
   <audio id="audioElement"></audio>
@@ -34,7 +34,7 @@
   <!-- ACCUEIL -->
   <section id="accueil" class="active">
     <div class="overlay-content">
-      <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil">
+      <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false">
     </div>
   </section>
 
@@ -42,7 +42,7 @@
   <section id="rencontre">
     <div class="overlay-content">
       <h1>Rencontre</h1>
-      <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre">
+      <img src="photorencontre.jpg" alt="Photo Rencontre" class="photo-rencontre" draggable="false">
       <p class="rencontre-text">
         Une histoire de passionnés…
         Avant la surprise, il y a eu une rencontre.
@@ -53,7 +53,7 @@
       <div class="carousel">
         <div class="carousel-content">
           <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
-          <img id="member-photo" src="Keo Vy.jpeg" alt="Membre">
+          <img id="member-photo" src="Keo Vy.jpeg" alt="Membre" draggable="false">
           <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
         </div>
         <p id="member-text" class="member-text"></p>
@@ -69,27 +69,27 @@
       <h2 class="net-title">Viens nous écouter sur</h2>
       <div class="social-icons">
         <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener">
-          <img src="apple.png" alt="Apple Music">
+          <img src="apple.png" alt="Apple Music" draggable="false">
         </a>
         <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener">
-          <img src="spotify.png" alt="Spotify">
+          <img src="spotify.png" alt="Spotify" draggable="false">
         </a>
       </div>
 
       <h2 class="net-title">Viens nous voir sur</h2>
       <div class="social-icons">
         <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener">
-          <img src="youtube.png" alt="YouTube">
+          <img src="youtube.png" alt="YouTube" draggable="false">
         </a>
       </div>
 
       <h2 class="net-title">Viens nous suivre sur</h2>
       <div class="social-icons">
         <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener">
-          <img src="instagram.png" alt="Instagram">
+          <img src="instagram.png" alt="Instagram" draggable="false">
         </a>
         <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener">
-          <img src="facebook.png" alt="Facebook">
+          <img src="facebook.png" alt="Facebook" draggable="false">
         </a>
       </div>
     </div>
@@ -99,9 +99,9 @@
   <section id="concerts">
     <div class="overlay-content">
       <h1>Programme des concerts</h1>
-      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg">
+      <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false">
       <p class="zoom-hint">
-        Double-clic = Zoom / Clic simple = Retour à la taille normale
+        Double-clic : zoom — Clic simple : taille normale. Clic en dehors : fermer.
       </p>
     </div>
   </section>
@@ -142,7 +142,7 @@
   <!-- Lightbox Zoom Concerts -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <div class="lightbox-content" id="lbContent">
-      <img id="lightboxImg" src="programme-concerts.jpg" alt="Programme des concerts (agrandi)">
+      <img id="lightboxImg" src="programme-concerts.jpg" alt="Programme des concerts (agrandi)" draggable="false">
     </div>
   </div>
 
@@ -157,6 +157,7 @@
       document.querySelectorAll('nav a').forEach(a => {
         if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
       });
+      // Fermer la lightbox si on change de section
       closeLightbox();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -246,34 +247,66 @@
     }
     updateMember();
 
-    // --- Lightbox Zoom Concerts
+    // --- Lightbox & Zoom (double-clic = zoom / clic = 100%)
     const concertImg = document.getElementById('concertImg');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
+    const lbContent = document.getElementById('lbContent');
+
     let zoomed = false;
 
-    function openLightbox() {
+    function openLightbox(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       lightbox.setAttribute('aria-hidden', 'false');
       lightbox.classList.add('open');
       resetZoom();
     }
     function closeLightbox() {
+      if (!lightbox) return;
       lightbox.setAttribute('aria-hidden', 'true');
       lightbox.classList.remove('open');
+      resetZoom();
     }
     function resetZoom() {
-      lightboxImg.style.transform = "scale(1)";
       zoomed = false;
+      lightboxImg.style.transform = 'scale(1)';
+    }
+    function zoomIn() {
+      zoomed = true;
+      lightboxImg.style.transform = 'scale(2)';
     }
 
-    // Clic simple = dézoom / Double clic = zoom
+    // Ouvrir (clic sur l’affiche dans la section Concerts)
     concertImg.addEventListener('click', openLightbox);
-    lightboxImg.addEventListener('click', () => resetZoom());
-    lightboxImg.addEventListener('dblclick', (e) => {
-      e.preventDefault();
-      lightboxImg.style.transform = "scale(2)";
-      zoomed = true;
+    concertImg.addEventListener('dblclick', openLightbox);
+
+    // Empêcher toute navigation par défaut dans la lightbox
+    ['click','dblclick','mousedown','mouseup'].forEach(evt => {
+      lightboxImg.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); }, { passive: false });
     });
+
+    // Règle demandée : dblclick = zoom, click = 100%
+    lightboxImg.addEventListener('dblclick', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      zoomIn();
+    }, { passive: false });
+
+    lightboxImg.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      resetZoom();
+    }, { passive: false });
+
+    // Fermer en cliquant sur l’arrière-plan
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        e.preventDefault(); e.stopPropagation();
+        closeLightbox();
+      }
+    }, { passive: false });
+
+    // Désactiver le menu contextuel sur l’image zoomée (évite “ouvrir l’image”)
+    lightboxImg.addEventListener('contextmenu', (e) => { e.preventDefault(); });
+
   </script>
 </body>
 </html>
