@@ -12,6 +12,14 @@ body::before{
   background: var(--bg) url('decor-reggae-surprise.png') center/cover no-repeat;
   transform: translateZ(0);
 }
+
+/* "..." TOUJOURS en bas (pas d'HTML nécessaire) */
+body::after{
+  content:"..."; position:fixed; left:50%; transform:translateX(-50%);
+  bottom:10px; z-index:9; font-size:22px; letter-spacing:4px;
+  color:rgba(255,255,255,0.85); pointer-events:none; user-select:none;
+}
+
 .background{ display:none; }
 
 /* Nav */
@@ -22,7 +30,8 @@ nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
 @media (max-width:768px){ nav ul{ justify-content:flex-start; min-width:max-content; } }
 
 /* Sections & carte */
-section{ display:none; padding-top:40px; } section.active{ display:block; }
+section{ display:none; padding-top:40px; } 
+section.active{ display:block; }
 .overlay-content{ background:transparent; padding:20px 0; }
 
 .container{
@@ -32,15 +41,22 @@ section{ display:none; padding-top:40px; } section.active{ display:block; }
 }
 @media (max-width:768px){ .container{ background:rgba(0,0,0,0.36); } }
 
-/* Text-slab léger + interligne */
-.text-slab{ display:inline-block; padding:8px 14px; margin:8px auto; background:rgba(0,0,0,0.36); border:1px solid rgba(255,215,0,0.20); border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,0.28); text-align:center; line-height:1.6; }
-.text-slab.wide{ display:block; padding:14px 18px; max-width:760px; margin-left:auto; margin-right:auto; }
+/* 2e couche — légère autour des textes */
+.text-slab{
+  display:inline-block; padding:8px 14px; margin:8px auto;
+  background:rgba(0,0,0,0.36); border:1px solid rgba(255,215,0,0.20);
+  border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,0.28);
+  text-align:center; line-height:1.6;
+}
+.text-slab.wide{
+  display:block; padding:14px 18px; max-width:760px; margin-left:auto; margin-right:auto;
+}
 @media (max-width:768px){ .text-slab{ background:rgba(0,0,0,0.42); } }
 
-/* Rencontre : enlever espace au-dessus du 1er paragraphe */
-#rencontre .overlay-content{ padding-top:10px; }
-#rencontre .container{ padding-top:12px; }
-#rencontre .rencontre-text.text-slab{ margin-top:0; }
+/* >>> RENCONTRE : enlever le vide AU-DESSUS du premier paragraphe */
+#rencontre .overlay-content{ padding-top:0; }
+#rencontre .container{ padding-top:4px; }
+#rencontre .rencontre-text.text-slab{ margin-top:0; }  /* aucun espace avant */
 
 /* Carrousel + textes */
 .rencontre-text{ white-space:pre-line; }
@@ -86,6 +102,3 @@ form input,form textarea{ width:100%; padding:10px; margin-bottom:12px; border-r
 form button{ background:linear-gradient(90deg,var(--gold),#2db84d); color:#000; font-weight:bold; padding:10px 20px; border:none; cursor:pointer; border-radius:5px; transition:transform .2s; }
 form button:hover{ transform:scale(1.05); background:#fff; }
 .form-status{ margin-top:8px; font-size:14px; }
-
-/* "..." fixes en bas */
-.page-dots{ position:fixed; left:50%; transform:translateX(-50%); bottom:10px; z-index:9; font-size:22px; letter-spacing:4px; color:rgba(255,255,255,0.85); pointer-events:none; user-select:none; }
