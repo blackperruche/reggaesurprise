@@ -214,7 +214,7 @@ section.active { display: block; }
   overflow: hidden;
 }
 .lightbox-content img {
-  max-width: none; /* pour autoriser le zoom au-delà du viewport */
+  max-width: none;
   width: auto;
   height: auto;
   transform-origin: center center;
@@ -270,6 +270,13 @@ form button:hover {
   transform: scale(1.05);
   background: white;
 }
+.form-status {
+  margin-top: 10px;
+  font-size: 14px;
+}
+.form-status.success { color: #7CFC00; }
+.form-status.error { color: #ff6b6b; }
+.form-status.info { color: #FFD700; }
 
 /* Responsive */
 @media (max-width: 768px) {
