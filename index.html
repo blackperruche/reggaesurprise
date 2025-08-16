@@ -142,9 +142,6 @@
     </section>
   </main>
 
-  <!-- "..." fixes en bas -->
-  <div class="page-dots" aria-hidden="true">...</div>
-
   <script>
     // --- Navigation
     const sections = document.querySelectorAll('section');
@@ -167,14 +164,54 @@
     const playOverlay = document.getElementById('playButtonOverlay');
     let isPlaying = false, firstPlay = true, clickTimeout;
 
-    function playTrack(index){ audio.src = audioFiles[index]; audio.play().catch(()=>{}); isPlaying = true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display='none'; }
-    function pauseTrack(){ audio.pause(); isPlaying = false; logo.classList.remove('playing'); logo.classList.add('blink'); playOverlay.style.display='block'; }
+    function playTrack(index){
+      audio.src = audioFiles[index];
+      audio.play().catch(()=>{});
+      isPlaying = true;
+      logo.classList.remove('blink');
+      logo.classList.add('playing');
+      playOverlay.style.display='none';
+    }
+    function pauseTrack(){
+      audio.pause();
+      isPlaying = false;
+      logo.classList.remove('playing');
+      logo.classList.add('blink');
+      playOverlay.style.display='block';
+    }
     document.getElementById('audioPlayer').addEventListener('click', () => {
-      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout=null; currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); return; }
-      clickTimeout=setTimeout(()=>{ if(!isPlaying){ if(firstPlay){ playTrack(currentTrack); firstPlay=false; } else { audio.play().then(()=>{isPlaying=true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display='none';}).catch(()=>{}); } } else { pauseTrack(); } clickTimeout=null; }, 250);
+      if (clickTimeout){
+        clearTimeout(clickTimeout);
+        clickTimeout=null;
+        currentTrack=(currentTrack+1)%audioFiles.length;
+        playTrack(currentTrack);
+        return;
+      }
+      clickTimeout=setTimeout(()=>{
+        if(!isPlaying){
+          if(firstPlay){
+            playTrack(currentTrack);
+            firstPlay=false;
+          } else {
+            audio.play().then(()=>{
+              isPlaying=true;
+              logo.classList.remove('blink');
+              logo.classList.add('playing');
+              playOverlay.style.display='none';
+            }).catch(()=>{});
+          }
+        } else {
+          pauseTrack();
+        }
+        clickTimeout=null;
+      }, 250);
     });
-    audio.addEventListener('ended', ()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
-    logo.classList.add('blink'); playOverlay.style.display='block';
+    audio.addEventListener('ended', ()=>{
+      currentTrack=(currentTrack+1)%audioFiles.length;
+      playTrack(currentTrack);
+    });
+    logo.classList.add('blink');
+    playOverlay.style.display='block';
 
     // --- Carrousel (textes complets)
     const members = [
