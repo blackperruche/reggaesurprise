@@ -2,6 +2,7 @@
 :root{
   --gold:#FFD700;
   --bg:#0a0a0a;
+  --overlay:rgba(0,0,0,0.5);
 }
 *{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; background:var(--bg); color:#fff; font-family:'Reggae One', cursive; }
@@ -13,41 +14,27 @@ html,body{ margin:0; padding:0; background:var(--bg); color:#fff; font-family:'R
   z-index:-1;
 }
 
-/* Navigation (scrollable mobile, défilement complet) */
+/* Navigation (centrée & scrollable mobile) */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:10;
   background: rgba(0,0,0,0.7);
   padding:10px 0;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-x: contain;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
 }
 nav ul{
   margin:0; padding:0 12px; list-style:none;
-  display:flex; gap:20px;
-  justify-content:flex-start;      /* pas de centrage => on peut scroller jusqu'à "Accueil" */
-  min-width:max-content;           /* largeur basée sur le contenu */
+  display:flex; justify-content:center; gap:20px; white-space:nowrap;
 }
 nav a{
   color:var(--gold); text-decoration:none; font-size:18px; padding:6px 2px;
 }
 nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
 
-/* Sections & carte centrée (on enlève le grand fond noir plein écran) */
+/* Sections & conteneur centré */
 section{ display:none; padding-top:90px; }
 section.active{ display:block; }
-.overlay-content{ background:transparent; padding:30px 0; }
-
-.container{
-  width:min(1100px, 92vw);
-  margin:0 auto;
-  text-align:center;
-  background: rgba(0,0,0,0.28);   /* plus léger -> on voit le décor */
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  padding:24px;
-  border-radius:12px;
-}
+.overlay-content{ background:var(--overlay); padding:30px 0; }
+.container{ width:min(1100px, 92vw); margin:0 auto; text-align:center; }
 
 /* Media */
 .photo-accueil, .photo-rencontre, .concert-img{
@@ -59,12 +46,32 @@ section.active{ display:block; }
   user-select:none; -webkit-user-drag:none;
 }
 
-/* Lecteur audio — bien centré */
-.audio-player{
-  position:relative;
-  display:block;             /* block + margin auto => centrage */
-  margin:100px auto 0;
+/* Texte rencontre */
+.rencontre-text{ max-width:700px; margin:0 auto; white-space:pre-line; }
+
+/* Réseaux : toutes les icônes même taille, parfaitement centrées */
+.net-title{ margin-top:8px; }
+.social-icons{
+  display:grid;
+  grid-template-columns:repeat(4, 72px);
+  gap:22px; justify-content:center; align-items:center;
+  margin:15px 0;
 }
+.icon-frame{
+  width:72px; height:72px;
+  display:grid; place-items:center;
+}
+.social-icons img{
+  width:64px; height:64px; object-fit:contain; display:block;
+  transition:transform .2s;
+}
+.social-icons img:hover{ transform:scale(1.08); }
+/* Compensation visuelle pour Spotify (logo souvent avec marges internes) */
+.social-icons img.icon-boost{ transform:scale(1.12); }
+.social-icons img.icon-boost:hover{ transform:scale(1.2); }
+
+/* Lecteur audio */
+.audio-player{ margin-top:100px; position:relative; display:inline-block; }
 #audioPlayer img{ width:250px; border-radius:20px; transition:box-shadow .3s; }
 #audioPlayer img.playing{ box-shadow:0 0 20px var(--gold); }
 #audioPlayer img.blink{ animation:blink 4s infinite; }
@@ -72,28 +79,6 @@ section.active{ display:block; }
 #playButtonOverlay{
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
   font-size:60px; color:var(--gold); pointer-events:none; text-shadow:2px 2px 4px #000;
-}
-
-/* Réseaux : centrage parfait + tailles uniformes, Spotify un peu réduit */
-.net-title{ margin-top:8px; }
-.social-icons{
-  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-  gap:22px; margin:15px 0;
-}
-.icon-frame{
-  width:72px; height:72px;
-  display:grid; place-items:center;
-  overflow:hidden;                 /* masque les marges internes des PNG */
-}
-.social-icons img{
-  width:90%; height:90%;           /* référence commune */
-  object-fit:contain; display:block;
-  transition:transform .2s;
-}
-.social-icons img:hover{ transform:scale(1.06); }
-/* Spotify : juste un petit bonus, plus discret qu’avant */
-.social-icons img.icon-boost{
-  width:95%; height:95%;
 }
 
 /* Carrousel : flèches dans la photo */
@@ -133,5 +118,5 @@ form button:hover{ transform:scale(1.05); background:#fff; }
 
 /* Responsive */
 @media (max-width: 768px){
-  .icon-frame{ width:70px; height:70px; }
+  .social-icons{ grid-template-columns:repeat(3,72px); gap:16px; }
 }
