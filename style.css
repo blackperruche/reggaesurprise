@@ -14,7 +14,7 @@ html,body{ margin:0; padding:0; background:var(--bg); color:#fff; font-family:'R
   z-index:-1;
 }
 
-/* Navigation (centrée & scrollable mobile) */
+/* Navigation (scrollable mobile, défilement complet aux extrémités) */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:10;
   background: rgba(0,0,0,0.7);
@@ -23,7 +23,9 @@ nav{
 }
 nav ul{
   margin:0; padding:0 12px; list-style:none;
-  display:flex; justify-content:center; gap:20px; white-space:nowrap;
+  display:flex; gap:20px;         /* pas de centrage => défilement total */
+  justify-content:flex-start;
+  min-width:max-content;          /* largeur basée sur le contenu => scrollez jusqu'à "Accueil" */
 }
 nav a{
   color:var(--gold); text-decoration:none; font-size:18px; padding:6px 2px;
@@ -49,26 +51,30 @@ section.active{ display:block; }
 /* Texte rencontre */
 .rencontre-text{ max-width:700px; margin:0 auto; white-space:pre-line; }
 
-/* Réseaux : toutes les icônes même taille, parfaitement centrées */
+/* Réseaux : parfait centrage + tailles uniformes */
 .net-title{ margin-top:8px; }
 .social-icons{
-  display:grid;
-  grid-template-columns:repeat(4, 72px);
-  gap:22px; justify-content:center; align-items:center;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
   margin:15px 0;
 }
 .icon-frame{
   width:72px; height:72px;
   display:grid; place-items:center;
+  overflow:hidden;                 /* on masque le surplus pour compenser les marges internes */
 }
 .social-icons img{
-  width:64px; height:64px; object-fit:contain; display:block;
+  width:86%; height:86%;
+  object-fit:contain; display:block;
   transition:transform .2s;
 }
-.social-icons img:hover{ transform:scale(1.08); }
-/* Compensation visuelle pour Spotify (logo souvent avec marges internes) */
-.social-icons img.icon-boost{ transform:scale(1.12); }
-.social-icons img.icon-boost:hover{ transform:scale(1.2); }
+.social-icons img:hover{ transform:scale(1.06); }
+/* Compensation visuelle pour Spotify (son PNG a des marges internes) */
+.social-icons img.icon-boost{
+  width:100%; height:100%;        /* légèrement plus grand dans le cadre */
+}
 
 /* Lecteur audio */
 .audio-player{ margin-top:100px; position:relative; display:inline-block; }
@@ -118,5 +124,5 @@ form button:hover{ transform:scale(1.05); background:#fff; }
 
 /* Responsive */
 @media (max-width: 768px){
-  .social-icons{ grid-template-columns:repeat(3,72px); gap:16px; }
+  .icon-frame{ width:70px; height:70px; }
 }
