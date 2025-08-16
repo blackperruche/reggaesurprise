@@ -13,7 +13,7 @@
   <div class="background" aria-hidden="true"></div>
 
   <!-- Navigation -->
-  <nav role="navigation" aria-label="Sections">
+  <nav>
     <ul>
       <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
       <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
@@ -149,93 +149,51 @@
   </main>
 
   <script>
-    // Tout le JS démarre quand le DOM est prêt
-    (function(){
-      // --- Navigation
-      const sections = document.querySelectorAll('section');
-      const navLinks = document.querySelectorAll('nav a');
-      window.showSection = function(id){
-        sections.forEach(sec => sec.classList.remove('active'));
-        navLinks.forEach(a => a.classList.remove('active'));
-        const target = document.getElementById(id);
-        if (target) target.classList.add('active');
-        document.querySelectorAll('nav a').forEach(a => {
-          if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
-
-      // --- Audio
-      const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
-      let currentTrack = 0;
-      const audio = document.getElementById('audioElement');
-      const logo = document.getElementById('logo');
-      const playOverlay = document.getElementById('playButtonOverlay');
-      let isPlaying = false, firstPlay = true, clickTimeout;
-
-      function playTrack(index){
-        audio.src = audioFiles[index];
-        audio.play().catch(()=>{});
-        isPlaying = true;
-        logo.classList.remove('blink');
-        logo.classList.add('playing');
-        playOverlay.style.display = 'none';
-      }
-      function pauseTrack(){
-        audio.pause();
-        isPlaying = false;
-        logo.classList.remove('playing');
-        logo.classList.add('blink');
-        playOverlay.style.display = 'block';
-      }
-      document.getElementById('audioPlayer').addEventListener('click', () => {
-        if (clickTimeout){
-          clearTimeout(clickTimeout);
-          clickTimeout = null;
-          currentTrack = (currentTrack + 1) % audioFiles.length;
-          playTrack(currentTrack);
-          return;
-        }
-        clickTimeout = setTimeout(() => {
-          if (!isPlaying){
-            if (firstPlay){ playTrack(currentTrack); firstPlay = false; }
-            else {
-              audio.play().then(()=>{
-                isPlaying = true;
-                logo.classList.remove('blink');
-                logo.classList.add('playing');
-                playOverlay.style.display = 'none';
-              }).catch(()=>{});
-            }
-          } else {
-            pauseTrack();
-          }
-          clickTimeout = null;
-        }, 250);
+    // --- Navigation
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+    function showSection(id) {
+      sections.forEach(sec => sec.classList.remove('active'));
+      navLinks.forEach(a => a.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => {
+        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
       });
-      audio.addEventListener('ended', ()=> {
-        currentTrack = (currentTrack + 1) % audioFiles.length;
-        playTrack(currentTrack);
-      });
-      logo.classList.add('blink');
-      playOverlay.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-      // --- Carrousel
-      const members = [
-        { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise. Batteur et percussionniste depuis des années..." },
-        { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de Thomas..." },
-        { photo: "jeremy.jpeg", text: "Jeremy, comme du rhum dans un cocktail..." },
-        { photo: "Antho.jpeg", text: "L’homme à la guitare..." },
-        { photo: "Julie.jpeg", text: "Julie, la touche de classique et de folie..." }
-      ];
-      let currentMember = 0;
-      const photoEl = document.getElementById('member-photo');
-      const textEl = document.getElementById('member-text');
-      function updateMember(){ photoEl.src = members[currentMember].photo; textEl.textContent = members[currentMember].text; }
-      window.prevMember = function(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
-      window.nextMember = function(){ currentMember=(currentMember+1)%members.length; updateMember(); }
-      updateMember();
-    })();
+    // --- Audio
+    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+    let currentTrack = 0;
+    const audio = document.getElementById('audioElement');
+    const logo = document.getElementById('logo');
+    const playOverlay = document.getElementById('playButtonOverlay');
+    let isPlaying = false, firstPlay = true, clickTimeout;
+
+    function playTrack(index){ audio.src = audioFiles[index]; audio.play().catch(()=>{}); isPlaying = true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display='none'; }
+    function pauseTrack(){ audio.pause(); isPlaying = false; logo.classList.remove('playing'); logo.classList.add('blink'); playOverlay.style.display='block'; }
+    document.getElementById('audioPlayer').addEventListener('click', () => {
+      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout=null; currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); return; }
+      clickTimeout=setTimeout(()=>{ if(!isPlaying){ if(firstPlay){ playTrack(currentTrack); firstPlay=false; } else { audio.play().then(()=>{isPlaying=true; logo.classList.remove('blink'); logo.classList.add('playing'); playOverlay.style.display='none';}).catch(()=>{}); } } else { pauseTrack(); } clickTimeout=null; }, 250);
+    });
+    audio.addEventListener('ended', ()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
+    logo.classList.add('blink'); playOverlay.style.display='block';
+
+    // --- Carrousel
+    const members = [
+      { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise. Batteur et percussionniste depuis des années..." },
+      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de Thomas..." },
+      { photo: "jeremy.jpeg", text: "Jeremy, comme du rhum dans un cocktail..." },
+      { photo: "Antho.jpeg", text: "L’homme à la guitare..." },
+      { photo: "Julie.jpeg", text: "Julie, la touche de classique et de folie..." }
+    ];
+    let currentMember = 0;
+    const photoEl = document.getElementById('member-photo');
+    const textEl = document.getElementById('member-text');
+    function updateMember(){ photoEl.src = members[currentMember].photo; textEl.textContent = members[currentMember].text; }
+    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
+    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
+    updateMember();
   </script>
 </body>
 </html>
