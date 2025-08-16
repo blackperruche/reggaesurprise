@@ -121,7 +121,8 @@
     <section id="contact">
       <div class="overlay-content">
         <div class="container">
-          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <!-- Endpoint Formspree branché -->
+          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
             <label for="name">Nom :</label>
             <input type="text" id="name" name="name" required />
 
@@ -131,10 +132,14 @@
             <label for="message">Message :</label>
             <textarea id="message" name="message" rows="6" required></textarea>
 
-            <input type="text" name="_gotcha" style="display:none" />
+            <!-- Honeypot anti-spam -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <!-- Sujet -->
             <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
+            <!-- (Optionnel) Redirection custom si tu veux une page merci.html -->
+            <!-- <input type="hidden" name="_next" value="https://reggaesurprise.fr/merci.html"> -->
 
-            <button type="submit">Envoyer</button>
+            <button type="submit" id="sendBtn">Envoyer</button>
             <p id="formStatus" class="form-status" aria-live="polite"></p>
           </form>
         </div>
@@ -267,6 +272,57 @@ Bref, avec Julie, ça groove avec élégance !`
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
+
+    // --- FORMSPREE: soumission AJAX + messages
+    (function(){
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+      const sendBtn = document.getElementById('sendBtn');
+
+      function setStatus(msg, ok){
+        status.textContent = msg;
+        status.style.color = ok ? '#2db84d' : '#ffb3b3';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // validation HTML5
+        if(!form.checkValidity()){
+          setStatus('Merci de compléter tous les champs.', false);
+          form.reportValidity();
+          return;
+        }
+
+        setStatus('Envoi en cours…', true);
+        sendBtn.disabled = true;
+
+        try{
+          const endpoint = form.action; // https://formspree.io/f/mldlkrov
+          const data = new FormData(form);
+
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok){
+            setStatus('Merci, votre message a été envoyé ✔', true);
+            form.reset();
+          } else {
+            // tente de lire le JSON d’erreur Formspree
+            let err = '';
+            try { const j = await res.json(); err = (j && j.error) ? ` (${j.error})` : ''; } catch(_){}
+            setStatus('Oups, impossible d’envoyer le message' + err, false);
+          }
+        } catch(err){
+          setStatus('Erreur réseau. Réessayez dans un instant.', false);
+        } finally {
+          sendBtn.disabled = false;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
