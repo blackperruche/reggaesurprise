@@ -18,6 +18,16 @@ body::before{
 }
 .background{ display:none; }
 
+/* "..." toujours en bas (pas d'HTML nécessaire) */
+body::after{
+  content:"...";
+  position:fixed; left:50%; transform:translateX(-50%);
+  bottom:10px; z-index:9;
+  font-size:22px; letter-spacing:4px;
+  color:rgba(255,255,255,0.85);
+  pointer-events:none; user-select:none;
+}
+
 /* Navigation */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:10;
@@ -62,24 +72,29 @@ section.active{ display:block; }
 /* 2e couche — légère autour des textes */
 .text-slab{
   display:inline-block;
-  padding:8px 14px;               /* un peu plus d’air */
+  padding:8px 14px;
   margin:8px auto;
   background: rgba(0,0,0,0.36);
   border:1px solid rgba(255,215,0,0.20);
   border-radius:10px;
   box-shadow:0 4px 14px rgba(0,0,0,0.28);
   text-align:center;
-  line-height:1.6;                 /* interlignage plus confortable */
+  line-height:1.6;                 /* interlignage augmenté */
 }
 .text-slab.wide{
   display:block;
   padding:14px 18px;
-  max-width: 760px;                /* centrage propre */
+  max-width: 760px;
   margin-left:auto; margin-right:auto;
 }
 @media (max-width: 768px){
   .text-slab{ background: rgba(0,0,0,0.42); }
 }
+
+/* >>> Spécifique RENCONTRE : enlever l’espace AU-DESSUS du 1er paragraphe */
+#rencontre .overlay-content{ padding-top:10px; }
+#rencontre .container{ padding-top:12px; }
+#rencontre .rencontre-text.text-slab{ margin-top:0; }  /* pas d'espace avant */
 
 /* Texte rencontre + carrousel */
 .rencontre-text{ white-space:pre-line; }
@@ -160,10 +175,3 @@ form button{
 }
 form button:hover{ transform:scale(1.05); background:#fff; }
 .form-status{ margin-top:8px; font-size:14px; }
-
-/* "..." fixes en bas */
-.page-dots{
-  position:fixed; left:50%; transform:translateX(-50%);
-  bottom:10px; z-index:9; font-size:22px; letter-spacing:4px;
-  color:rgba(255,255,255,0.85); pointer-events:none; user-select:none;
-}
