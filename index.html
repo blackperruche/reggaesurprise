@@ -179,18 +179,55 @@
     audio.addEventListener('ended', ()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
     logo.classList.add('blink'); playOverlay.style.display='block';
 
-    // --- Carrousel
+    // --- Carrousel (textes complets)
     const members = [
-      { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise. Batteur et percussionniste depuis des années..." },
-      { photo: "Thomas.jpeg", text: "Aujourd’hui c’est au tour de Thomas..." },
-      { photo: "jeremy.jpeg", text: "Jeremy, comme du rhum dans un cocktail..." },
-      { photo: "Antho.jpeg", text: "L’homme à la guitare..." },
-      { photo: "Julie.jpeg", text: "Julie, la touche de classique et de folie..." }
+      { 
+        photo: "Keo Vy.jpeg",
+        text: `Le battement de cœur de Reggae Surprise Kéo Vy 
+Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
+Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
+Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
+      },
+      {
+        photo: "jeremy.jpeg",
+        text: `Notre bassiste, Jérémy ! 
+Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
+Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
+Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
+Big up Jérémy !`
+      },
+      {
+        photo: "Thomas.jpeg",
+        text: `Thomas, notre maestro des claviers !
+Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
+Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
+      },
+      {
+        photo: "Antho.jpeg",
+        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
+À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
+En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
+Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
+Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
+Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
+      },
+      {
+        photo: "Julie.jpeg",
+        text: `Notre chanteuse, Julie Marsaud !
+Julie, c’est la touche de classique et de folie du groupe.
+Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
+Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
+Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
+Bref, avec Julie, ça groove avec élégance !`
+      }
     ];
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
     const textEl = document.getElementById('member-text');
-    function updateMember(){ photoEl.src = members[currentMember].photo; textEl.textContent = members[currentMember].text; }
+    function updateMember(){
+      photoEl.src = members[currentMember].photo;
+      textEl.textContent = members[currentMember].text;
+    }
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
