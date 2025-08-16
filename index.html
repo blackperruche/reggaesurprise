@@ -5,11 +5,11 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
 
-  <!-- Décor -->
+  <!-- Décor (géré par CSS via body::before) -->
   <div class="background" aria-hidden="true"></div>
 
   <!-- Navigation -->
@@ -118,6 +118,7 @@
         <div class="container">
           <h1>Merchandising</h1>
           <div class="merch-box"><p>À venir</p></div>
+          <img class="merch-img" src="merch.jpg" alt="Aperçu du merchandising" loading="lazy">
         </div>
       </div>
     </section>
@@ -147,6 +148,9 @@
       </div>
     </section>
   </main>
+
+  <!-- "..." fixes en bas -->
+  <div class="page-dots" aria-hidden="true">...</div>
 
   <script>
     // --- Navigation
