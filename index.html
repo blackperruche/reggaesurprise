@@ -5,19 +5,21 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=16" />
+  <link rel="stylesheet" href="style.css?v=17" />
 </head>
 <body>
 
   <!-- Navigation -->
   <nav>
     <ul>
+      <li class="nav-pad" aria-hidden="true"></li>
       <li><a href="#accueil">Accueil</a></li>
       <li><a href="#rencontre">Rencontre</a></li>
       <li><a href="#videos">Vidéos</a></li>
       <li><a href="#concerts">Concerts</a></li>
       <li><a href="#souvenir">Souvenir</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li class="nav-pad" aria-hidden="true"></li>
     </ul>
   </nav>
 
@@ -45,6 +47,14 @@
       </div>
     </section>
 
+    <!-- GALERIE 1 -->
+    <div class="between-gallery">
+      <img src="gal1.jpg" alt="" loading="lazy">
+      <img src="gal2.jpg" alt="" loading="lazy">
+      <img src="gal3.jpg" alt="" loading="lazy">
+      <img src="gal4.jpg" alt="" loading="lazy">
+    </div>
+
     <!-- RENCONTRE -->
     <section id="rencontre">
       <div class="overlay-content">
@@ -68,6 +78,13 @@
       </div>
     </section>
 
+    <!-- GALERIE 2 -->
+    <div class="between-gallery">
+      <img src="gal5.jpg" alt="" loading="lazy">
+      <img src="gal6.jpg" alt="" loading="lazy">
+      <img src="gal7.jpg" alt="" loading="lazy">
+    </div>
+
     <!-- VIDÉOS -->
     <section id="videos">
       <div class="overlay-content">
@@ -81,6 +98,14 @@
       </div>
     </section>
 
+    <!-- GALERIE 3 -->
+    <div class="between-gallery">
+      <img src="gal8.jpg" alt="" loading="lazy">
+      <img src="gal9.jpg" alt="" loading="lazy">
+      <img src="gal10.jpg" alt="" loading="lazy">
+      <img src="gal11.jpg" alt="" loading="lazy">
+    </div>
+
     <!-- CONCERTS -->
     <section id="concerts">
       <div class="overlay-content">
@@ -89,6 +114,13 @@
         </div>
       </div>
     </section>
+
+    <!-- GALERIE 4 -->
+    <div class="between-gallery">
+      <img src="gal12.jpg" alt="" loading="lazy">
+      <img src="gal13.jpg" alt="" loading="lazy">
+      <img src="gal14.jpg" alt="" loading="lazy">
+    </div>
 
     <!-- SOUVENIR -->
     <section id="souvenir">
@@ -100,6 +132,14 @@
         </div>
       </div>
     </section>
+
+    <!-- GALERIE 5 -->
+    <div class="between-gallery">
+      <img src="gal15.jpg" alt="" loading="lazy">
+      <img src="gal16.jpg" alt="" loading="lazy">
+      <img src="gal17.jpg" alt="" loading="lazy">
+      <img src="gal18.jpg" alt="" loading="lazy">
+    </div>
 
     <!-- CONTACT -->
     <section id="contact">
@@ -121,7 +161,7 @@
   </main>
 
   <script>
-    /* --- Carrousel --- */
+    /* --- Carrousel avec animation 1ère fois (mot par mot) --- */
     const members = [
       {
         photo: "Julie.jpeg",
@@ -163,16 +203,39 @@ Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop
 Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
       }
     ];
-    let current=0;
-    const photoEl=document.getElementById('member-photo');
-    const textEl=document.getElementById('member-text');
-    function updateMember(){ photoEl.src=members[current].photo; textEl.textContent=members[current].text; }
-    function prevMember(){ current=(current-1+members.length)%members.length; updateMember(); }
-    function nextMember(){ current=(current+1)%members.length; updateMember(); }
+    let currentMember = 0;
+    const photoEl = document.getElementById('member-photo');
+    const textEl = document.getElementById('member-text');
+    const seenMembers = new Set();
+
+    function typeWriter(text, done){
+      const words = text.split(' ');
+      let i = 0;
+      textEl.textContent = '';
+      function tick(){
+        if(i < words.length){
+          textEl.textContent += (i ? ' ' : '') + words[i++];
+          setTimeout(tick, 90);
+        } else { done && done(); }
+      }
+      tick();
+    }
+
+    function updateMember(){
+      const m = members[currentMember];
+      photoEl.src = m.photo;
+      if(seenMembers.has(currentMember)){
+        textEl.textContent = m.text;
+      } else {
+        typeWriter(m.text, ()=>seenMembers.add(currentMember));
+      }
+    }
+    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
+    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
 
-    /* --- Lecteur Audio --- */
-    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+    /* --- Lecteur Audio (20 pistes, clic/pause, double-clic piste suivante) --- */
+    const audioFiles=[]; for(let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack=0,isPlaying=false,firstPlay=true,clickTimeout;
     const audio=document.getElementById('audioElement');
     const logo=document.getElementById('logo');
@@ -182,30 +245,26 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       audio.src=audioFiles[i];
       audio.play().catch(()=>{});
       isPlaying=true;
-      logo.classList.remove("blink");
-      logo.classList.add("playing");
-      overlay.style.display="none";
+      logo.classList.remove('blink'); logo.classList.add('playing');
+      overlay.style.display='none';
     }
     function pauseTrack(){
-      audio.pause();
-      isPlaying=false;
-      logo.classList.remove("playing");
-      logo.classList.add("blink");
-      overlay.style.display="block";
+      audio.pause(); isPlaying=false;
+      logo.classList.remove('playing'); logo.classList.add('blink');
+      overlay.style.display='block';
     }
     document.getElementById('audioPlayer').addEventListener('click',()=>{
-      if(clickTimeout){ clearTimeout(clickTimeout);clickTimeout=null;
+      if(clickTimeout){ clearTimeout(clickTimeout); clickTimeout=null;
         currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); return; }
       clickTimeout=setTimeout(()=>{
         if(!isPlaying){ if(firstPlay){ playTrack(currentTrack); firstPlay=false; }
-          else{ audio.play().then(()=>{isPlaying=true;logo.classList.add("playing");overlay.style.display="none";}); } }
+          else{ audio.play().then(()=>{isPlaying=true;logo.classList.add('playing');overlay.style.display='none';}); } }
         else{ pauseTrack(); }
         clickTimeout=null;
       },250);
     });
     audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
-    logo.classList.add("blink");
-    overlay.style.display="block";
+    logo.classList.add('blink'); overlay.style.display='block';
   </script>
 </body>
 </html>
