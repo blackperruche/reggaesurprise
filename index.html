@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=16" />
+  <link rel="stylesheet" href="style.css?v=18" />
 </head>
 <body>
 
@@ -16,6 +16,7 @@
       <a href="#rencontre" class="nav-link">Rencontre</a>
       <a href="#concerts" class="nav-link">Concerts</a>
       <a href="#souvenir" class="nav-link">Souvenirs</a>
+      <a href="#videos" class="nav-link">Vidéos</a>
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
@@ -35,12 +36,21 @@
   </div>
   <audio id="audioElement"></audio>
 
+  <!-- DOCK RÉSEAUX (fixe en bas au centre) -->
+  <div class="social-dock" aria-label="Réseaux (dock bas)">
+    <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
+    <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
+    <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
+    <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
+    <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
+  </div>
+
   <!-- ACCUEIL -->
   <section id="accueil" class="section">
     <div class="accueil-photo-wrapper">
       <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-      <!-- RÉSEAUX DANS LA 1ʳᵉ IMAGE (HORIZONTAUX, ABAISSÉS) -->
-      <div class="social-band inside lowered" aria-label="Réseaux (dans l'image)">
+      <!-- RÉSEAUX DANS LA 1ʳᵉ IMAGE — HORIZONTAUX, PLUS GROS, ABAISSÉS -->
+      <div class="social-band inside big" aria-label="Réseaux (dans l'image)">
         <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
         <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
         <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
@@ -98,6 +108,22 @@
   </div>
   <div class="gallery"><img src="gal7.jpg" alt=""></div>
 
+  <!-- VIDÉOS -->
+  <section id="videos" class="section">
+    <h2 class="section-title">Vidéos <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <div class="videos-grid">
+      <div class="video">
+        <iframe title="Reggae Surprise — Vidéo 1" src="https://www.youtube.com/embed/zKMnLi_MgBU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="video">
+        <iframe title="Reggae Surprise — Vidéo 2" src="https://www.youtube.com/embed/lnlzKieaveo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="video">
+        <iframe title="Reggae Surprise — Vidéo 3" src="https://www.youtube.com/embed/fmNJjPm3r4M" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact" class="section">
     <h2 class="section-title">Contact <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
@@ -113,7 +139,7 @@
     </form>
   </section>
 
-  <!-- FOOTER (RÉSEAUX en bas) -->
+  <!-- FOOTER (RÉSEAUX en bas de page) -->
   <footer>
     <div class="footer-socials" aria-label="Réseaux (bas de page)">
       <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
@@ -129,8 +155,6 @@
     const links = document.querySelectorAll('.main-nav .nav-link');
     const sections = [...document.querySelectorAll('.section')];
     const headerHeight = document.querySelector('.site-header').offsetHeight || 120;
-
-    // surbrillance du lien actif
     const activate = id => links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
     const onScroll = () => {
       const fromTop = window.scrollY + headerHeight + 10;
@@ -152,26 +176,17 @@
     function playTrack(index){
       audio.src = audioFiles[index];
       audio.play().catch(()=>{});
-      isPlaying = true;
-      logo.classList.add('playing');
-      playFab.textContent = '❚❚';
+      isPlaying = true; logo.classList.add('playing'); playFab.textContent = '❚❚';
     }
     function pauseTrack(){
       audio.pause();
-      isPlaying = false;
-      logo.classList.remove('playing');
-      playFab.textContent = '▶';
+      isPlaying = false; logo.classList.remove('playing'); playFab.textContent = '▶';
     }
 
-    // zone cliquable: le bloc entier (1 clic play/pause, double-clic piste suivante)
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.addEventListener('click', () => {
-      if (clickTimeout){
-        clearTimeout(clickTimeout); clickTimeout = null;
-        currentTrack = (currentTrack + 1) % audioFiles.length;
-        playTrack(currentTrack);
-        return;
-      }
+      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout = null;
+        currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); return; }
       clickTimeout = setTimeout(() => {
         if (!isPlaying){
           if (firstPlay){ playTrack(currentTrack); firstPlay = false; }
@@ -180,18 +195,11 @@
         clickTimeout = null;
       }, 250);
     });
-
-    // bouton fab (empêche propagation pour éviter double-clic piste suivante)
-    playFab.addEventListener('click', (e) => {
-      e.stopPropagation();
+    playFab.addEventListener('click', (e) => { e.stopPropagation();
       if (!isPlaying){ if (firstPlay){ playTrack(currentTrack); firstPlay=false; } else { audio.play(); isPlaying=true; logo.classList.add('playing'); playFab.textContent='❚❚'; } }
       else { pauseTrack(); }
     });
-
-    audio.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % audioFiles.length;
-      playTrack(currentTrack);
-    });
+    audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
 
     /* ---------- CARROUSEL + ANIMATION MOT PAR MOT ---------- */
     const members = [
@@ -241,17 +249,15 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
-    function typeWords(text, el, wpm = 600){
-      // wpm ~ mots par minute => délai par mot
+    function typeWords(text, el, wpm = 300){
       const words = text.split(/\s+/);
-      const delay = Math.max(20, Math.floor(60000 / wpm)); // borne basse 20ms
+      const delay = Math.max(20, Math.floor(60000 / wpm));
       el.textContent = "";
       let i = 0;
       function step(){
         if (i < words.length){
           el.textContent += (i ? " " : "") + words[i];
-          i++;
-          setTimeout(step, delay);
+          i++; setTimeout(step, delay);
         }
       }
       step();
@@ -262,7 +268,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       photoEl.src = m.photo;
       photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
       if (!hasAnimated.has(currentMember)){
-        typeWords(m.text, textEl, 300); // ~300 mots/minute (agréable à lire)
+        typeWords(m.text, textEl, 300);
         hasAnimated.add(currentMember);
       } else {
         textEl.textContent = m.text;
