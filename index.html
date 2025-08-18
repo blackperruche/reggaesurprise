@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=18" />
+  <link rel="stylesheet" href="style.css?v=19" />
 </head>
 <body>
 
@@ -14,9 +14,9 @@
     <nav class="main-nav" aria-label="Sections">
       <a href="#accueil" class="nav-link">Accueil</a>
       <a href="#rencontre" class="nav-link">Rencontre</a>
+      <a href="#videos" class="nav-link">Vidéos</a>
       <a href="#concerts" class="nav-link">Concerts</a>
       <a href="#souvenir" class="nav-link">Souvenirs</a>
-      <a href="#videos" class="nav-link">Vidéos</a>
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
@@ -35,15 +35,6 @@
     <button id="playFab" class="fab-btn" aria-label="Lecture/Pause">▶</button>
   </div>
   <audio id="audioElement"></audio>
-
-  <!-- DOCK RÉSEAUX (fixe en bas au centre) -->
-  <div class="social-dock" aria-label="Réseaux (dock bas)">
-    <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
-    <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
-    <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
-    <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
-    <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
-  </div>
 
   <!-- ACCUEIL -->
   <section id="accueil" class="section">
@@ -79,6 +70,22 @@
     <p id="member-text" class="member-text" aria-live="polite"></p>
   </section>
 
+  <!-- VIDÉOS (déplacées ici juste après Rencontre) -->
+  <section id="videos" class="section">
+    <h2 class="section-title">Vidéos <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <div class="videos-grid">
+      <div class="video">
+        <iframe title="Reggae Surprise — Vidéo 1" src="https://www.youtube.com/embed/zKMnLi_MgBU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="video">
+        <iframe title="Reggae Surprise — Vidéo 2" src="https://www.youtube.com/embed/lnlzKieaveo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="video">
+        <iframe title="Reggae Surprise — Vidéo 3" src="https://www.youtube.com/embed/fmNJjPm3r4M" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- GALERIE -->
   <div class="gallery two">
     <img src="gal2.jpg" alt="">
@@ -101,28 +108,9 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- GALERIE -->
-  <div class="gallery two">
-    <img src="gal5.jpg" alt="">
-    <img src="gal6.jpg" alt="">
-  </div>
+  <!-- GALERIE (gal5 supprimée → gal6 seul) -->
+  <div class="gallery"><img src="gal6.jpg" alt=""></div>
   <div class="gallery"><img src="gal7.jpg" alt=""></div>
-
-  <!-- VIDÉOS -->
-  <section id="videos" class="section">
-    <h2 class="section-title">Vidéos <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
-    <div class="videos-grid">
-      <div class="video">
-        <iframe title="Reggae Surprise — Vidéo 1" src="https://www.youtube.com/embed/zKMnLi_MgBU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="video">
-        <iframe title="Reggae Surprise — Vidéo 2" src="https://www.youtube.com/embed/lnlzKieaveo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <div class="video">
-        <iframe title="Reggae Surprise — Vidéo 3" src="https://www.youtube.com/embed/fmNJjPm3r4M" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-    </div>
-  </section>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
@@ -139,7 +127,7 @@
     </form>
   </section>
 
-  <!-- FOOTER (RÉSEAUX en bas de page) -->
+  <!-- FOOTER : réseaux + mentions -->
   <footer>
     <div class="footer-socials" aria-label="Réseaux (bas de page)">
       <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
@@ -148,6 +136,11 @@
       <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
       <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
     </div>
+    <p class="footer-meta">
+      © 2025 Reggae Surprise — Tous droits réservés ·
+      <a href="#" rel="nofollow">Mentions légales</a> ·
+      <a href="#" rel="nofollow">Politique de confidentialité</a>
+    </p>
   </footer>
 
   <script>
