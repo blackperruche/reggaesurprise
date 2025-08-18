@@ -1,93 +1,336 @@
-/* Variables */
-:root{ --gold:#FFD700; }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reggae Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=11" />
+</head>
+<body>
 
-/* Reset */
-*{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; height:100%; font-family:'Playfair Display', serif; color:#111; }
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
+      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
+      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+      <li><a href="#" onclick="showSection('souvenir')">Un objet unique</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+    </ul>
+  </nav>
 
-/* Fond blanc + clin d'œil Jamaïque subtil */
-body{
-  background: linear-gradient(
-    135deg,
-    rgba(0,0,0,0.02) 0%,
-    rgba(255,215,0,0.05) 25%,
-    rgba(255,255,255,1) 50%,
-    rgba(0,128,0,0.05) 75%,
-    rgba(0,0,0,0.02) 100%
-  );
-  background-attachment: fixed;
-  background-size: cover;
-}
+  <!-- Lecteur Audio -->
+  <div class="audio-player" id="audioPlayer">
+    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
+    <div id="playButtonOverlay">▶</div>
+  </div>
+  <audio id="audioElement"></audio>
 
-/* Nav */
-nav{ position:fixed; top:0; left:0; right:0; z-index:10; background:rgba(255,255,255,0.9); padding:8px 0; overflow-x:auto; }
-nav ul{ margin:0; padding:0 12px; list-style:none; display:flex; justify-content:center; gap:18px; white-space:nowrap; }
-nav a{ color:#111; text-decoration:none; font-size:17px; padding:6px 2px; }
-nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
-@media (max-width:768px){ nav ul{ justify-content:flex-start; } }
+  <main>
+    <!-- ACCUEIL -->
+    <section id="accueil" class="active">
+      <!-- Réseaux AU-DESSUS de la 1re image -->
+      <div class="social-band top">
+        <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" aria-label="Apple Music"><img src="apple.png" alt="Apple Music" /></a>
+        <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener" aria-label="Spotify"><img src="spotify.png" alt="Spotify" /></a>
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" aria-label="YouTube"><img src="youtube.png" alt="YouTube" /></a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" aria-label="Instagram"><img src="instagram.png" alt="Instagram" /></a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" aria-label="Facebook"><img src="facebook.png" alt="Facebook" /></a>
+      </div>
 
-/* Sections */
-section{ display:none; padding-top:50px; }
-section.active{ display:block; }
-.container{
-  width:min(1000px,92vw); margin:0 auto; text-align:center; padding:18px;
-  border-radius:12px; background:rgba(255,255,255,0.8);
-  box-shadow:0 6px 20px rgba(0,0,0,0.08);
-}
+      <div class="overlay-content">
+        <div class="container accueil-container">
+          <div class="accueil-photo-wrapper">
+            <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
 
-/* Texte */
-.text-slab{ display:inline-block; padding:8px 14px; margin:6px auto; background:rgba(255,255,255,0.75); border-radius:8px; }
-.text-slab.wide{ display:block; width:90%; }
+            <!-- Réseaux incrustés DANS la 1re image -->
+            <div class="social-band inside">
+              <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music" /></a>
+              <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify" /></a>
+              <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube" /></a>
+              <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram" /></a>
+              <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-/* Accueil */
-.accueil-photo-wrapper{ position:relative; display:inline-block; }
-.photo-accueil{ display:block; width:100%; max-width:90%; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.3); }
-.social-band.inside{ position:absolute; bottom:12px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.45); padding:6px 12px; border-radius:8px; display:flex; gap:14px; }
-.social-band.inside img{ width:36px; height:36px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); transition:transform 0.25s; }
-.social-band.inside img:hover{ transform:scale(1.15); }
+    <!-- Image intermédiaire -->
+    <div class="gallery"><img src="gal1.jpg" alt="Photo ambiance reggae" loading="lazy"></div>
 
-/* Gallery */
-.gallery{ display:flex; justify-content:center; gap:14px; margin:16px auto; }
-.gallery img{ width:46%; max-width:480px; border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,0.2); }
-.gallery.two img{ width:30%; }
+    <!-- RENCONTRE -->
+    <section id="rencontre">
+      <div class="overlay-content">
+        <div class="container">
+          <p class="rencontre-text text-slab wide">
+            Une histoire de passionnés…
+            Avant la surprise, il y a eu une rencontre.
+            Cinq musiciens aux univers différents,
+            réunis par l'amour du groove et du reggae.
+          </p>
 
-/* Carousel */
-.carousel{ margin-top:20px; }
-.carousel-content{ position:relative; display:flex; align-items:center; justify-content:center; gap:12px; }
-.carousel-btn{ background:none; border:none; color:var(--gold); font-size:28px; cursor:pointer; transition:transform 0.2s; }
-.carousel-btn:hover{ transform:scale(1.2); }
-.carousel-btn.inside{ position:absolute; top:50%; transform:translateY(-50%); }
-.carousel-btn.left{ left:-28px; }
-.carousel-btn.right{ right:-28px; }
-#member-photo{ max-width:260px; border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,0.25); }
-.member-text{ margin-top:12px; font-size:15px; line-height:1.5; white-space:pre-line; text-align:justify; }
+          <div class="carousel">
+            <div class="carousel-content">
+              <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
+              <img id="member-photo" src="Julie.jpeg" alt="Membre" draggable="false" />
+              <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
+            </div>
+            <p id="member-text" class="member-text text-slab wide"></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-/* Concerts */
-.concert-img{ width:95%; max-width:700px; border-radius:10px; box-shadow:0 6px 16px rgba(0,0,0,0.25); }
+    <!-- Images intermédiaires -->
+    <div class="gallery two"><img src="gal2.jpg" alt="" loading="lazy"><img src="gal3.jpg" alt="" loading="lazy"></div>
 
-/* Souvenir */
-.souvenir-text{ font-size:20px; margin-bottom:14px; color:#333; }
-.merch-img{ width:95%; max-width:500px; border-radius:8px; opacity:0.9; }
+    <!-- CONCERTS -->
+    <section id="concerts">
+      <div class="overlay-content">
+        <div class="container">
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" draggable="false" loading="lazy" />
+        </div>
+      </div>
+    </section>
 
-/* Contact */
-form{ display:flex; flex-direction:column; gap:10px; }
-label{ text-align:left; font-size:14px; margin-left:2px; }
-input,textarea{ padding:10px; border-radius:6px; border:1px solid #ccc; font-family:inherit; font-size:14px; }
-button{ padding:10px; border:none; border-radius:6px; background:var(--gold); color:#000; font-weight:bold; cursor:pointer; transition:background 0.3s; }
-button:hover{ background:#e6c200; }
-.form-status{ margin-top:6px; font-size:14px; }
+    <!-- Image intermédiaire -->
+    <div class="gallery"><img src="gal4.jpg" alt="" loading="lazy"></div>
 
-/* Audio Player */
-.audio-player{ position:fixed; bottom:18px; right:18px; z-index:10; }
-#logo{ width:110px; height:110px; border-radius:20px; box-shadow:0 0 20px rgba(255,215,0,0.6); cursor:pointer; user-select:none; }
-#playButtonOverlay{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:40px; color:white; text-shadow:0 0 8px #000; pointer-events:none; }
-.blink{ animation: blink 1.2s infinite alternate; }
-@keyframes blink{ from{ opacity:1; } to{ opacity:0.3; } }
-.playing{ animation: spin 6s linear infinite; }
-@keyframes spin{ from{ transform:rotate(0); } to{ transform:rotate(360deg); } }
+    <!-- SOUVENIR -->
+    <section id="souvenir">
+      <div class="overlay-content">
+        <div class="container">
+          <p class="souvenir-text">Viens nous voir sur place et repars avec un objet unique ✨</p>
+          <img class="merch-img" src="merch.jpg" alt="Aperçu des objets" loading="lazy">
+        </div>
+      </div>
+    </section>
 
-/* Footer réseaux */
-footer{ margin-top:30px; padding:14px 0; text-align:center; background:rgba(0,0,0,0.04); }
-.footer-socials{ display:flex; justify-content:center; gap:16px; }
-.footer-socials img{ width:32px; height:32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); transition:transform 0.25s; }
-.footer-socials img:hover{ transform:scale(1.15); }
+    <!-- Images intermédiaires -->
+    <div class="gallery two"><img src="gal5.jpg" alt="" loading="lazy"><img src="gal6.jpg" alt="" loading="lazy"></div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="overlay-content">
+        <div class="container">
+          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="_replyto" required />
+
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+
+            <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
+            <button type="submit" id="sendBtn">Envoyer</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Réseaux (bas de page) -->
+  <footer>
+    <div class="footer-socials">
+      <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
+      <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
+      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
+      <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
+      <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
+    </div>
+  </footer>
+
+  <script>
+    // --- Navigation
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+    function showSection(id) {
+      sections.forEach(sec => sec.classList.remove('active'));
+      navLinks.forEach(a => a.classList.remove('active'));
+      const target = document.getElementById(id);
+      if (target) target.classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => {
+        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- Audio
+    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+    let currentTrack = 0;
+    const audio = document.getElementById('audioElement');
+    const logo = document.getElementById('logo');
+    const playOverlay = document.getElementById('playButtonOverlay');
+    let isPlaying = false, firstPlay = true, clickTimeout;
+
+    function playTrack(index){
+      audio.src = audioFiles[index];
+      audio.play().catch(()=>{});
+      isPlaying = true;
+      logo.classList.remove('blink');
+      logo.classList.add('playing');
+      playOverlay.style.display='none';
+    }
+    function pauseTrack(){
+      audio.pause();
+      isPlaying = false;
+      logo.classList.remove('playing');
+      logo.classList.add('blink');
+      playOverlay.style.display='block';
+    }
+    document.getElementById('audioPlayer').addEventListener('click', () => {
+      if (clickTimeout){
+        clearTimeout(clickTimeout);
+        clickTimeout=null;
+        currentTrack=(currentTrack+1)%audioFiles.length;
+        playTrack(currentTrack);
+        return;
+      }
+      clickTimeout=setTimeout(()=>{
+        if(!isPlaying){
+          if(firstPlay){
+            playTrack(currentTrack);
+            firstPlay=false;
+          } else {
+            audio.play().then(()=>{
+              isPlaying=true;
+              logo.classList.remove('blink');
+              logo.classList.add('playing');
+              playOverlay.style.display='none';
+            }).catch(()=>{});
+          }
+        } else {
+          pauseTrack();
+        }
+        clickTimeout=null;
+      }, 250);
+    });
+    audio.addEventListener('ended', ()=>{
+      currentTrack=(currentTrack+1)%audioFiles.length;
+      playTrack(currentTrack);
+    });
+    logo.classList.add('blink');
+    playOverlay.style.display='block';
+
+    // --- Carrousel (tes textes exacts)
+    const members = [
+      {
+        photo: "Julie.jpeg",
+        text: `Notre chanteuse, Julie Marsaud !
+Julie, c’est la touche de classique et de folie du groupe.
+Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
+Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
+Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
+Bref, avec Julie, ça groove avec élégance !`
+      },
+      {
+        photo: "Antho.jpeg",
+        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
+À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
+En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
+Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
+Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
+Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
+      },
+      { 
+        photo: "Keo Vy.jpeg",
+        text: `Le battement de cœur de Reggae Surprise Kéo Vy 
+Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
+Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
+Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
+      },
+      {
+        photo: "jeremy.jpeg",
+        text: `Notre bassiste, Jérémy ! 
+Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
+Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
+Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
+Big up Jérémy !`
+      },
+      {
+        photo: "Thomas.jpeg",
+        text: `Thomas, notre maestro des claviers !
+Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
+Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
+      }
+    ];
+    let currentMember = 0;
+    const photoEl = document.getElementById('member-photo');
+    const textEl = document.getElementById('member-text');
+    let hasAnimated = {};
+
+    function typeWriter(text, el, speed = 35, callback) {
+      let words = text.split(" ");
+      let i = 0;
+      el.textContent = "";
+      function typing() {
+        if (i < words.length) {
+          el.textContent += words[i] + " ";
+          i++;
+          setTimeout(typing, speed);
+        } else {
+          if (callback) callback();
+        }
+      }
+      typing();
+    }
+
+    function updateMember(){
+      photoEl.src = members[currentMember].photo;
+      photoEl.alt = `Photo de ${members[currentMember].photo.replace(/\.\w+$/, '')}`;
+      let key = currentMember;
+      if (!hasAnimated[key]) {
+        typeWriter(members[currentMember].text, textEl, 35, ()=>{ hasAnimated[key]=true; });
+      } else {
+        textEl.textContent = members[currentMember].text;
+      }
+    }
+    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
+    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
+    updateMember();
+
+    // --- Formulaire
+    (function(){
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+      const sendBtn = document.getElementById('sendBtn');
+      function setStatus(msg, ok){
+        status.textContent = msg;
+        status.style.color = ok ? '#2db84d' : '#d44';
+      }
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if(!form.checkValidity()){
+          setStatus('Merci de compléter tous les champs.', false);
+          form.reportValidity();
+          return;
+        }
+        setStatus('Envoi en cours…', true);
+        sendBtn.disabled = true;
+        try{
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok){
+            setStatus('Merci, votre message a été envoyé ✔', true);
+            form.reset();
+          } else {
+            setStatus('Oups, impossible d’envoyer le message', false);
+          }
+        } catch(err){
+          setStatus('Erreur réseau. Réessayez.', false);
+        } finally {
+          sendBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
