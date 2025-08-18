@@ -1,6 +1,7 @@
-/* style.css v18 — Reggae Surprise
+/* style.css v19 — Reggae Surprise
    - Nav fixe (scroll horizontal possible)
-   - Réseaux : top / inside (gros & horizontaux) / footer / DOCK fixé en bas
+   - Réseaux : top / inside (gros & horizontaux) / footer
+   - PAS de dock réseaux en scroll (supprimé)
    - Lecteur audio fixé en bas-droite (rotation en lecture)
    - 3 points Jamaïque dans les titres
    - Vidéos responsive (grid + 16:9)
@@ -151,25 +152,15 @@ button#sendBtn{
 button#sendBtn:hover{ filter:brightness(1.05); }
 #formStatus{ min-height:20px; }
 
-/* ---------- FOOTER (RÉSEAUX) ---------- */
-footer{ padding:26px 0 36px; border-top:1px solid var(--border); }
+/* ---------- FOOTER (RÉSEAUX + MÉTA) ---------- */
+footer{ padding:26px 0 36px; border-top:1px solid var(--border); text-align:center; }
 .footer-socials{
   display:flex; gap:18px; justify-content:center; align-items:center;
-  width:min(var(--wrap), 100% - 2rem); margin:0 auto;
+  width:min(var(--wrap), 100% - 2rem); margin:0 auto 10px;
 }
 .footer-socials img{ width:28px; height:28px; display:block; }
-
-/* ---------- DOCK RÉSEAUX (fixe en bas, comme le lecteur) ---------- */
-.social-dock{
-  position:fixed; left:50%; transform:translateX(-50%);
-  bottom: max(12px, env(safe-area-inset-bottom));
-  z-index:1190;
-  display:flex; gap:14px; align-items:center;
-  background:rgba(255,255,255,.92); padding:8px 14px; border-radius:999px;
-  backdrop-filter: blur(8px); box-shadow:0 10px 24px rgba(0,0,0,.18);
+.footer-meta{
+  margin:0; color:#555; font-size:14px;
 }
-.social-dock img{ width:28px; height:28px; }
-@media (max-width:520px){
-  .social-dock{ gap:12px; padding:8px 12px; }
-  .social-dock img{ width:26px; height:26px; }
-}
+.footer-meta a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
+.footer-meta a:hover{ text-decoration-thickness:2px; }
