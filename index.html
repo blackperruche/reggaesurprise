@@ -5,38 +5,61 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
   <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 <body>
 
   <!-- Décor (géré par CSS via body::before) -->
   <div class="background" aria-hidden="true"></div>
 
-  <!-- Navigation -->
+  <!-- Navigation (ancres -> page en long) -->
   <nav>
     <ul>
-      <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
-      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
-      <li><a href="#" onclick="showSection('reseaux')">Réseaux</a></li>
-      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
-      <li><a href="#" onclick="showSection('merch')">Merchandising</a></li>
-      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#rencontre">Rencontre</a></li>
+      <li><a href="#videos">Vidéos</a></li>
+      <li><a href="#reseaux">Réseaux</a></li>
+      <li><a href="#concerts">Concerts</a></li>
+      <li><a href="#merch">Merchandising</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- Lecteur Audio -->
+  <!-- Lecteur Audio (ancien logo conservé) -->
   <div class="audio-player" id="audioPlayer">
     <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
     <div id="playButtonOverlay">▶</div>
   </div>
-  <audio id="audioElement"></audio>
+  <audio id="audioElement" preload="none"></audio>
 
   <main>
     <!-- ACCUEIL -->
-    <section id="accueil" class="active">
+    <section id="accueil">
       <div class="overlay-content">
         <div class="container">
           <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
+
+          <!-- Pictos sous la première image -->
+          <div class="social-icons under-hero">
+            <!-- Écouter -->
+            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
+              <img src="apple.png" alt="Apple Music" draggable="false" />
+            </a>
+            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
+              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
+            </a>
+            <!-- Voir -->
+            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
+              <img src="youtube.png" alt="YouTube" draggable="false" />
+            </a>
+            <!-- Suivre -->
+            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
+              <img src="instagram.png" alt="Instagram" draggable="false" />
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
+              <img src="facebook.png" alt="Facebook" draggable="false" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -59,6 +82,51 @@
               <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
             </div>
             <p id="member-text" class="member-text text-slab wide"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDÉOS -->
+    <section id="videos">
+      <div class="overlay-content">
+        <div class="container">
+          <div class="video-grid">
+            <div class="video">
+              <div class="video-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/zKMnLi_MgBU"
+                  title="Reggae Surprise - Vidéo 1"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy"></iframe>
+              </div>
+            </div>
+
+            <div class="video">
+              <div class="video-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/lnlzKieaveo"
+                  title="Reggae Surprise - Vidéo 2"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy"></iframe>
+              </div>
+            </div>
+
+            <div class="video">
+              <div class="video-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/fmNJjPm3r4M"
+                  title="Reggae Surprise - Vidéo 3"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy"></iframe>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -145,19 +213,6 @@
   <!-- "..." fixes en bas -->
 
   <script>
-    // --- Navigation
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
-    function showSection(id) {
-      sections.forEach(sec => sec.classList.remove('active'));
-      navLinks.forEach(a => a.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(a => {
-        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     // --- Audio
     const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack = 0;
@@ -268,47 +323,18 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
 
-    // --- Formspree AJAX
-    (function(){
-      const form = document.getElementById('contactForm');
-      const status = document.getElementById('formStatus');
-      const sendBtn = document.getElementById('sendBtn');
-      function setStatus(msg, ok){
-        status.textContent = msg;
-        status.style.color = ok ? '#2db84d' : '#ffb3b3';
-      }
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if(!form.checkValidity()){
-          setStatus('Merci de compléter tous les champs.', false);
-          form.reportValidity();
-          return;
-        }
-        setStatus('Envoi en cours…', true);
-        sendBtn.disabled = true;
-        try{
-          const endpoint = form.action;
-          const data = new FormData(form);
-          const res = await fetch(endpoint, {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
-          });
-          if (res.ok){
-            setStatus('Merci, votre message a été envoyé ✔', true);
-            form.reset();
-          } else {
-            let err = '';
-            try { const j = await res.json(); err = (j && j.error) ? ` (${j.error})` : ''; } catch(_){}
-            setStatus('Oups, impossible d’envoyer le message' + err, false);
-          }
-        } catch(err){
-          setStatus('Erreur réseau. Réessayez dans un instant.', false);
-        } finally {
-          sendBtn.disabled = false;
+    // --- Smooth scroll (optionnel)
+    document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if(target){
+          e.preventDefault();
+          window.scrollTo({ top: target.offsetTop - 56, behavior: 'smooth' });
+          history.pushState(null, "", `#${id}`);
         }
       });
-    })();
+    });
   </script>
 </body>
 </html>
