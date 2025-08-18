@@ -1,8 +1,9 @@
-/* style.css v16 — Reggae Surprise
-   - Nav fixe défilable horizontalement
-   - Réseaux top / inside (horizontaux abaissés) / footer
-   - Lecteur audio fixé en bas-droite, qui tourne en lecture
-   - 3 points Jamaïque seulement dans les titres
+/* style.css v18 — Reggae Surprise
+   - Nav fixe (scroll horizontal possible)
+   - Réseaux : top / inside (gros & horizontaux) / footer / DOCK fixé en bas
+   - Lecteur audio fixé en bas-droite (rotation en lecture)
+   - 3 points Jamaïque dans les titres
+   - Vidéos responsive (grid + 16:9)
 */
 
 :root{
@@ -30,13 +31,12 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
   border-bottom:1px solid var(--border);
 }
 
-/* NAV défilable (on peut aller sur les côtés) */
+/* NAV défilable (peut aller sur les côtés) */
 .main-nav{
   display:flex; gap:18px; align-items:center;
   overflow-x:auto; -webkit-overflow-scrolling:touch;
   scrollbar-width: thin;
-  padding:10px 12px;
-  white-space:nowrap;
+  padding:10px 12px; white-space:nowrap;
 }
 .main-nav .nav-link{
   text-decoration:none; color:#222; font-weight:600; letter-spacing:.2px;
@@ -60,17 +60,10 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
   width:86px; height:86px; border-radius:20px; display:grid; place-items:center;
   box-shadow: var(--shadow); background:#fff;
 }
-.audio-fab img#logo{
-  width:86px; height:86px; border-radius:20px; object-fit:cover;
-}
-.audio-fab img#logo.playing{
-  animation: spin 10s linear infinite, glow 2.2s ease-in-out infinite;
-}
+.audio-fab img#logo{ width:86px; height:86px; border-radius:20px; object-fit:cover; }
+.audio-fab img#logo.playing{ animation: spin 10s linear infinite, glow 2.2s ease-in-out infinite; }
 @keyframes spin{ to{ transform: rotate(360deg); } }
-@keyframes glow{
-  0%,100%{ filter:none; }
-  50%{ filter: brightness(1.06); }
-}
+@keyframes glow{ 0%,100%{ filter:none; } 50%{ filter: brightness(1.06); } }
 .fab-btn{
   position:absolute; right:-6px; bottom:-6px;
   width:46px; height:46px; border-radius:50%; border:0; cursor:pointer;
@@ -96,20 +89,18 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 .accueil-photo-wrapper{ position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; }
 .photo-accueil{ width:100%; height:auto; display:block; border-radius:16px; box-shadow:var(--shadow); }
 
-/* Réseaux dans la 1re image : HORIZONTAUX, jamais en colonne */
+/* Réseaux dans la 1re image : HORIZONTAUX, PLUS GROS, abaissés */
 .social-band.inside{
   position:absolute; left:50%; transform:translateX(-50%);
-  bottom:8px; /* abaissée */
-  background:rgba(255,255,255,.9); padding:8px 12px; border-radius:999px;
-  backdrop-filter: blur(6px);
-  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  bottom:8px; background:rgba(255,255,255,.9); border-radius:999px;
   display:flex; flex-direction:row; align-items:center; gap:12px;
-  flex-wrap:nowrap; white-space:nowrap;
+  flex-wrap:nowrap; white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,.18);
 }
-.social-band.inside img{ width:26px; height:26px; }
+.social-band.inside.big{ padding:10px 16px; }
+.social-band.inside.big img{ width:30px; height:30px; }
 @media (max-width:520px){
-  .social-band.inside{ gap:10px; padding:6px 10px; }
-  .social-band.inside img{ width:22px; height:22px; }
+  .social-band.inside.big{ padding:8px 12px; gap:10px; }
+  .social-band.inside.big img{ width:26px; height:26px; }
 }
 
 /* ---------- GALERIES ---------- */
@@ -135,6 +126,17 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 .concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
 .souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px 0; }
 
+/* ---------- VIDÉOS ---------- */
+.videos-grid{
+  width:min(var(--wrap), 100% - 2rem); margin:0 auto;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;
+}
+.video iframe{
+  width:100%; aspect-ratio:16/9; border:0; border-radius:12px; box-shadow:var(--shadow);
+}
+@media (max-width:900px){ .videos-grid{ grid-template-columns:repeat(2, 1fr); } }
+@media (max-width:600px){ .videos-grid{ grid-template-columns:1fr; } }
+
 /* ---------- CONTACT ---------- */
 form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
 label{ font-weight:600; }
@@ -156,3 +158,18 @@ footer{ padding:26px 0 36px; border-top:1px solid var(--border); }
   width:min(var(--wrap), 100% - 2rem); margin:0 auto;
 }
 .footer-socials img{ width:28px; height:28px; display:block; }
+
+/* ---------- DOCK RÉSEAUX (fixe en bas, comme le lecteur) ---------- */
+.social-dock{
+  position:fixed; left:50%; transform:translateX(-50%);
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index:1190;
+  display:flex; gap:14px; align-items:center;
+  background:rgba(255,255,255,.92); padding:8px 14px; border-radius:999px;
+  backdrop-filter: blur(8px); box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+.social-dock img{ width:28px; height:28px; }
+@media (max-width:520px){
+  .social-dock{ gap:12px; padding:8px 12px; }
+  .social-dock img{ width:26px; height:26px; }
+}
