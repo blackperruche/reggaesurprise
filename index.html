@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=21" />
+  <link rel="stylesheet" href="style.css?v=22" />
 </head>
 <body>
 
@@ -44,7 +44,7 @@
   <section id="accueil" class="section">
     <div class="accueil-photo-wrapper">
       <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-      <!-- RÉSEAUX EN PLEINE LARGEUR DE LA PHOTO -->
+      <!-- RÉSEAUX PLEINE LARGEUR, FOND GRIS -->
       <div class="social-band inside full big" aria-label="Réseaux (dans l'image)">
         <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
         <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
@@ -131,12 +131,12 @@
     </form>
   </section>
 
-  <!-- FOOTER : réseaux + mentions -->
+  <!-- FOOTER : réseaux + mentions (fond gris) -->
   <footer>
     <div class="footer-socials" aria-label="Réseaux (bas de page)">
       <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
       <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
-      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></img></a>
+      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
       <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
       <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
     </div>
@@ -180,7 +180,7 @@
       audio.src = audioFiles[index];
       audio.play().catch(()=>{});
       isPlaying = true;
-      logoBox.classList.add('spin');      // <-- on fait tourner TOUT le carré
+      logoBox.classList.add('spin');    // tout le carré tourne
       playFab.textContent = '❚❚';
     }
     function pauseTrack(){
@@ -203,7 +203,6 @@
       }, 250);
     });
 
-    // boutons (prév/next/play) — empêchent la propagation
     [playFab, fabPrev, fabNext].forEach(btn => btn.addEventListener('click', e => e.stopPropagation()));
     playFab.addEventListener('click', () => { (!isPlaying) ? (firstPlay ? (firstPlay=false, playTrack(currentTrack)) : (audio.play(), isPlaying=true, logoBox.classList.add('spin'), playFab.textContent='❚❚')) : pauseTrack(); });
     fabPrev.addEventListener('click', () => { currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length; playTrack(currentTrack); });
@@ -244,7 +243,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const hasAnimated = new Set();
 
     function typeLetters(text, el, cps = 48){
-      const chars = [...text];             // gère accents/emoji
+      const chars = [...text];
       const delay = Math.max(8, Math.floor(1000 / cps));
       el.textContent = "";
       let i = 0;
