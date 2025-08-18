@@ -1,14 +1,16 @@
-/* style.css v13 — Reggae Surprise (layout en long + points jamaïcains sur galeries) */
+/* style.css v14 — Reggae Surprise */
 
 :root{
   --ja-green:#2AA843;
   --ja-yellow:#FFC300;
   --ja-red:#D62828;
   --shadow:0 10px 25px rgba(0,0,0,.1);
+  --text:#111;
+  --bg:#fff;
 }
 
 *{ box-sizing:border-box; }
-body{ margin:0; font-family:"Playfair Display", serif; background:#fff; color:#111; }
+body{ margin:0; font-family:"Playfair Display", serif; background:var(--bg); color:var(--text); }
 
 /* Réseaux */
 .social-band{ display:flex; gap:16px; justify-content:center; align-items:center; }
@@ -42,13 +44,13 @@ section{ padding:40px 20px; text-align:center; }
 /* Images */
 .photo-accueil,.concert-img,.merch-img{ width:100%; border-radius:12px; box-shadow:var(--shadow); display:block; }
 
-/* Galerie standard + alternée */
+/* Galerie */
 .gallery{ padding:20px; }
 .gallery img{ width:100%; border-radius:12px; box-shadow:var(--shadow); display:block; }
 .gallery.two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 @media (max-width:760px){ .gallery.two{ grid-template-columns:1fr; } }
 
-/* Dots en bas à droite de chaque photo de galerie */
+/* Points jamaïcains en bas à droite */
 .img-dot{ position:relative; display:block; }
 .jamaica-dots.corner{
   position:absolute; right:10px; bottom:10px;
@@ -57,7 +59,7 @@ section{ padding:40px 20px; text-align:center; }
 }
 .jamaica-dots.corner i{ width:7px; height:7px; }
 
-/* Texte rencontre + carrousel */
+/* Rencontre + carrousel */
 .rencontre-text{ max-width:70ch; margin:0 auto 16px; }
 .carousel{ position:relative; max-width:700px; margin:20px auto; }
 .carousel img{ width:100%; border-radius:12px; box-shadow:var(--shadow); display:block; }
