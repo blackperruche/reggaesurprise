@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=19" />
+  <link rel="stylesheet" href="style.css?v=20" />
 </head>
 <body>
 
@@ -31,8 +31,12 @@
 
   <!-- LECTEUR AUDIO FLOTTANT (fixe en bas-droite) -->
   <div class="audio-fab" id="audioPlayer" aria-label="Lecteur audio (1 clic: lecture/pause, 2 clics: piste suivante)">
-    <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
-    <button id="playFab" class="fab-btn" aria-label="Lecture/Pause">▶</button>
+    <div class="logo-box">
+      <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
+      <button id="fabPrev" class="fab-skip prev" aria-label="Piste précédente">‹</button>
+      <button id="fabNext" class="fab-skip next" aria-label="Piste suivante">›</button>
+      <button id="playFab" class="fab-btn" aria-label="Lecture/Pause">▶</button>
+    </div>
   </div>
   <audio id="audioElement"></audio>
 
@@ -40,7 +44,7 @@
   <section id="accueil" class="section">
     <div class="accueil-photo-wrapper">
       <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-      <!-- RÉSEAUX DANS LA 1ʳᵉ IMAGE — HORIZONTAUX, PLUS GROS, ABAISSÉS -->
+      <!-- RÉSEAUX DANS LA 1ʳᵉ IMAGE — HORIZONTAUX, PLUS GRANDS, SANS DÉBORDEMENT -->
       <div class="social-band inside big" aria-label="Réseaux (dans l'image)">
         <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
         <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
@@ -70,7 +74,7 @@
     <p id="member-text" class="member-text" aria-live="polite"></p>
   </section>
 
-  <!-- VIDÉOS (déplacées ici juste après Rencontre) -->
+  <!-- VIDÉOS (juste après Rencontre) -->
   <section id="videos" class="section">
     <h2 class="section-title">Vidéos <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
     <div class="videos-grid">
@@ -108,7 +112,7 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- GALERIE (gal5 supprimée → gal6 seul) -->
+  <!-- GALERIE (gal5 supprimée → gal6 & gal7) -->
   <div class="gallery"><img src="gal6.jpg" alt=""></div>
   <div class="gallery"><img src="gal7.jpg" alt=""></div>
 
@@ -136,11 +140,15 @@
       <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
       <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
     </div>
-    <p class="footer-meta">
-      © 2025 Reggae Surprise — Tous droits réservés ·
-      <a href="#" rel="nofollow">Mentions légales</a> ·
+    <div class="footer-meta">
+      <span>© 2025 Reggae Surprise</span>
+      <span class="sep"></span>
+      <span>Tous droits réservés</span>
+      <span class="sep"></span>
+      <a href="#" rel="nofollow">Mentions légales</a>
+      <span class="sep"></span>
       <a href="#" rel="nofollow">Politique de confidentialité</a>
-    </p>
+    </div>
   </footer>
 
   <script>
@@ -164,6 +172,8 @@
     const audio = document.getElementById('audioElement');
     const logo = document.getElementById('logo');
     const playFab = document.getElementById('playFab');
+    const fabPrev = document.getElementById('fabPrev');
+    const fabNext = document.getElementById('fabNext');
     let isPlaying = false, firstPlay = true, clickTimeout;
 
     function playTrack(index){
@@ -176,6 +186,7 @@
       isPlaying = false; logo.classList.remove('playing'); playFab.textContent = '▶';
     }
 
+    // zone cliquable (1 clic play/pause, double-clic piste suivante)
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.addEventListener('click', () => {
       if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout = null;
@@ -188,53 +199,49 @@
         clickTimeout = null;
       }, 250);
     });
-    playFab.addEventListener('click', (e) => { e.stopPropagation();
+
+    // boutons (prév/next/play) — empêchent la propagation
+    [playFab, fabPrev, fabNext].forEach(btn => btn.addEventListener('click', e => e.stopPropagation()));
+    playFab.addEventListener('click', () => {
       if (!isPlaying){ if (firstPlay){ playTrack(currentTrack); firstPlay=false; } else { audio.play(); isPlaying=true; logo.classList.add('playing'); playFab.textContent='❚❚'; } }
       else { pauseTrack(); }
     });
+    fabPrev.addEventListener('click', () => {
+      currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length;
+      playTrack(currentTrack);
+    });
+    fabNext.addEventListener('click', () => {
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      playTrack(currentTrack);
+    });
     audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
 
-    /* ---------- CARROUSEL + ANIMATION MOT PAR MOT ---------- */
+    /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE ---------- */
     const members = [
-      {
-        photo: "Julie.jpeg",
-        text: `Notre chanteuse, Julie Marsaud !
+      { photo: "Julie.jpeg", text: `Notre chanteuse, Julie Marsaud !
 Julie, c’est la touche de classique et de folie du groupe.
 Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
 Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
 Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
-Bref, avec Julie, ça groove avec élégance !`
-      },
-      {
-        photo: "Antho.jpeg",
-        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
+Bref, avec Julie, ça groove avec élégance !` },
+      { photo: "Antho.jpeg", text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
 À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
 En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
 Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
 Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
-Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
-      },
-      { 
-        photo: "Keo Vy.jpeg",
-        text: `Le battement de cœur de Reggae Surprise Kéo Vy 
+Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !` },
+      { photo: "Keo Vy.jpeg", text: `Le battement de cœur de Reggae Surprise Kéo Vy 
 Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
 Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
-Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
-      },
-      {
-        photo: "jeremy.jpeg",
-        text: `Notre bassiste, Jérémy ! 
+Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !` },
+      { photo: "jeremy.jpeg", text: `Notre bassiste, Jérémy ! 
 Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
 Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
 Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
-Big up Jérémy !`
-      },
-      {
-        photo: "Thomas.jpeg",
-        text: `Thomas, notre maestro des claviers !
+Big up Jérémy !` },
+      { photo: "Thomas.jpeg", text: `Thomas, notre maestro des claviers !
 Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
-Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
-      }
+Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !` }
     ];
 
     let currentMember = 0;
@@ -242,18 +249,18 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
-    function typeWords(text, el, wpm = 300){
-      const words = text.split(/\s+/);
-      const delay = Math.max(20, Math.floor(60000 / wpm));
+    function typeLetters(text, el, cps = 45){
+      // cps = caractères/secondes
+      const chars = [...text]; // gère accents/emoji
+      const delay = Math.max(8, Math.floor(1000 / cps));
       el.textContent = "";
       let i = 0;
-      function step(){
-        if (i < words.length){
-          el.textContent += (i ? " " : "") + words[i];
-          i++; setTimeout(step, delay);
+      (function step(){
+        if (i < chars.length){
+          el.textContent += chars[i++];
+          setTimeout(step, delay);
         }
-      }
-      step();
+      })();
     }
 
     function updateMember(){
@@ -261,7 +268,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       photoEl.src = m.photo;
       photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
       if (!hasAnimated.has(currentMember)){
-        typeWords(m.text, textEl, 300);
+        typeLetters(m.text, textEl, 48); // ~48 char/s
         hasAnimated.add(currentMember);
       } else {
         textEl.textContent = m.text;
