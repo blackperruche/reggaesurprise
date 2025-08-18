@@ -3,7 +3,7 @@
 
 /* Reset */
 *{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; color:#fff; font-family:'Reggae One', cursive; }
+html,body{ margin:0; padding:0; color:#fff; font-family:'Reggae One', cursive; scroll-behavior:smooth; }
 html,body{ height:100%; }
 
 /* Fond décor */
@@ -25,13 +25,12 @@ body::after{
 /* Nav */
 nav{ position:fixed; top:0; left:0; right:0; z-index:10; background:rgba(0,0,0,0.7); padding:10px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
 nav ul{ margin:0; padding:0 12px; list-style:none; display:flex; justify-content:center; gap:20px; white-space:nowrap; }
-nav a{ color:var(--gold); text-decoration:none; font-size:18px; padding:6px 2px; }
-nav a.active{ border-bottom:2px solid var(--gold); padding-bottom:3px; }
+nav a{ color:var(--gold); text-decoration:none; font-size:18px; padding:6px 2px; border-bottom:2px solid transparent; }
+nav a:focus, nav a:hover{ border-bottom-color:var(--gold); }
 @media (max-width:768px){ nav ul{ justify-content:flex-start; min-width:max-content; } }
 
 /* Sections & carte */
-section{ display:none; padding-top:40px; } 
-section.active{ display:block; }
+section{ padding-top:64px; } /* espace pour la nav fixe */
 .overlay-content{ background:transparent; padding:20px 0; }
 
 .container{
@@ -49,7 +48,11 @@ section.active{ display:block; }
 .text-slab.wide{ display:block; width:85%; }
 
 /* Accueil */
-.photo-accueil{ max-width:90%; height:auto; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+.photo-accueil{ max-width:90%; height:auto; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.5); margin-bottom:14px; }
+
+/* Réseaux sous la première image */
+.social-icons.under-hero{ gap:14px; margin-top:6px; }
+.social-icons.under-hero .icon-frame{ background:rgba(0,0,0,0.45); }
 
 /* Carousel */
 .carousel{ margin-top:25px; }
@@ -71,6 +74,20 @@ section.active{ display:block; }
 .icon-frame{ display:inline-block; padding:8px; border-radius:12px; background:rgba(0,0,0,0.35); transition:transform 0.25s; }
 .icon-frame:hover{ transform:scale(1.1); }
 .icon-frame img{ width:50px; height:50px; display:block; }
+
+/* Vidéos */
+.video-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:start;
+}
+@media (max-width:980px){
+  .video-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px){
+  .video-grid{ grid-template-columns:1fr; }
+}
+.video{ width:100%; }
+.video-embed{ position:relative; width:100%; padding-top:56.25%; border-radius:10px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,0.55); }
+.video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; }
 
 /* Concerts */
 .concert-img{ width:95%; max-width:720px; border-radius:10px; box-shadow:0 6px 16px rgba(0,0,0,0.55); }
