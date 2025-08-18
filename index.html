@@ -4,28 +4,24 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
-  <link href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=11" />
 </head>
 <body>
 
-  <!-- Décor (géré par CSS via body::before) -->
-  <div class="background" aria-hidden="true"></div>
-
-  <!-- Navigation (ancres -> page en long) -->
+  <!-- Navigation -->
   <nav>
     <ul>
       <li><a href="#accueil">Accueil</a></li>
       <li><a href="#rencontre">Rencontre</a></li>
       <li><a href="#videos">Vidéos</a></li>
-      <li><a href="#reseaux">Réseaux</a></li>
       <li><a href="#concerts">Concerts</a></li>
-      <li><a href="#merch">Merchandising</a></li>
+      <li><a href="#souvenir">Souvenir</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- Lecteur Audio (ancien logo conservé) -->
+  <!-- Lecteur Audio -->
   <div class="audio-player" id="audioPlayer">
     <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
     <div id="playButtonOverlay">▶</div>
@@ -38,27 +34,12 @@
       <div class="overlay-content">
         <div class="container">
           <img src="accueil.png?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-
-          <!-- Pictos sous la première image -->
           <div class="social-icons under-hero">
-            <!-- Écouter -->
-            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
-              <img src="apple.png" alt="Apple Music" draggable="false" />
-            </a>
-            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
-              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
-            </a>
-            <!-- Voir -->
-            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
-              <img src="youtube.png" alt="YouTube" draggable="false" />
-            </a>
-            <!-- Suivre -->
-            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
-              <img src="instagram.png" alt="Instagram" draggable="false" />
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
-              <img src="facebook.png" alt="Facebook" draggable="false" />
-            </a>
+            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" class="icon-frame"><img src="apple.png" alt="Apple Music" /></a>
+            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" class="icon-frame"><img src="spotify.png" alt="Spotify" /></a>
+            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" class="icon-frame"><img src="youtube.png" alt="YouTube" /></a>
+            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" class="icon-frame"><img src="instagram.png" alt="Instagram" /></a>
+            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" class="icon-frame"><img src="facebook.png" alt="Facebook" /></a>
           </div>
         </div>
       </div>
@@ -68,18 +49,18 @@
     <section id="rencontre">
       <div class="overlay-content">
         <div class="container">
+          <h2 class="section-title">Rencontre</h2>
           <p class="rencontre-text text-slab wide">
-            Une histoire de passionnés…
-            Avant la surprise, il y a eu une rencontre.
-            Cinq musiciens aux univers différents,
-            réunis par l'amour du groove et du reggae.
+            Une histoire de passionnés…  
+            Avant la surprise, il y a eu une rencontre.  
+            Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae.
           </p>
 
           <div class="carousel">
             <div class="carousel-content">
-              <button class="carousel-btn inside left" aria-label="Précédent" onclick="prevMember()">&#10094;</button>
-              <img id="member-photo" src="Julie.jpeg" alt="Membre" draggable="false" />
-              <button class="carousel-btn inside right" aria-label="Suivant" onclick="nextMember()">&#10095;</button>
+              <button class="carousel-btn inside left" onclick="prevMember()">&#10094;</button>
+              <img id="member-photo" src="Julie.jpeg" alt="Membre" />
+              <button class="carousel-btn inside right" onclick="nextMember()">&#10095;</button>
             </div>
             <p id="member-text" class="member-text text-slab wide"></p>
           </div>
@@ -92,75 +73,9 @@
       <div class="overlay-content">
         <div class="container">
           <div class="video-grid">
-            <div class="video">
-              <div class="video-embed">
-                <iframe
-                  src="https://www.youtube.com/embed/zKMnLi_MgBU"
-                  title="Reggae Surprise - Vidéo 1"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy"></iframe>
-              </div>
-            </div>
-
-            <div class="video">
-              <div class="video-embed">
-                <iframe
-                  src="https://www.youtube.com/embed/lnlzKieaveo"
-                  title="Reggae Surprise - Vidéo 2"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy"></iframe>
-              </div>
-            </div>
-
-            <div class="video">
-              <div class="video-embed">
-                <iframe
-                  src="https://www.youtube.com/embed/fmNJjPm3r4M"
-                  title="Reggae Surprise - Vidéo 3"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy"></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RÉSEAUX -->
-    <section id="reseaux">
-      <div class="overlay-content">
-        <div class="container">
-          <h2 class="net-title text-slab">Viens nous écouter sur</h2>
-          <div class="social-icons">
-            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" class="icon-frame">
-              <img src="apple.png" alt="Apple Music" draggable="false" />
-            </a>
-            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" rel="noopener" class="icon-frame">
-              <img src="spotify.png" alt="Spotify" class="icon-boost" draggable="false" />
-            </a>
-          </div>
-
-          <h2 class="net-title text-slab">Viens nous voir sur</h2>
-          <div class="social-icons">
-            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" class="icon-frame">
-              <img src="youtube.png" alt="YouTube" draggable="false" />
-            </a>
-          </div>
-
-          <h2 class="net-title text-slab">Viens nous suivre sur</h2>
-          <div class="social-icons">
-            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" class="icon-frame">
-              <img src="instagram.png" alt="Instagram" draggable="false" />
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" class="icon-frame">
-              <img src="facebook.png" alt="Facebook" draggable="false" />
-            </a>
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/zKMnLi_MgBU" allowfullscreen></iframe></div>
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/lnlzKieaveo" allowfullscreen></iframe></div>
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/fmNJjPm3r4M" allowfullscreen></iframe></div>
           </div>
         </div>
       </div>
@@ -170,17 +85,18 @@
     <section id="concerts">
       <div class="overlay-content">
         <div class="container">
-          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" id="concertImg" draggable="false" />
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" />
         </div>
       </div>
     </section>
 
-    <!-- MERCH -->
-    <section id="merch">
+    <!-- SOUVENIR -->
+    <section id="souvenir">
       <div class="overlay-content">
         <div class="container">
-          <p class="merch-coming">À venir ...</p>
-          <img class="merch-img" src="merch.jpg" alt="Aperçu du merchandising" loading="lazy">
+          <h2 class="section-title">Souvenir</h2>
+          <p class="souvenir-text">Viens nous voir sur place et repars avec un souvenir.</p>
+          <img class="merch-img" src="merch.jpg" alt="Souvenir Reggae Surprise" loading="lazy">
         </div>
       </div>
     </section>
@@ -189,152 +105,37 @@
     <section id="contact">
       <div class="overlay-content">
         <div class="container">
-          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
+          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST">
             <label for="name">Nom :</label>
-            <input type="text" id="name" name="name" required />
-
+            <input type="text" id="name" name="name" required>
             <label for="email">Email :</label>
-            <input type="email" id="email" name="_replyto" required />
-
+            <input type="email" id="email" name="_replyto" required>
             <label for="message">Message :</label>
             <textarea id="message" name="message" rows="6" required></textarea>
-
-            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-            <input type="hidden" name="_subject" value="Nouveau message via le site Reggae Surprise" />
-
-            <button type="submit" id="sendBtn">Envoyer</button>
-            <p id="formStatus" class="form-status" aria-live="polite"></p>
+            <button type="submit">Envoyer</button>
+            <p id="formStatus" class="form-status"></p>
           </form>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- "..." fixes en bas -->
-
   <script>
-    // --- Audio
-    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
-    let currentTrack = 0;
-    const audio = document.getElementById('audioElement');
-    const logo = document.getElementById('logo');
-    const playOverlay = document.getElementById('playButtonOverlay');
-    let isPlaying = false, firstPlay = true, clickTimeout;
-
-    function playTrack(index){
-      audio.src = audioFiles[index];
-      audio.play().catch(()=>{});
-      isPlaying = true;
-      logo.classList.remove('blink');
-      logo.classList.add('playing');
-      playOverlay.style.display='none';
-    }
-    function pauseTrack(){
-      audio.pause();
-      isPlaying = false;
-      logo.classList.remove('playing');
-      logo.classList.add('blink');
-      playOverlay.style.display='block';
-    }
-    document.getElementById('audioPlayer').addEventListener('click', () => {
-      if (clickTimeout){
-        clearTimeout(clickTimeout);
-        clickTimeout=null;
-        currentTrack=(currentTrack+1)%audioFiles.length;
-        playTrack(currentTrack);
-        return;
-      }
-      clickTimeout=setTimeout(()=>{
-        if(!isPlaying){
-          if(firstPlay){
-            playTrack(currentTrack);
-            firstPlay=false;
-          } else {
-            audio.play().then(()=>{
-              isPlaying=true;
-              logo.classList.remove('blink');
-              logo.classList.add('playing');
-              playOverlay.style.display='none';
-            }).catch(()=>{});
-          }
-        } else {
-          pauseTrack();
-        }
-        clickTimeout=null;
-      }, 250);
-    });
-    audio.addEventListener('ended', ()=>{
-      currentTrack=(currentTrack+1)%audioFiles.length;
-      playTrack(currentTrack);
-    });
-    logo.classList.add('blink');
-    playOverlay.style.display='block';
-
-    // --- Carrousel (Julie en 1, Antho en 2)
+    // Carrousel
     const members = [
-      {
-        photo: "Julie.jpeg",
-        text: `Notre chanteuse, Julie Marsaud !
-Julie, c’est la touche de classique et de folie du groupe.
-Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
-Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
-Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
-Bref, avec Julie, ça groove avec élégance !`
-      },
-      {
-        photo: "Antho.jpeg",
-        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
-À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
-En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
-Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
-Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
-Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
-      },
-      { 
-        photo: "Keo Vy.jpeg",
-        text: `Le battement de cœur de Reggae Surprise Kéo Vy 
-Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
-Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
-Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
-      },
-      {
-        photo: "jeremy.jpeg",
-        text: `Notre bassiste, Jérémy ! 
-Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
-Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
-Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
-Big up Jérémy !`
-      },
-      {
-        photo: "Thomas.jpeg",
-        text: `Thomas, notre maestro des claviers !
-Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
-Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
-      }
+      { photo:"Julie.jpeg", text:"Notre chanteuse, Julie Marsaud ! ..." },
+      { photo:"Antho.jpeg", text:"Voici Anthony, notre guitariste et fondateur ! ..." },
+      { photo:"Keo Vy.jpeg", text:"Kéo Vy, batteur et percussionniste depuis des années..." },
+      { photo:"jeremy.jpeg", text:"Jérémy, notre bassiste, groove et vibes assurées !" },
+      { photo:"Thomas.jpeg", text:"Thomas, claviériste, touche à tout musical et créatif !" }
     ];
-    let currentMember = 0;
-    const photoEl = document.getElementById('member-photo');
-    const textEl = document.getElementById('member-text');
-    function updateMember(){
-      photoEl.src = members[currentMember].photo;
-      textEl.textContent = members[currentMember].text;
-    }
-    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
-    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
+    let current=0;
+    const photoEl=document.getElementById('member-photo');
+    const textEl=document.getElementById('member-text');
+    function updateMember(){ photoEl.src=members[current].photo; textEl.textContent=members[current].text; }
+    function prevMember(){ current=(current-1+members.length)%members.length; updateMember(); }
+    function nextMember(){ current=(current+1)%members.length; updateMember(); }
     updateMember();
-
-    // --- Smooth scroll (optionnel)
-    document.querySelectorAll('nav a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const id = a.getAttribute('href').slice(1);
-        const target = document.getElementById(id);
-        if(target){
-          e.preventDefault();
-          window.scrollTo({ top: target.offsetTop - 56, behavior: 'smooth' });
-          history.pushState(null, "", `#${id}`);
-        }
-      });
-    });
   </script>
 </body>
 </html>
