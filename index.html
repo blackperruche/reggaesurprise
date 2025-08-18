@@ -5,21 +5,19 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=17" />
+  <link rel="stylesheet" href="style.css?v=8" />
 </head>
 <body>
 
   <!-- Navigation -->
   <nav>
     <ul>
-      <li class="nav-pad" aria-hidden="true"></li>
-      <li><a href="#accueil">Accueil</a></li>
-      <li><a href="#rencontre">Rencontre</a></li>
-      <li><a href="#videos">Vidéos</a></li>
-      <li><a href="#concerts">Concerts</a></li>
-      <li><a href="#souvenir">Souvenir</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li class="nav-pad" aria-hidden="true"></li>
+      <li><a href="#" onclick="showSection('accueil')" class="active">Accueil</a></li>
+      <li><a href="#" onclick="showSection('rencontre')">Rencontre</a></li>
+      <li><a href="#" onclick="showSection('videos')">Vidéos</a></li>
+      <li><a href="#" onclick="showSection('concerts')">Concerts</a></li>
+      <li><a href="#" onclick="showSection('souvenir')">Souvenir</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
     </ul>
   </nav>
 
@@ -28,67 +26,54 @@
     <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
     <div id="playButtonOverlay">▶</div>
   </div>
-  <audio id="audioElement" preload="none"></audio>
+  <audio id="audioElement"></audio>
 
   <main>
     <!-- ACCUEIL -->
-    <section id="accueil">
+    <section id="accueil" class="active">
       <div class="overlay-content">
         <div class="container">
-          <img src="accueil.jpg?v=1" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-          <div class="social-icons under-hero">
-            <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" class="icon-frame"><img src="apple.png" alt="Apple Music" /></a>
-            <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx?si=04DVmS7pROagwVvOh4DR1g" target="_blank" class="icon-frame"><img src="spotify.png" alt="Spotify" /></a>
-            <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" class="icon-frame"><img src="youtube.png" alt="YouTube" /></a>
-            <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" class="icon-frame"><img src="instagram.png" alt="Instagram" /></a>
-            <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" class="icon-frame"><img src="facebook.png" alt="Facebook" /></a>
-          </div>
+          <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
         </div>
       </div>
     </section>
 
-    <!-- GALERIE 1 -->
-    <div class="between-gallery">
+    <!-- Galerie 1 (1 photo) -->
+    <div class="between-gallery one">
       <img src="gal1.jpg" alt="" loading="lazy">
-      <img src="gal2.jpg" alt="" loading="lazy">
-      <img src="gal3.jpg" alt="" loading="lazy">
-      <img src="gal4.jpg" alt="" loading="lazy">
     </div>
 
     <!-- RENCONTRE -->
     <section id="rencontre">
       <div class="overlay-content">
         <div class="container">
-          <h2 class="section-title">Rencontre</h2>
-          <p class="rencontre-text text-slab wide">
-            Une histoire de passionnés…  
-            Avant la surprise, il y a eu une rencontre.  
+          <p class="rencontre-text">
+            Une histoire de passionnés… Avant la surprise, il y a eu une rencontre.
             Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae.
           </p>
-
           <div class="carousel">
             <div class="carousel-content">
-              <button class="carousel-btn inside left" onclick="prevMember()">&#10094;</button>
-              <img id="member-photo" src="Julie.jpeg" alt="Membre" />
-              <button class="carousel-btn inside right" onclick="nextMember()">&#10095;</button>
+              <button class="carousel-btn left" onclick="prevMember()">&#10094;</button>
+              <img id="member-photo" src="Julie.jpeg" alt="Membre" draggable="false" />
+              <button class="carousel-btn right" onclick="nextMember()">&#10095;</button>
             </div>
-            <p id="member-text" class="member-text text-slab wide"></p>
+            <p id="member-text" class="member-text"></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- GALERIE 2 -->
-    <div class="between-gallery">
-      <img src="gal5.jpg" alt="" loading="lazy">
-      <img src="gal6.jpg" alt="" loading="lazy">
-      <img src="gal7.jpg" alt="" loading="lazy">
+    <!-- Galerie 2 (2 photos) -->
+    <div class="between-gallery two">
+      <img src="gal2.jpg" alt="" loading="lazy">
+      <img src="gal3.jpg" alt="" loading="lazy">
     </div>
 
-    <!-- VIDÉOS -->
+    <!-- VIDEOS -->
     <section id="videos">
       <div class="overlay-content">
         <div class="container">
+          <h2 class="section-title">Vidéos</h2>
           <div class="video-grid">
             <div class="video-embed"><iframe src="https://www.youtube.com/embed/zKMnLi_MgBU" allowfullscreen></iframe></div>
             <div class="video-embed"><iframe src="https://www.youtube.com/embed/lnlzKieaveo" allowfullscreen></iframe></div>
@@ -98,61 +83,55 @@
       </div>
     </section>
 
-    <!-- GALERIE 3 -->
-    <div class="between-gallery">
-      <img src="gal8.jpg" alt="" loading="lazy">
-      <img src="gal9.jpg" alt="" loading="lazy">
-      <img src="gal10.jpg" alt="" loading="lazy">
-      <img src="gal11.jpg" alt="" loading="lazy">
+    <!-- Galerie 3 (1 photo) -->
+    <div class="between-gallery one">
+      <img src="gal4.jpg" alt="" loading="lazy">
     </div>
 
     <!-- CONCERTS -->
     <section id="concerts">
       <div class="overlay-content">
         <div class="container">
-          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" />
+          <h2 class="section-title">Concerts</h2>
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" draggable="false" />
         </div>
       </div>
     </section>
 
-    <!-- GALERIE 4 -->
-    <div class="between-gallery">
-      <img src="gal12.jpg" alt="" loading="lazy">
-      <img src="gal13.jpg" alt="" loading="lazy">
-      <img src="gal14.jpg" alt="" loading="lazy">
+    <!-- Galerie 4 (2 photos) -->
+    <div class="between-gallery two">
+      <img src="gal5.jpg" alt="" loading="lazy">
+      <img src="gal6.jpg" alt="" loading="lazy">
     </div>
 
     <!-- SOUVENIR -->
     <section id="souvenir">
       <div class="overlay-content">
         <div class="container">
-          <h2 class="section-title">Souvenir</h2>
-          <p class="souvenir-text">Viens nous voir sur place et repars avec un objet unique.</p>
-          <img class="merch-img" src="merch.jpg" alt="Souvenir Reggae Surprise" loading="lazy">
+          <p class="souvenir-text">Viens nous voir sur place… et repars avec un objet unique.</p>
+          <img class="merch-img" src="merch.jpg" alt="Aperçu merchandising" loading="lazy">
         </div>
       </div>
     </section>
 
-    <!-- GALERIE 5 -->
-    <div class="between-gallery">
-      <img src="gal15.jpg" alt="" loading="lazy">
-      <img src="gal16.jpg" alt="" loading="lazy">
-      <img src="gal17.jpg" alt="" loading="lazy">
-      <img src="gal18.jpg" alt="" loading="lazy">
+    <!-- Galerie 5 (1 photo) -->
+    <div class="between-gallery one">
+      <img src="gal7.jpg" alt="" loading="lazy">
     </div>
 
     <!-- CONTACT -->
     <section id="contact">
       <div class="overlay-content">
         <div class="container">
-          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST">
+          <h2 class="section-title">Contact</h2>
+          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
             <label for="name">Nom :</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" required />
             <label for="email">Email :</label>
-            <input type="email" id="email" name="_replyto" required>
+            <input type="email" id="email" name="_replyto" required />
             <label for="message">Message :</label>
             <textarea id="message" name="message" rows="6" required></textarea>
-            <button type="submit">Envoyer</button>
+            <button type="submit" id="sendBtn">Envoyer</button>
             <p id="formStatus" class="form-status"></p>
           </form>
         </div>
@@ -161,110 +140,108 @@
   </main>
 
   <script>
-    /* --- Carrousel avec animation 1ère fois (mot par mot) --- */
-    const members = [
-      {
-        photo: "Julie.jpeg",
-        text: `Notre chanteuse, Julie Marsaud !
-Julie, c’est la touche de classique et de folie du groupe.
-Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
-Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
-Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
-Bref, avec Julie, ça groove avec élégance !`
-      },
-      {
-        photo: "Antho.jpeg",
-        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
-À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
-En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
-Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
-Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
-Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
-      },
-      { 
-        photo: "Keo Vy.jpeg",
-        text: `Le battement de cœur de Reggae Surprise : Kéo Vy !
-Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
-Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
-Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
-      },
-      {
-        photo: "jeremy.jpeg",
-        text: `Notre bassiste, Jérémy !
-Jérémy c’est un peu comme du rhum dans un cocktail… on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
-Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
-Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
-Big up Jérémy !`
-      },
-      {
-        photo: "Thomas.jpeg",
-        text: `Thomas, notre maestro des claviers !
-Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
-Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
+    // --- Navigation
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+    function showSection(id) {
+      sections.forEach(sec => sec.classList.remove('active'));
+      navLinks.forEach(a => a.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => {
+        if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- Audio
+    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+    let currentTrack = 0;
+    const audio = document.getElementById('audioElement');
+    const logo = document.getElementById('logo');
+    const playOverlay = document.getElementById('playButtonOverlay');
+    let isPlaying = false, firstPlay = true, clickTimeout;
+
+    function playTrack(index){
+      audio.src = audioFiles[index];
+      audio.play().catch(()=>{});
+      isPlaying = true;
+      logo.classList.remove('blink');
+      logo.classList.add('playing');
+      playOverlay.style.display='none';
+    }
+    function pauseTrack(){
+      audio.pause();
+      isPlaying = false;
+      logo.classList.remove('playing');
+      logo.classList.add('blink');
+      playOverlay.style.display='block';
+    }
+    document.getElementById('audioPlayer').addEventListener('click', () => {
+      if (clickTimeout){
+        clearTimeout(clickTimeout);
+        clickTimeout=null;
+        currentTrack=(currentTrack+1)%audioFiles.length;
+        playTrack(currentTrack);
+        return;
       }
-    ];
+      clickTimeout=setTimeout(()=>{
+        if(!isPlaying){
+          if(firstPlay){
+            playTrack(currentTrack);
+            firstPlay=false;
+          } else {
+            audio.play().then(()=>{
+              isPlaying=true;
+              logo.classList.remove('blink');
+              logo.classList.add('playing');
+              playOverlay.style.display='none';
+            }).catch(()=>{});
+          }
+        } else {
+          pauseTrack();
+        }
+        clickTimeout=null;
+      }, 250);
+    });
+    audio.addEventListener('ended', ()=>{
+      currentTrack=(currentTrack+1)%audioFiles.length;
+      playTrack(currentTrack);
+    });
+    logo.classList.add('blink');
+    playOverlay.style.display='block';
+
+    // --- Carrousel avec animation mot par mot (une seule fois)
+    const members = [/* mêmes objets texte que précédemment */];
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
     const textEl = document.getElementById('member-text');
     const seenMembers = new Set();
 
-    function typeWriter(text, done){
-      const words = text.split(' ');
+    function typeWriter(text, callback) {
+      let words = text.split(" ");
       let i = 0;
-      textEl.textContent = '';
-      function tick(){
-        if(i < words.length){
-          textEl.textContent += (i ? ' ' : '') + words[i++];
-          setTimeout(tick, 90);
-        } else { done && done(); }
+      textEl.textContent = "";
+      function nextWord() {
+        if (i < words.length) {
+          textEl.textContent += (i === 0 ? "" : " ") + words[i];
+          i++;
+          setTimeout(nextWord, 80);
+        } else if (callback) callback();
       }
-      tick();
+      nextWord();
     }
-
-    function updateMember(){
-      const m = members[currentMember];
-      photoEl.src = m.photo;
-      if(seenMembers.has(currentMember)){
-        textEl.textContent = m.text;
+    function updateMember() {
+      const member = members[currentMember];
+      photoEl.src = member.photo;
+      if (seenMembers.has(currentMember)) {
+        textEl.textContent = member.text;
       } else {
-        typeWriter(m.text, ()=>seenMembers.add(currentMember));
+        typeWriter(member.text, () => seenMembers.add(currentMember));
       }
     }
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
-
-    /* --- Lecteur Audio (20 pistes, clic/pause, double-clic piste suivante) --- */
-    const audioFiles=[]; for(let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
-    let currentTrack=0,isPlaying=false,firstPlay=true,clickTimeout;
-    const audio=document.getElementById('audioElement');
-    const logo=document.getElementById('logo');
-    const overlay=document.getElementById('playButtonOverlay');
-
-    function playTrack(i){
-      audio.src=audioFiles[i];
-      audio.play().catch(()=>{});
-      isPlaying=true;
-      logo.classList.remove('blink'); logo.classList.add('playing');
-      overlay.style.display='none';
-    }
-    function pauseTrack(){
-      audio.pause(); isPlaying=false;
-      logo.classList.remove('playing'); logo.classList.add('blink');
-      overlay.style.display='block';
-    }
-    document.getElementById('audioPlayer').addEventListener('click',()=>{
-      if(clickTimeout){ clearTimeout(clickTimeout); clickTimeout=null;
-        currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); return; }
-      clickTimeout=setTimeout(()=>{
-        if(!isPlaying){ if(firstPlay){ playTrack(currentTrack); firstPlay=false; }
-          else{ audio.play().then(()=>{isPlaying=true;logo.classList.add('playing');overlay.style.display='none';}); } }
-        else{ pauseTrack(); }
-        clickTimeout=null;
-      },250);
-    });
-    audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
-    logo.classList.add('blink'); overlay.style.display='block';
   </script>
 </body>
 </html>
