@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20" />
+  <link rel="stylesheet" href="style.css?v=21" />
 </head>
 <body>
 
@@ -29,9 +29,9 @@
     </div>
   </header>
 
-  <!-- LECTEUR AUDIO FLOTTANT (fixe en bas-droite) -->
+  <!-- LECTEUR AUDIO FLOTTANT (fixe en bas-droite, tout le carré tourne) -->
   <div class="audio-fab" id="audioPlayer" aria-label="Lecteur audio (1 clic: lecture/pause, 2 clics: piste suivante)">
-    <div class="logo-box">
+    <div class="logo-box" id="logoBox">
       <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
       <button id="fabPrev" class="fab-skip prev" aria-label="Piste précédente">‹</button>
       <button id="fabNext" class="fab-skip next" aria-label="Piste suivante">›</button>
@@ -44,8 +44,8 @@
   <section id="accueil" class="section">
     <div class="accueil-photo-wrapper">
       <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-      <!-- RÉSEAUX DANS LA 1ʳᵉ IMAGE — HORIZONTAUX, PLUS GRANDS, SANS DÉBORDEMENT -->
-      <div class="social-band inside big" aria-label="Réseaux (dans l'image)">
+      <!-- RÉSEAUX EN PLEINE LARGEUR DE LA PHOTO -->
+      <div class="social-band inside full big" aria-label="Réseaux (dans l'image)">
         <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
         <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
         <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
@@ -74,7 +74,7 @@
     <p id="member-text" class="member-text" aria-live="polite"></p>
   </section>
 
-  <!-- VIDÉOS (juste après Rencontre) -->
+  <!-- VIDÉOS -->
   <section id="videos" class="section">
     <h2 class="section-title">Vidéos <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
     <div class="videos-grid">
@@ -112,7 +112,7 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- GALERIE (gal5 supprimée → gal6 & gal7) -->
+  <!-- GALERIE -->
   <div class="gallery"><img src="gal6.jpg" alt=""></div>
   <div class="gallery"><img src="gal7.jpg" alt=""></div>
 
@@ -136,7 +136,7 @@
     <div class="footer-socials" aria-label="Réseaux (bas de page)">
       <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
       <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
-      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
+      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></img></a>
       <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
       <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
     </div>
@@ -170,7 +170,7 @@
     const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
-    const logo = document.getElementById('logo');
+    const logoBox = document.getElementById('logoBox');
     const playFab = document.getElementById('playFab');
     const fabPrev = document.getElementById('fabPrev');
     const fabNext = document.getElementById('fabNext');
@@ -179,14 +179,17 @@
     function playTrack(index){
       audio.src = audioFiles[index];
       audio.play().catch(()=>{});
-      isPlaying = true; logo.classList.add('playing'); playFab.textContent = '❚❚';
+      isPlaying = true;
+      logoBox.classList.add('spin');      // <-- on fait tourner TOUT le carré
+      playFab.textContent = '❚❚';
     }
     function pauseTrack(){
       audio.pause();
-      isPlaying = false; logo.classList.remove('playing'); playFab.textContent = '▶';
+      isPlaying = false;
+      logoBox.classList.remove('spin');
+      playFab.textContent = '▶';
     }
 
-    // zone cliquable (1 clic play/pause, double-clic piste suivante)
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.addEventListener('click', () => {
       if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout = null;
@@ -194,7 +197,7 @@
       clickTimeout = setTimeout(() => {
         if (!isPlaying){
           if (firstPlay){ playTrack(currentTrack); firstPlay = false; }
-          else { audio.play().then(()=>{ isPlaying = true; logo.classList.add('playing'); playFab.textContent='❚❚'; }).catch(()=>{}); }
+          else { audio.play().then(()=>{ isPlaying = true; logoBox.classList.add('spin'); playFab.textContent='❚❚'; }).catch(()=>{}); }
         } else { pauseTrack(); }
         clickTimeout = null;
       }, 250);
@@ -202,18 +205,9 @@
 
     // boutons (prév/next/play) — empêchent la propagation
     [playFab, fabPrev, fabNext].forEach(btn => btn.addEventListener('click', e => e.stopPropagation()));
-    playFab.addEventListener('click', () => {
-      if (!isPlaying){ if (firstPlay){ playTrack(currentTrack); firstPlay=false; } else { audio.play(); isPlaying=true; logo.classList.add('playing'); playFab.textContent='❚❚'; } }
-      else { pauseTrack(); }
-    });
-    fabPrev.addEventListener('click', () => {
-      currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length;
-      playTrack(currentTrack);
-    });
-    fabNext.addEventListener('click', () => {
-      currentTrack = (currentTrack + 1) % audioFiles.length;
-      playTrack(currentTrack);
-    });
+    playFab.addEventListener('click', () => { (!isPlaying) ? (firstPlay ? (firstPlay=false, playTrack(currentTrack)) : (audio.play(), isPlaying=true, logoBox.classList.add('spin'), playFab.textContent='❚❚')) : pauseTrack(); });
+    fabPrev.addEventListener('click', () => { currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length; playTrack(currentTrack); });
+    fabNext.addEventListener('click', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
     audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
 
     /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE ---------- */
@@ -249,17 +243,13 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
-    function typeLetters(text, el, cps = 45){
-      // cps = caractères/secondes
-      const chars = [...text]; // gère accents/emoji
+    function typeLetters(text, el, cps = 48){
+      const chars = [...text];             // gère accents/emoji
       const delay = Math.max(8, Math.floor(1000 / cps));
       el.textContent = "";
       let i = 0;
       (function step(){
-        if (i < chars.length){
-          el.textContent += chars[i++];
-          setTimeout(step, delay);
-        }
+        if (i < chars.length){ el.textContent += chars[i++]; setTimeout(step, delay); }
       })();
     }
 
@@ -267,12 +257,8 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       const m = members[currentMember];
       photoEl.src = m.photo;
       photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
-      if (!hasAnimated.has(currentMember)){
-        typeLetters(m.text, textEl, 48); // ~48 char/s
-        hasAnimated.add(currentMember);
-      } else {
-        textEl.textContent = m.text;
-      }
+      if (!hasAnimated.has(currentMember)){ typeLetters(m.text, textEl, 48); hasAnimated.add(currentMember); }
+      else { textEl.textContent = m.text; }
     }
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
