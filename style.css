@@ -1,5 +1,8 @@
-/* style.css v15 — Reggae Surprise (menu fixe + lecteur animé + réseaux top/inside/footer)
-   - 3 points Jamaïque UNIQUEMENT dans les titres (pas dans les photos)
+/* style.css v16 — Reggae Surprise
+   - Nav fixe défilable horizontalement
+   - Réseaux top / inside (horizontaux abaissés) / footer
+   - Lecteur audio fixé en bas-droite, qui tourne en lecture
+   - 3 points Jamaïque seulement dans les titres
 */
 
 :root{
@@ -11,9 +14,9 @@
   --bg:#fff;
   --border:#eee;
   --muted:#666;
-  --shadow:0 12px 30px rgba(0,0,0,.10);
+  --shadow:0 12px 30px rgba(0,0,0,.12);
 
-  --bp-m:760px;
+  --wrap:1100px;
 }
 
 /* Reset léger */
@@ -23,59 +26,60 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 
 /* ---------- EN-TÊTE FIXE ---------- */
 .site-header{
-  position:sticky; top:0; z-index:1000;
-  background:#fff; border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:1000; background:#fff;
+  border-bottom:1px solid var(--border);
 }
+
+/* NAV défilable (on peut aller sur les côtés) */
 .main-nav{
-  display:flex; gap:18px; justify-content:center; align-items:center;
+  display:flex; gap:18px; align-items:center;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scrollbar-width: thin;
   padding:10px 12px;
+  white-space:nowrap;
 }
 .main-nav .nav-link{
   text-decoration:none; color:#222; font-weight:600; letter-spacing:.2px;
-  padding:8px 6px;
+  padding:8px 6px; border-radius:8px;
 }
 .main-nav .nav-link:hover,
 .main-nav .nav-link.active{
   text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px;
 }
 
-/* Réseaux TOP */
+/* Réseaux (TOP) */
 .social-band.top{
   display:flex; gap:14px; justify-content:center; align-items:center;
   padding:10px 12px; border-top:1px solid var(--border);
 }
 .social-band img{ width:28px; height:28px; display:block; }
 
-/* ---------- LECTEUR AUDIO ---------- */
-.audio-player{ display:grid; place-items:center; padding:20px 0 10px; }
-.logo-wrap{
-  position:relative; width:200px; height:200px; border-radius:28px;
-  display:grid; place-items:center;
+/* ---------- LECTEUR AUDIO (FAB) ---------- */
+.audio-fab{
+  position:fixed; right:18px; bottom:18px; z-index:1200;
+  width:86px; height:86px; border-radius:20px; display:grid; place-items:center;
+  box-shadow: var(--shadow); background:#fff;
 }
-#logo{
-  width:100%; height:100%; object-fit:cover; border-radius:28px;
-  box-shadow: var(--shadow);
+.audio-fab img#logo{
+  width:86px; height:86px; border-radius:20px; object-fit:cover;
 }
-#logo.playing{
+.audio-fab img#logo.playing{
   animation: spin 10s linear infinite, glow 2.2s ease-in-out infinite;
 }
 @keyframes spin{ to{ transform: rotate(360deg); } }
 @keyframes glow{
-  0%,100%{ box-shadow: 0 0 0 rgba(0,0,0,0), 0 12px 30px rgba(0,0,0,.12); }
-  50%   { box-shadow: 0 0 0 rgba(0,0,0,0), 0 18px 42px rgba(0,0,0,.20); }
+  0%,100%{ filter:none; }
+  50%{ filter: brightness(1.06); }
 }
-
-/* Bouton Play en bas-droite du logo */
-.fab{
-  position:absolute; right:10px; bottom:10px;
-  width:48px; height:48px; border-radius:50%;
-  border:0; background:#111; color:#fff; font-size:20px; cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,.25);
+.fab-btn{
+  position:absolute; right:-6px; bottom:-6px;
+  width:46px; height:46px; border-radius:50%; border:0; cursor:pointer;
+  background:#111; color:#fff; font-size:18px; line-height:46px;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
 }
-.fab:hover{ filter:brightness(1.05); }
 
 /* ---------- SECTIONS & TITRES ---------- */
-.section{ padding:44px 16px; text-align:center; }
+.section{ padding:44px 16px; text-align:center; scroll-margin-top:110px; }
 .section-title{
   font-size:clamp(26px, 3.2vw, 36px); margin: 0 0 18px 0;
   display:inline-flex; align-items:center; gap:10px;
@@ -89,23 +93,27 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 .jamaica-dots i:nth-child(3){ background:var(--ja-red); }
 
 /* ---------- ACCUEIL ---------- */
-.accueil-photo-wrapper{ position:relative; width:min(1100px, 100% - 2rem); margin:0 auto; }
+.accueil-photo-wrapper{ position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; }
 .photo-accueil{ width:100%; height:auto; display:block; border-radius:16px; box-shadow:var(--shadow); }
 
-/* Réseaux DANS la 1re image (barre abaissée) */
+/* Réseaux dans la 1re image : HORIZONTAUX, jamais en colonne */
 .social-band.inside{
   position:absolute; left:50%; transform:translateX(-50%);
-  bottom:6px; /* abaissée */
-  background:rgba(255,255,255,.86); padding:8px 12px; border-radius:999px;
+  bottom:8px; /* abaissée */
+  background:rgba(255,255,255,.9); padding:8px 12px; border-radius:999px;
   backdrop-filter: blur(6px);
   box-shadow:0 8px 24px rgba(0,0,0,.18);
+  display:flex; flex-direction:row; align-items:center; gap:12px;
+  flex-wrap:nowrap; white-space:nowrap;
 }
+.social-band.inside img{ width:26px; height:26px; }
 @media (max-width:520px){
-  .social-band.inside{ bottom:4px; }
+  .social-band.inside{ gap:10px; padding:6px 10px; }
+  .social-band.inside img{ width:22px; height:22px; }
 }
 
 /* ---------- GALERIES ---------- */
-.gallery{ width:min(1100px, 100% - 2rem); margin: 18px auto; }
+.gallery{ width:min(var(--wrap), 100% - 2rem); margin: 18px auto; }
 .gallery img{ width:100%; height:auto; display:block; border-radius:12px; box-shadow:var(--shadow); }
 .gallery.two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 @media (max-width:760px){ .gallery.two{ grid-template-columns:1fr; } }
@@ -124,7 +132,7 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 .member-text{ max-width:80ch; margin:10px auto 0; white-space:pre-wrap; padding:0 8px; }
 
 /* ---------- CONCERTS / SOUVENIRS ---------- */
-.concert-img, .merch-img{ width:min(1100px, 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
+.concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
 .souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px 0; }
 
 /* ---------- CONTACT ---------- */
@@ -141,9 +149,10 @@ button#sendBtn{
 button#sendBtn:hover{ filter:brightness(1.05); }
 #formStatus{ min-height:20px; }
 
-/* ---------- FOOTER ---------- */
+/* ---------- FOOTER (RÉSEAUX) ---------- */
 footer{ padding:26px 0 36px; border-top:1px solid var(--border); }
 .footer-socials{
   display:flex; gap:18px; justify-content:center; align-items:center;
+  width:min(var(--wrap), 100% - 2rem); margin:0 auto;
 }
 .footer-socials img{ width:28px; height:28px; display:block; }
