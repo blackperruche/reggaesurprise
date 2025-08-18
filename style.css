@@ -1,8 +1,8 @@
-/* style.css v19 — Reggae Surprise
+/* style.css v20 — Reggae Surprise
    - Nav fixe (scroll horizontal possible)
-   - Réseaux : top / inside (gros & horizontaux) / footer
-   - PAS de dock réseaux en scroll (supprimé)
-   - Lecteur audio fixé en bas-droite (rotation en lecture)
+   - Réseaux : top / inside (GRANDS & horizontaux) / footer
+   - PAS de dock réseaux en scroll
+   - Lecteur audio fixe bas-droite + flèches ← →
    - 3 points Jamaïque dans les titres
    - Vidéos responsive (grid + 16:9)
 */
@@ -53,24 +53,41 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
   display:flex; gap:14px; justify-content:center; align-items:center;
   padding:10px 12px; border-top:1px solid var(--border);
 }
-.social-band img{ width:28px; height:28px; display:block; }
+.social-band img{ width:28px; height:28px; display:block; position:static !important; }
 
 /* ---------- LECTEUR AUDIO (FAB) ---------- */
 .audio-fab{
   position:fixed; right:18px; bottom:18px; z-index:1200;
-  width:86px; height:86px; border-radius:20px; display:grid; place-items:center;
-  box-shadow: var(--shadow); background:#fff;
 }
-.audio-fab img#logo{ width:86px; height:86px; border-radius:20px; object-fit:cover; }
-.audio-fab img#logo.playing{ animation: spin 10s linear infinite, glow 2.2s ease-in-out infinite; }
+.logo-box{
+  position:relative; width:96px; height:96px; border-radius:22px;
+  box-shadow: var(--shadow); background:#fff; overflow:hidden;
+}
+#logo{
+  width:100%; height:100%; border-radius:22px; object-fit:cover; display:block;
+}
+#logo.playing{ animation: spin 10s linear infinite, glow 2.2s ease-in-out infinite; }
 @keyframes spin{ to{ transform: rotate(360deg); } }
 @keyframes glow{ 0%,100%{ filter:none; } 50%{ filter: brightness(1.06); } }
+
+/* Play (en bas-droite) */
 .fab-btn{
   position:absolute; right:-6px; bottom:-6px;
   width:46px; height:46px; border-radius:50%; border:0; cursor:pointer;
-  background:#111; color:#fff; font-size:18px; line-height:46px;
+  background:#111; color:#fff; font-size:18px;
   box-shadow:0 10px 24px rgba(0,0,0,.25);
 }
+
+/* Flèches ← → dans le logo */
+.fab-skip{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(0,0,0,.55); color:#fff; border:0; cursor:pointer;
+  display:grid; place-items:center; font-size:18px;
+}
+.fab-skip.prev{ left:6px; }
+.fab-skip.next{ right:6px; }
+.fab-skip:hover{ background:rgba(0,0,0,.75); }
 
 /* ---------- SECTIONS & TITRES ---------- */
 .section{ padding:44px 16px; text-align:center; scroll-margin-top:110px; }
@@ -90,18 +107,24 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 .accueil-photo-wrapper{ position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; }
 .photo-accueil{ width:100%; height:auto; display:block; border-radius:16px; box-shadow:var(--shadow); }
 
-/* Réseaux dans la 1re image : HORIZONTAUX, PLUS GROS, abaissés */
+/* Réseaux dans la 1re image : HORIZONTAUX, GRANDS, anti-débordement */
 .social-band.inside{
   position:absolute; left:50%; transform:translateX(-50%);
-  bottom:8px; background:rgba(255,255,255,.9); border-radius:999px;
-  display:flex; flex-direction:row; align-items:center; gap:12px;
-  flex-wrap:nowrap; white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,.18);
+  bottom:10px; background:rgba(255,255,255,.92); border-radius:999px;
+  display:flex; flex-direction:row; align-items:center;
+  gap: clamp(10px, 1.6vw, 18px);
+  padding: clamp(10px, 1.8vw, 16px) clamp(14px, 2.4vw, 24px);
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+  max-width: calc(100% - 20px);
+  overflow:hidden; white-space:nowrap; z-index:2;
 }
-.social-band.inside.big{ padding:10px 16px; }
-.social-band.inside.big img{ width:30px; height:30px; }
-@media (max-width:520px){
-  .social-band.inside.big{ padding:8px 12px; gap:10px; }
-  .social-band.inside.big img{ width:26px; height:26px; }
+.social-band.inside.big{
+  --inside-icon: clamp(26px, 4.6vw, 40px);
+}
+.social-band.inside.big a{ flex:0 0 auto; }
+.social-band.inside.big img{
+  width: var(--inside-icon); height: var(--inside-icon);
+  display:block;
 }
 
 /* ---------- GALERIES ---------- */
@@ -123,10 +146,6 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 .carousel-btn:hover{ background:rgba(0,0,0,.78); }
 .member-text{ max-width:80ch; margin:10px auto 0; white-space:pre-wrap; padding:0 8px; }
 
-/* ---------- CONCERTS / SOUVENIRS ---------- */
-.concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
-.souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px 0; }
-
 /* ---------- VIDÉOS ---------- */
 .videos-grid{
   width:min(var(--wrap), 100% - 2rem); margin:0 auto;
@@ -137,6 +156,10 @@ body{ font-family:"Playfair Display", serif; color:var(--text); background:var(-
 }
 @media (max-width:900px){ .videos-grid{ grid-template-columns:repeat(2, 1fr); } }
 @media (max-width:600px){ .videos-grid{ grid-template-columns:1fr; } }
+
+/* ---------- CONCERTS / SOUVENIRS ---------- */
+.concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
+.souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px 0; }
 
 /* ---------- CONTACT ---------- */
 form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
@@ -153,14 +176,17 @@ button#sendBtn:hover{ filter:brightness(1.05); }
 #formStatus{ min-height:20px; }
 
 /* ---------- FOOTER (RÉSEAUX + MÉTA) ---------- */
-footer{ padding:26px 0 36px; border-top:1px solid var(--border); text-align:center; }
+footer{ padding:28px 0 40px; border-top:1px solid var(--border); text-align:center; }
 .footer-socials{
   display:flex; gap:18px; justify-content:center; align-items:center;
-  width:min(var(--wrap), 100% - 2rem); margin:0 auto 10px;
+  width:min(var(--wrap), 100% - 2rem); margin:0 auto 12px;
 }
 .footer-socials img{ width:28px; height:28px; display:block; }
 .footer-meta{
-  margin:0; color:#555; font-size:14px;
+  width:min(var(--wrap), 100% - 2rem); margin:0 auto;
+  display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;
+  color:#555; font-size:14px;
 }
+.footer-meta .sep::before{ content:"·"; color:#777; }
 .footer-meta a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
 .footer-meta a:hover{ text-decoration-thickness:2px; }
