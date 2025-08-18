@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=11" />
 </head>
 <body>
 
@@ -30,12 +30,21 @@
   <main>
     <!-- ACCUEIL -->
     <section id="accueil" class="active">
+      <!-- Réseaux AU-DESSUS de la 1re image -->
+      <div class="social-band top">
+        <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener" aria-label="Apple Music"><img src="apple.png" alt="Apple Music" /></a>
+        <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener" aria-label="Spotify"><img src="spotify.png" alt="Spotify" /></a>
+        <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener" aria-label="YouTube"><img src="youtube.png" alt="YouTube" /></a>
+        <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener" aria-label="Instagram"><img src="instagram.png" alt="Instagram" /></a>
+        <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener" aria-label="Facebook"><img src="facebook.png" alt="Facebook" /></a>
+      </div>
+
       <div class="overlay-content">
         <div class="container accueil-container">
           <div class="accueil-photo-wrapper">
             <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
 
-            <!-- Réseaux incrustés -->
+            <!-- Réseaux incrustés DANS la 1re image -->
             <div class="social-band inside">
               <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music" /></a>
               <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify" /></a>
@@ -49,7 +58,7 @@
     </section>
 
     <!-- Image intermédiaire -->
-    <div class="gallery"><img src="gal1.jpg" alt="Photo ambiance reggae"></div>
+    <div class="gallery"><img src="gal1.jpg" alt="Photo ambiance reggae" loading="lazy"></div>
 
     <!-- RENCONTRE -->
     <section id="rencontre">
@@ -75,19 +84,19 @@
     </section>
 
     <!-- Images intermédiaires -->
-    <div class="gallery two"><img src="gal2.jpg" alt=""><img src="gal3.jpg" alt=""></div>
+    <div class="gallery two"><img src="gal2.jpg" alt="" loading="lazy"><img src="gal3.jpg" alt="" loading="lazy"></div>
 
     <!-- CONCERTS -->
     <section id="concerts">
       <div class="overlay-content">
         <div class="container">
-          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" draggable="false" />
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" draggable="false" loading="lazy" />
         </div>
       </div>
     </section>
 
     <!-- Image intermédiaire -->
-    <div class="gallery"><img src="gal4.jpg" alt=""></div>
+    <div class="gallery"><img src="gal4.jpg" alt="" loading="lazy"></div>
 
     <!-- SOUVENIR -->
     <section id="souvenir">
@@ -100,7 +109,7 @@
     </section>
 
     <!-- Images intermédiaires -->
-    <div class="gallery two"><img src="gal5.jpg" alt=""><img src="gal6.jpg" alt=""></div>
+    <div class="gallery two"><img src="gal5.jpg" alt="" loading="lazy"><img src="gal6.jpg" alt="" loading="lazy"></div>
 
     <!-- CONTACT -->
     <section id="contact">
@@ -125,14 +134,14 @@
     </section>
   </main>
 
-  <!-- Footer Réseaux -->
+  <!-- Footer Réseaux (bas de page) -->
   <footer>
     <div class="footer-socials">
-      <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank"><img src="apple.png" alt=""></a>
-      <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank"><img src="spotify.png" alt=""></a>
-      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank"><img src="youtube.png" alt=""></a>
-      <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank"><img src="instagram.png" alt=""></a>
-      <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank"><img src="facebook.png" alt=""></a>
+      <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
+      <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
+      <a href="https://www.youtube.com/@ReggaeSurprise" target="_blank" rel="noopener"><img src="youtube.png" alt="YouTube"></a>
+      <a href="https://www.instagram.com/reggaesurpriseoff/" target="_blank" rel="noopener"><img src="instagram.png" alt="Instagram"></a>
+      <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
     </div>
   </footer>
 
@@ -143,7 +152,8 @@
     function showSection(id) {
       sections.forEach(sec => sec.classList.remove('active'));
       navLinks.forEach(a => a.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+      const target = document.getElementById(id);
+      if (target) target.classList.add('active');
       document.querySelectorAll('nav a').forEach(a => {
         if (a.getAttribute('onclick') === `showSection('${id}')`) a.classList.add('active');
       });
@@ -207,7 +217,7 @@
     logo.classList.add('blink');
     playOverlay.style.display='block';
 
-    // --- Carrousel
+    // --- Carrousel (tes textes exacts)
     const members = [
       {
         photo: "Julie.jpeg",
@@ -272,6 +282,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
 
     function updateMember(){
       photoEl.src = members[currentMember].photo;
+      photoEl.alt = `Photo de ${members[currentMember].photo.replace(/\.\w+$/, '')}`;
       let key = currentMember;
       if (!hasAnimated[key]) {
         typeWriter(members[currentMember].text, textEl, 35, ()=>{ hasAnimated[key]=true; });
