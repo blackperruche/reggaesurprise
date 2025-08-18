@@ -80,4 +80,194 @@
               <img id="member-photo" src="Julie.jpeg" alt="Membre" draggable="false" />
               <button class="carousel-btn right" onclick="nextMember()">&#10095;</button>
             </div>
-            <p id="m
+            <p id="member-text" class="member-text"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galerie 2 (2 photos) -->
+    <div class="between-gallery two">
+      <img src="gal2.jpg" alt="" loading="lazy">
+      <img src="gal3.jpg" alt="" loading="lazy">
+    </div>
+
+    <!-- VIDÉOS -->
+    <section id="videos">
+      <div class="overlay-content">
+        <div class="container">
+          <h2 class="section-title">Vidéos</h2>
+          <div class="video-grid">
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/zKMnLi_MgBU" allowfullscreen></iframe></div>
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/lnlzKieaveo" allowfullscreen></iframe></div>
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/fmNJjPm3r4M" allowfullscreen></iframe></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galerie 3 (1 photo) -->
+    <div class="between-gallery one">
+      <img src="gal4.jpg" alt="" loading="lazy">
+    </div>
+
+    <!-- CONCERTS -->
+    <section id="concerts">
+      <div class="overlay-content">
+        <div class="container">
+          <h2 class="section-title">Concerts</h2>
+          <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" draggable="false" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Galerie 4 (2 photos) -->
+    <div class="between-gallery two">
+      <img src="gal5.jpg" alt="" loading="lazy">
+      <img src="gal6.jpg" alt="" loading="lazy">
+    </div>
+
+    <!-- SOUVENIR -->
+    <section id="souvenir">
+      <div class="overlay-content">
+        <div class="container">
+          <h2 class="section-title">Souvenir</h2>
+          <p class="souvenir-text">Viens nous voir sur place et repars avec un objet unique.</p>
+          <img class="merch-img" src="merch.jpg" alt="Souvenir Reggae Surprise" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- Galerie 5 (1 photo) -->
+    <div class="between-gallery one">
+      <img src="gal7.jpg" alt="" loading="lazy">
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="overlay-content">
+        <div class="container">
+          <h2 class="section-title">Contact</h2>
+          <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required />
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="_replyto" required />
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+            <button type="submit" id="sendBtn">Envoyer</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* --- Carrousel (textes complets + anim 1ère fois mot par mot) --- */
+    const members = [
+      {
+        photo: "Julie.jpeg",
+        text: `Notre chanteuse, Julie Marsaud !
+Julie, c’est la touche de classique et de folie du groupe.
+Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
+Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
+Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
+Bref, avec Julie, ça groove avec élégance !`
+      },
+      {
+        photo: "Antho.jpeg",
+        text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
+À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
+En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
+Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
+Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
+Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !`
+      },
+      { 
+        photo: "Keo Vy.jpeg",
+        text: `Le battement de cœur de Reggae Surprise : Kéo Vy !
+Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
+Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
+Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !`
+      },
+      {
+        photo: "jeremy.jpeg",
+        text: `Notre bassiste, Jérémy !
+Jérémy c’est un peu comme du rhum dans un cocktail… on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
+Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
+Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
+Big up Jérémy !`
+      },
+      {
+        photo: "Thomas.jpeg",
+        text: `Thomas, notre maestro des claviers !
+Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
+Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !`
+      }
+    ];
+
+    let currentMember = 0;
+    const photoEl = document.getElementById('member-photo');
+    const textEl = document.getElementById('member-text');
+    const seenMembers = new Set();
+
+    function typeWriter(text, done){
+      const words = text.split(' ');
+      let i = 0;
+      textEl.textContent = '';
+      (function tick(){
+        if(i < words.length){
+          textEl.textContent += (i ? ' ' : '') + words[i++];
+          setTimeout(tick, 90);
+        } else { done && done(); }
+      })();
+    }
+
+    function updateMember(){
+      const m = members[currentMember];
+      photoEl.src = m.photo;
+      if(seenMembers.has(currentMember)){
+        textEl.textContent = m.text;
+      } else {
+        typeWriter(m.text, ()=>seenMembers.add(currentMember));
+      }
+    }
+    function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
+    function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
+    updateMember();
+
+    /* --- Lecteur Audio (20 pistes) --- */
+    const audioFiles=[]; for(let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+    let currentTrack=0,isPlaying=false,firstPlay=true,clickTimeout;
+    const audio=document.getElementById('audioElement');
+    const logo=document.getElementById('logo');
+    const overlay=document.getElementById('playButtonOverlay');
+
+    function playTrack(i){
+      audio.src=audioFiles[i];
+      audio.play().catch(()=>{});
+      isPlaying=true;
+      logo.classList.remove('blink'); logo.classList.add('playing');
+      overlay.style.display='none';
+    }
+    function pauseTrack(){
+      audio.pause(); isPlaying=false;
+      logo.classList.remove('playing'); logo.classList.add('blink');
+      overlay.style.display='block';
+    }
+    document.getElementById('audioPlayer').addEventListener('click',()=>{
+      if(clickTimeout){ clearTimeout(clickTimeout); clickTimeout=null;
+        currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); return; }
+      clickTimeout=setTimeout(()=>{
+        if(!isPlaying){ if(firstPlay){ playTrack(currentTrack); firstPlay=false; }
+          else{ audio.play().then(()=>{isPlaying=true;logo.classList.add('playing');overlay.style.display='none';}); } }
+        else{ pauseTrack(); }
+        clickTimeout=null;
+      },250);
+    });
+    audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%audioFiles.length; playTrack(currentTrack); });
+    logo.classList.add('blink'); overlay.style.display='block';
+  </script>
+</body>
+</html>
