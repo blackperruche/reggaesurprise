@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Police locale : Helvetica (on supprime Google Fonts Poppins) -->
+  <!-- Google Fonts supprimé : on utilise Helvetica côté CSS -->
   <link rel="stylesheet" href="style.css?v=22" />
 </head>
 <body>
@@ -102,11 +102,11 @@
     <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" />
   </section>
 
+  <!-- ✅ AJOUT GALERIE gal5 juste après Concerts -->
+  <div class="gallery"><img src="gal5.jpg" alt=""></div>
+
   <!-- GALERIE -->
   <div class="gallery"><img src="gal4.jpg" alt=""></div>
-
-  <!-- ✅ GALERIE AJOUTÉE : gal5 juste après gal4 -->
-  <div class="gallery"><img src="gal5.jpg" alt=""></div>
 
   <!-- SOUVENIRS -->
   <section id="souvenir" class="section">
@@ -245,6 +245,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
+    // Timers propres pour éviter tout chevauchement
     const typer = { token: 0, timers: [] };
     function clearTyper() {
       typer.timers.forEach(clearTimeout);
@@ -255,7 +256,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     function typeLetters(text, el, cps = 48) {
       clearTyper();
       const token = typer.token;
-      const chars = Array.from(text.normalize('NFC'));
+      const chars = Array.from(text.normalize('NFC')); // accents OK
       el.textContent = "";
       let i = 0;
       const delay = Math.max(8, Math.floor(1000 / cps));
@@ -286,7 +287,6 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
-
   </script>
 </body>
 </html>
