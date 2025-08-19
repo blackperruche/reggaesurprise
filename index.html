@@ -209,7 +209,7 @@
     fabNext.addEventListener('click', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
     audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
 
-    /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE ---------- */
+    /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE (FIX) ---------- */
     const members = [
       { photo: "Julie.jpeg", text: `Notre chanteuse, Julie Marsaud !
 Julie, c’est la touche de classique et de folie du groupe.
@@ -242,26 +242,49 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
-    function typeLetters(text, el, cps = 48){
-      const chars = [...text];
-      const delay = Math.max(8, Math.floor(1000 / cps));
+    // ---- Gestion propre des timers pour éviter les chevauchements
+    const typer = { token: 0, timers: [] };
+    function clearTyper() {
+      typer.timers.forEach(clearTimeout);
+      typer.timers = [];
+      typer.token++; // invalide toute anim en cours
+    }
+
+    function typeLetters(text, el, cps = 48) {
+      clearTyper();
+      const token = typer.token;
+      const chars = Array.from(text.normalize('NFC')); // évite les artefacts d’accents
       el.textContent = "";
       let i = 0;
+      const delay = Math.max(8, Math.floor(1000 / cps));
+
       (function step(){
-        if (i < chars.length){ el.textContent += chars[i++]; setTimeout(step, delay); }
+        if (token !== typer.token) return; // anim annulée
+        if (i < chars.length) {
+          el.textContent += chars[i++];
+          const t = setTimeout(step, delay);
+          typer.timers.push(t);
+        }
       })();
     }
 
     function updateMember(){
+      clearTyper();
       const m = members[currentMember];
       photoEl.src = m.photo;
       photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
-      if (!hasAnimated.has(currentMember)){ typeLetters(m.text, textEl, 48); hasAnimated.add(currentMember); }
-      else { textEl.textContent = m.text; }
+      if (!hasAnimated.has(currentMember)){
+        typeLetters(m.text, textEl, 48);
+        hasAnimated.add(currentMember);
+      } else {
+        textEl.textContent = m.text;
+      }
     }
+
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
+
   </script>
 </body>
 </html>
