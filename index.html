@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <!-- Police locale : Helvetica (on supprime Google Fonts Poppins) -->
   <link rel="stylesheet" href="style.css?v=22" />
 </head>
 <body>
@@ -104,6 +104,9 @@
 
   <!-- GALERIE -->
   <div class="gallery"><img src="gal4.jpg" alt=""></div>
+
+  <!-- ✅ GALERIE AJOUTÉE : gal5 juste après gal4 -->
+  <div class="gallery"><img src="gal5.jpg" alt=""></div>
 
   <!-- SOUVENIRS -->
   <section id="souvenir" class="section">
@@ -242,24 +245,23 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
-    // ---- Gestion propre des timers pour éviter les chevauchements
     const typer = { token: 0, timers: [] };
     function clearTyper() {
       typer.timers.forEach(clearTimeout);
       typer.timers = [];
-      typer.token++; // invalide toute anim en cours
+      typer.token++;
     }
 
     function typeLetters(text, el, cps = 48) {
       clearTyper();
       const token = typer.token;
-      const chars = Array.from(text.normalize('NFC')); // évite les artefacts d’accents
+      const chars = Array.from(text.normalize('NFC'));
       el.textContent = "";
       let i = 0;
       const delay = Math.max(8, Math.floor(1000 / cps));
 
       (function step(){
-        if (token !== typer.token) return; // anim annulée
+        if (token !== typer.token) return;
         if (i < chars.length) {
           el.textContent += chars[i++];
           const t = setTimeout(step, delay);
