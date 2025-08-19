@@ -14,7 +14,7 @@
 /* Reset */
 *{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; scroll-behavior:smooth; }
-body{ font-family:"Playfair Display", serif; color:var(--text); background:var(--bg); line-height:1.6; }
+body{ font-family:"Poppins", sans-serif; color:var(--text); background:var(--bg); line-height:1.6; }
 
 /* ---------- HEADER ---------- */
 .site-header{ position:sticky; top:0; z-index:1000; background:#fff; border-bottom:1px solid var(--border); }
