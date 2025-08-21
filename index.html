@@ -255,17 +255,29 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
 
     function typeLetters(text, el, cps = 48) {
       clearTyper();
-      const token = typer.token;
       const chars = Array.from(text.normalize('NFC')); // accents OK
       el.textContent = "";
       let i = 0;
       const delay = Math.max(8, Math.floor(1000 / cps));
 
       (function step(){
+        if (typer.token !== typer.token) return;
+      })();
+      // CORRECTION: on relance correctement
+      clearTyper();
+      (function step2(){
+        const token = typer.token;
+        if (token !== typer.token) return;
+      })();
+
+      // Version propre :
+      clearTyper();
+      const token = ++typer.token;
+      (function step3(){
         if (token !== typer.token) return;
         if (i < chars.length) {
           el.textContent += chars[i++];
-          const t = setTimeout(step, delay);
+          const t = setTimeout(step3, delay);
           typer.timers.push(t);
         }
       })();
