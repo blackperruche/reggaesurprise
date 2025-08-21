@@ -70,12 +70,32 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .fab-skip:hover{ background:rgba(0,0,0,.75); }
 
 /* ---------- SECTIONS ---------- */
-.section{ padding:44px 16px; text-align:center; scroll-margin-top:110px; }
-.section-title{ font-size:clamp(26px, 3.2vw, 36px); margin:0 0 18px; display:inline-flex; align-items:center; gap:10px; }
-.jamaica-dots{ display:inline-flex; gap:6px; vertical-align:middle; }
+.section{
+  padding:44px 16px;
+  text-align:center;
+  scroll-margin-top:110px;
+}
+
+.section-title{
+  font-size:clamp(26px, 3.2vw, 36px);
+  margin:0 0 18px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+
+.jamaica-dots{
+  display:inline-flex;
+  gap:6px;
+  vertical-align:middle;
+}
+
 .jamaica-dots i{
-  width:10px; height:10px; border-radius:50%; display:inline-block;
-  background:#000; /* 🔥 noir */
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+  background:#000; /* points en noir */
 }
 
 /* ---------- ACCUEIL ---------- */
