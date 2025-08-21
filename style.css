@@ -74,7 +74,10 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .section-title{ font-size:clamp(26px, 3.2vw, 36px); margin:0 0 18px; display:inline-flex; align-items:center; gap:10px; }
 .jamaica-dots{ display:inline-flex; gap:6px; vertical-align:middle; }
 .jamaica-dots i{ width:10px; height:10px; border-radius:50%; display:inline-block; }
-.jamaica-dots i:nth-child(1){ background:var(--ja-green); } .jamaica-dots i:nth-child(2){ background:var(--ja-yellow); } .jamaica-dots i:nth-child(3){ background:var(--ja-red); }
+/* Dots en NOIR (au lieu vert/jaune/rouge) */
+.jamaica-dots i:nth-child(1),
+.jamaica-dots i:nth-child(2),
+.jamaica-dots i:nth-child(3){ background:#000; }
 
 /* ---------- ACCUEIL ---------- */
 .accueil-photo-wrapper{ position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; overflow:hidden; border-radius:16px; }
