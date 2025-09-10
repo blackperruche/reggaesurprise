@@ -145,3 +145,55 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .diapo{
   position:relative;
   width:min(var(--wrap), 100% - 2rem);
+  margin:0 auto;
+  aspect-ratio: 16/9;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: var(--shadow);
+  background:#000;
+}
+.diapo img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition: opacity .8s ease;
+  display:block;
+  user-select:none; -webkit-user-drag:none;
+}
+.diapo img.show{ opacity:1; }
+.diapo-controls{
+  position:absolute; left:10px; right:10px; bottom:10px;
+  display:flex; gap:8px; justify-content:flex-end; pointer-events:auto;
+}
+.diapo-btn{
+  border:0; border-radius:999px; padding:8px 12px; cursor:pointer;
+  background: rgba(0,0,0,.6); color:#fff; font-weight:700; font-size:16px;
+  backdrop-filter: blur(4px);
+}
+.diapo-btn:hover{ background: rgba(0,0,0,.8); }
+.diapo-tip{ color:#555; font-size:14px; margin:8px 0 0; }
+
+/* ---------- CONTACT ---------- */
+form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
+label{ font-weight:600; }
+input, textarea, button{ font:inherit; }
+input, textarea{ padding:12px 14px; border:1px solid #ccc; border-radius:10px; background:#fff; outline:none; }
+input:focus, textarea:focus{ border-color:#999; box-shadow:0 0 0 3px rgba(0,0,0,.05); }
+button#sendBtn{ padding:12px 14px; border:0; border-radius:10px; cursor:pointer; background:#111; color:#fff; font-weight:700; }
+button#sendBtn:hover{ filter:brightness(1.05); }
+#formStatus{ min-height:20px; }
+
+/* ---------- FOOTER (fond gris pour les réseaux) ---------- */
+footer{ padding:28px 0 40px; border-top:1px solid var(--border); text-align:center; }
+.footer-socials{
+  display:inline-flex; gap:18px; justify-content:center; align-items:center;
+  padding:10px 14px; border-radius:999px;
+  background:#e9e9e9; /* gris clair pour contraste */
+}
+.footer-socials img{ width:28px; height:28px; display:block; }
+.footer-meta{
+  width:min(var(--wrap), 100% - 2rem); margin:12px auto 0;
+  display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
+  color:#555; font-size:14px; letter-spacing:.1px;
+}
+.footer-meta .sep::before{ content:"·"; color:#777; }
+.footer-meta a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
+.footer-meta a:hover{ text-decoration-thickness:2px; }
