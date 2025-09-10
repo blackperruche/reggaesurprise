@@ -1,5 +1,7 @@
-/* style.css v24 — Reggae Surprise
-   Ajout du style .gallery (centré, plus étroit) pour gal2/gal3
+/* style.css v25 — Reggae Surprise
+   - Duo gal2/gal3 : petits, côte à côte, hauteur fixe (pas de saut)
+   - gal1/gal4/gal5/gal7 : blocs centrés et non trop larges
+   - Pas d’ellipses décoratives après les titres
 */
 
 :root{
@@ -79,16 +81,11 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 }
 .social-band.inside.big img{ width: clamp(30px, 5vw, 48px); height: clamp(30px, 5vw, 48px); }
 
-/* ---------- GALERIE (gal2 + gal3 seulement) ---------- */
+/* ---------- GALERIES ---------- */
+/* Base centrée et pas trop large */
 .gallery{
-  /* plus étroit et centré */
   width:min(900px, 100% - 2rem);
   margin:18px auto;
-}
-.gallery.two{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
 }
 .gallery img{
   width:100%;
@@ -97,9 +94,22 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
   border-radius:12px;
   box-shadow:var(--shadow);
 }
-@media (max-width:760px){
-  .gallery.two{ grid-template-columns:1fr; }
+
+/* Duo : taille stable, côte à côte (gal2/gal3) */
+.gallery.duo{
+  width:min(820px, 100% - 2rem);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  align-items:center;
 }
+.gallery.duo img{
+  aspect-ratio: 4 / 3;   /* évite le déplacement pendant le chargement */
+  object-fit: cover;     /* recadre proprement */
+}
+
+/* Single : hérite de .gallery (pas d’aspect-ratio forcé) */
+.gallery.single{}
 
 /* ---------- RENCONTRE / CARROUSEL ---------- */
 .rencontre-text{ max-width:70ch; margin:0 auto 16px; }
