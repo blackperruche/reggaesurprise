@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Google Fonts supprimé : on utilise Helvetica côté CSS -->
   <link rel="stylesheet" href="style.css?v=25" />
 </head>
 <body>
@@ -17,7 +16,6 @@
       <a href="#videos" class="nav-link">Vidéos</a>
       <a href="#concerts" class="nav-link">Concerts</a>
       <a href="#souvenir" class="nav-link">Souvenirs</a>
-      <!-- (Galerie retiré) -->
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
@@ -30,7 +28,7 @@
     </div>
   </header>
 
-  <!-- LECTEUR AUDIO FLOTTANT (fixe en bas-droite, tout le carré tourne) -->
+  <!-- LECTEUR AUDIO FLOTTANT -->
   <div class="audio-fab" id="audioPlayer" aria-label="Lecteur audio (1 clic: lecture/pause, 2 clics: piste suivante)">
     <div class="logo-box" id="logoBox">
       <img src="logo-reggae-surprise.png" alt="Logo Reggae Surprise" id="logo" draggable="false" />
@@ -45,7 +43,6 @@
   <section id="accueil" class="section">
     <div class="accueil-photo-wrapper">
       <img src="accueil.jpg" alt="Photo Accueil" class="photo-accueil" draggable="false" />
-      <!-- RÉSEAUX PLEINE LARGEUR, FOND GRIS -->
       <div class="social-band inside full big" aria-label="Réseaux (dans l'image)">
         <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
         <a href="https://open.spotify.com/intl-fr/artist/5Djx1kAthICTwQu1u6AAhx" target="_blank" rel="noopener"><img src="spotify.png" alt="Spotify"></a>
@@ -55,7 +52,7 @@
       </div>
     </div>
 
-    <!-- 🎞️ DIAPORAMA SLIDES (galeries = slides), placé juste sous la première photo -->
+    <!-- 🎞️ DIAPORAMA SLIDES -->
     <div class="diapo" role="region" aria-label="Diaporama" id="diapo">
       <img id="diapoA" alt="Photo de la galerie" decoding="async" />
       <img id="diapoB" alt="" decoding="async" />
@@ -67,6 +64,11 @@
     </div>
     <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
   </section>
+
+  <!-- ✅ gal1 juste AVANT "Rencontre" -->
+  <div class="gallery single" aria-label="Galerie photo supplémentaire">
+    <img src="gal1.jpg" alt="Galerie 1">
+  </div>
 
   <!-- RENCONTRE -->
   <section id="rencontre" class="section">
@@ -84,15 +86,10 @@
     <p id="member-text" class="member-text" aria-live="polite"></p>
   </section>
 
-  <!-- ✅ gal2 + gal3 (petits, côte à côte, place stable) -->
+  <!-- ✅ gal2 + gal3 (duo) après carrousel, avant vidéos -->
   <div class="gallery duo" aria-label="Galerie photos">
     <img src="gal2.jpg" alt="Galerie 2">
     <img src="gal3.jpg" alt="Galerie 3">
-  </div>
-
-  <!-- ✅ gal1 sous le duo -->
-  <div class="gallery single" aria-label="Galerie photo supplémentaire">
-    <img src="gal1.jpg" alt="Galerie 1">
   </div>
 
   <!-- VIDÉOS -->
@@ -154,7 +151,7 @@
     </form>
   </section>
 
-  <!-- FOOTER : réseaux + mentions (fond gris) -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-socials" aria-label="Réseaux (bas de page)">
       <a href="https://music.apple.com/fr/artist/reggae-surprise/1821732281" target="_blank" rel="noopener"><img src="apple.png" alt="Apple Music"></a>
@@ -189,7 +186,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    /* ---------- AUDIO (fab bottom-right) ---------- */
+    /* ---------- AUDIO (fab) ---------- */
     const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
@@ -203,7 +200,7 @@
       audio.src = audioFiles[index];
       audio.play().catch(()=>{});
       isPlaying = true;
-      logoBox.classList.add('spin');    // tout le carré tourne
+      logoBox.classList.add('spin');
       playFab.textContent = '❚❚';
     }
     function pauseTrack(){
@@ -266,46 +263,25 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const hasAnimated = new Set();
 
     const typer = { token: 0, timers: [] };
-    function clearTyper() {
-      typer.timers.forEach(clearTimeout);
-      typer.timers = [];
-      typer.token++;
-    }
+    function clearTyper() { typer.timers.forEach(clearTimeout); typer.timers = []; typer.token++; }
     function typeLetters(text, el, cps = 48) {
-      clearTyper();
-      const chars = Array.from(text.normalize('NFC'));
-      el.textContent = "";
-      let i = 0;
-      const delay = Math.max(8, Math.floor(1000 / cps));
-      const token = ++typer.token;
-      (function step(){
-        if (token !== typer.token) return;
-        if (i < chars.length) {
-          el.textContent += chars[i++];
-          const t = setTimeout(step, delay);
-          typer.timers.push(t);
-        }
-      })();
+      clearTyper(); const chars = Array.from(text.normalize('NFC')); el.textContent = ""; let i = 0;
+      const delay = Math.max(8, Math.floor(1000 / cps)); const token = ++typer.token;
+      (function step(){ if (token !== typer.token) return;
+        if (i < chars.length) { el.textContent += chars[i++]; const t=setTimeout(step, delay); typer.timers.push(t); } })();
     }
     function updateMember(){
-      clearTyper();
-      const m = members[currentMember];
-      photoEl.src = m.photo;
-      photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
-      if (!hasAnimated.has(currentMember)){
-        typeLetters(m.text, textEl, 48);
-        hasAnimated.add(currentMember);
-      } else {
-        textEl.textContent = m.text;
-      }
+      clearTyper(); const m = members[currentMember];
+      photoEl.src = m.photo; photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
+      if (!hasAnimated.has(currentMember)){ typeLetters(m.text, textEl, 48); hasAnimated.add(currentMember); }
+      else { textEl.textContent = m.text; }
     }
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
 
-    /* ---------- DIAPORAMA (57 photos) — slides = slide01.jpg → slide57.jpg ---------- */
+    /* ---------- DIAPORAMA slides ---------- */
     const diapoFiles = Array.from({length:57}, (_,i) => `slide${String(i+1).padStart(2,'0')}.jpg`);
-
     const diapoA = document.getElementById('diapoA');
     const diapoB = document.getElementById('diapoB');
     const diapoPrev = document.getElementById('diapoPrev');
@@ -313,11 +289,8 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const diapoPlay = document.getElementById('diapoPlay');
     const diapoWrap = document.getElementById('diapo');
 
-    let dIndex = 0;
-    let showingA = true;
-    let dTimer = null;
-    let dPlaying = true;
-    const DURATION = 3200; // ms entre images
+    let dIndex = 0, showingA = true, dTimer = null, dPlaying = true;
+    const DURATION = 3200;
 
     function diapoShow(index) {
       const next = ((index % diapoFiles.length) + diapoFiles.length) % diapoFiles.length;
@@ -326,60 +299,27 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       showEl.alt = `Photo ${next+1} sur ${diapoFiles.length}`;
       showEl.src = diapoFiles[next];
       const swap = () => {
-        hideEl.classList.remove('show');
-        showEl.classList.add('show');
-        showingA = !showingA;
-        dIndex = next;
-        const preload = new Image();
-        preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
+        hideEl.classList.remove('show'); showEl.classList.add('show');
+        showingA = !showingA; dIndex = next;
+        const preload = new Image(); preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
       };
       if (showEl.decode) showEl.decode().catch(()=>{}).finally(swap);
       else { if (showEl.complete) swap(); else showEl.onload = swap; }
     }
-
-    function diapoNextFn(){ diapoShow(dIndex + 1); }
-    function diapoPrevFn(){ diapoShow(dIndex - 1); }
-
-    function diapoStart(){
-      if (dTimer) clearInterval(dTimer);
-      dTimer = setInterval(diapoNextFn, DURATION);
-      dPlaying = true;
-      diapoPlay.textContent = '❚❚';
-      diapoPlay.setAttribute('aria-label','Mettre en pause');
-    }
-    function diapoPause(){
-      if (dTimer) clearInterval(dTimer);
-      dTimer = null;
-      dPlaying = false;
-      diapoPlay.textContent = '▶';
-      diapoPlay.setAttribute('aria-label','Relancer le diaporama');
-    }
+    const diapoNextFn = () => diapoShow(dIndex + 1);
+    const diapoPrevFn = () => diapoShow(dIndex - 1);
+    function diapoStart(){ if (dTimer) clearInterval(dTimer); dTimer = setInterval(diapoNextFn, DURATION); dPlaying = true; diapoPlay.textContent='❚❚'; }
+    function diapoPause(){ if (dTimer) clearInterval(dTimer); dTimer = null; dPlaying = false; diapoPlay.textContent='▶'; }
     function diapoToggle(){ dPlaying ? diapoPause() : diapoStart(); }
 
     diapoPrev.addEventListener('click', () => { diapoPause(); diapoPrevFn(); });
     diapoNext.addEventListener('click', () => { diapoPause(); diapoNextFn(); });
     diapoPlay.addEventListener('click', diapoToggle);
-
     diapoWrap.addEventListener('mouseenter', diapoPause);
     diapoWrap.addEventListener('mouseleave', diapoStart);
     diapoWrap.addEventListener('focusin', diapoPause);
     diapoWrap.addEventListener('focusout', diapoStart);
 
-    // swipe mobile
-    let sx=0, sy=0, tracking=false;
-    diapoWrap.addEventListener('touchstart', (e)=>{ tracking=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
-    diapoWrap.addEventListener('touchend', (e)=>{
-      if(!tracking) return;
-      const dx = (e.changedTouches[0].clientX - sx);
-      const dy = Math.abs(e.changedTouches[0].clientY - sy);
-      tracking=false;
-      if (Math.abs(dx) > 40 && dy < 60){
-        diapoPause();
-        if (dx < 0) diapoNextFn(); else diapoPrevFn();
-      }
-    }, {passive:true});
-
-    // Lancement
     diapoA.src = diapoFiles[0];
     diapoA.alt = `Photo 1 sur ${diapoFiles.length}`;
     diapoA.classList.add('show');
