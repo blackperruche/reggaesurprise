@@ -17,6 +17,7 @@
       <a href="#videos" class="nav-link">Vidéos</a>
       <a href="#concerts" class="nav-link">Concerts</a>
       <a href="#souvenir" class="nav-link">Souvenirs</a>
+      <a href="#galerie" class="nav-link">Galerie</a>
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
@@ -55,7 +56,7 @@
     </div>
   </section>
 
-  <!-- GALERIE -->
+  <!-- GALERIE (images statiques existantes) -->
   <div class="gallery"><img src="gal1.jpg" alt=""></div>
 
   <!-- RENCONTRE -->
@@ -118,6 +119,23 @@
   <!-- GALERIE -->
   <div class="gallery"><img src="gal6.jpg" alt=""></div>
   <div class="gallery"><img src="gal7.jpg" alt=""></div>
+
+  <!-- 🎞️ GALERIE — DIAPORAMA AUTO (57 photos) -->
+  <section id="galerie" class="section">
+    <h2 class="section-title">Galerie <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+
+    <div class="diapo" role="region" aria-label="Diaporama de la galerie" id="diapo">
+      <!-- Double calque pour fondu crossfade -->
+      <img id="diapoA" alt="Photo de la galerie" decoding="async" />
+      <img id="diapoB" alt="" decoding="async" />
+      <div class="diapo-controls">
+        <button class="diapo-btn" id="diapoPrev" aria-label="Image précédente">‹</button>
+        <button class="diapo-btn" id="diapoPlay" aria-label="Mettre en pause">❚❚</button>
+        <button class="diapo-btn" id="diapoNext" aria-label="Image suivante">›</button>
+      </div>
+    </div>
+    <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
+  </section>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
@@ -259,25 +277,12 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       el.textContent = "";
       let i = 0;
       const delay = Math.max(8, Math.floor(1000 / cps));
-
-      (function step(){
-        if (typer.token !== typer.token) return;
-      })();
-      // CORRECTION: on relance correctement
-      clearTyper();
-      (function step2(){
-        const token = typer.token;
-        if (token !== typer.token) return;
-      })();
-
-      // Version propre :
-      clearTyper();
       const token = ++typer.token;
-      (function step3(){
+      (function step(){
         if (token !== typer.token) return;
         if (i < chars.length) {
           el.textContent += chars[i++];
-          const t = setTimeout(step3, delay);
+          const t = setTimeout(step, delay);
           typer.timers.push(t);
         }
       })();
@@ -299,6 +304,100 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
+
+    /* ---------- DIAPORAMA 57 PHOTOS (auto + crossfade + pause hover + swipe) ---------- */
+    const diapoFiles = [];
+    for (let i=1; i<=57; i++) diapoFiles.push(`gal${i}.jpg`); // gal1.jpg ... gal57.jpg
+
+    const diapoA = document.getElementById('diapoA');
+    const diapoB = document.getElementById('diapoB');
+    const diapoPrev = document.getElementById('diapoPrev');
+    const diapoNext = document.getElementById('diapoNext');
+    const diapoPlay = document.getElementById('diapoPlay');
+    const diapoWrap = document.getElementById('diapo');
+
+    let dIndex = 0;
+    let showingA = true;
+    let dTimer = null;
+    let dPlaying = true;
+    const DURATION = 3200; // ms entre images
+
+    // init
+    function diapoShow(index, direction = 1) {
+      const next = ((index % diapoFiles.length) + diapoFiles.length) % diapoFiles.length;
+      const showEl = showingA ? diapoB : diapoA;
+      const hideEl = showingA ? diapoA : diapoB;
+      showEl.alt = `Photo ${next+1} sur ${diapoFiles.length}`;
+      showEl.src = diapoFiles[next];
+      if (showEl.decode) {
+        showEl.decode().catch(()=>{}).finally(()=>swap());
+      } else {
+        // fallback
+        if (showEl.complete) swap(); else showEl.onload = swap;
+      }
+      function swap(){
+        hideEl.classList.remove('show');
+        showEl.classList.add('show');
+        showingA = !showingA;
+        dIndex = next;
+        // précharge l’image suivante pour fluidité
+        const preload = new Image();
+        preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
+      }
+    }
+
+    function diapoNextFn(){ diapoShow(dIndex + 1); }
+    function diapoPrevFn(){ diapoShow(dIndex - 1); }
+
+    function diapoStart(){
+      if (dTimer) clearInterval(dTimer);
+      dTimer = setInterval(diapoNextFn, DURATION);
+      dPlaying = true;
+      diapoPlay.textContent = '❚❚';
+      diapoPlay.setAttribute('aria-label','Mettre en pause');
+    }
+    function diapoPause(){
+      if (dTimer) clearInterval(dTimer);
+      dTimer = null;
+      dPlaying = false;
+      diapoPlay.textContent = '▶';
+      diapoPlay.setAttribute('aria-label','Relancer le diaporama');
+    }
+    function diapoToggle(){ dPlaying ? diapoPause() : diapoStart(); }
+
+    // évènements
+    diapoPrev.addEventListener('click', () => { diapoPause(); diapoPrevFn(); });
+    diapoNext.addEventListener('click', () => { diapoPause(); diapoNextFn(); });
+    diapoPlay.addEventListener('click', diapoToggle);
+
+    // pause au survol / focus
+    diapoWrap.addEventListener('mouseenter', diapoPause);
+    diapoWrap.addEventListener('mouseleave', diapoStart);
+    diapoWrap.addEventListener('focusin', diapoPause);
+    diapoWrap.addEventListener('focusout', diapoStart);
+
+    // swipe mobile
+    let sx=0, sy=0, tracking=false;
+    diapoWrap.addEventListener('touchstart', (e)=>{ tracking=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
+    diapoWrap.addEventListener('touchmove', (e)=>{}, {passive:true});
+    diapoWrap.addEventListener('touchend', (e)=>{
+      if(!tracking) return;
+      const dx = (e.changedTouches[0].clientX - sx);
+      const dy = Math.abs(e.changedTouches[0].clientY - sy);
+      tracking=false;
+      if (Math.abs(dx) > 40 && dy < 60){
+        diapoPause();
+        if (dx < 0) diapoNextFn(); else diapoPrevFn();
+      }
+    }, {passive:true});
+
+    // Lancement
+    diapoA.src = diapoFiles[0];
+    diapoA.alt = `Photo 1 sur ${diapoFiles.length}`;
+    diapoA.classList.add('show');
+    // précharge la 2e
+    const _pre = new Image(); _pre.src = diapoFiles[1];
+    diapoStart();
   </script>
 </body>
 </html>
