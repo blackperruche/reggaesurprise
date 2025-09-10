@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css?v=25" />
+  <link rel="stylesheet" href="style.css?v=26" />
 </head>
 <body>
 
@@ -197,15 +197,29 @@
     const fabNext = document.getElementById('fabNext');
     let isPlaying = false, firstPlay = true, clickTimeout;
 
-    function playTrack(index){ audio.src = audioFiles[index]; audio.play().catch(()=>{}); isPlaying = true; logoBox.classList.add('spin'); playFab.textContent = '❚❚'; }
-    function pauseTrack(){ audio.pause(); isPlaying = false; logoBox.classList.remove('spin'); playFab.textContent = '▶'; }
+    function playTrack(index){
+      audio.src = audioFiles[index];
+      audio.play().catch(()=>{});
+      isPlaying = true;
+      logoBox.classList.add('spin');
+      playFab.textContent = '❚❚';
+    }
+    function pauseTrack(){
+      audio.pause();
+      isPlaying = false;
+      logoBox.classList.remove('spin');
+      playFab.textContent = '▶';
+    }
 
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.addEventListener('click', () => {
-      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout = null; currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); return; }
+      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout = null;
+        currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); return; }
       clickTimeout = setTimeout(() => {
-        if (!isPlaying){ if (firstPlay){ playTrack(currentTrack); firstPlay = false; } else { audio.play().then(()=>{ isPlaying = true; logoBox.classList.add('spin'); playFab.textContent='❚❚'; }).catch(()=>{}); } }
-        else { pauseTrack(); }
+        if (!isPlaying){
+          if (firstPlay){ playTrack(currentTrack); firstPlay = false; }
+          else { audio.play().then(()=>{ isPlaying = true; logoBox.classList.add('spin'); playFab.textContent='❚❚'; }).catch(()=>{}); }
+        } else { pauseTrack(); }
         clickTimeout = null;
       }, 250);
     });
@@ -217,7 +231,32 @@
     audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
 
     /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE ---------- */
-    const members = [/* … (inchangé) … */];
+    const members = [
+      { photo: "Julie.jpeg", text: `Notre chanteuse, Julie Marsaud !
+Julie, c’est la touche de classique et de folie du groupe.
+Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
+Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
+Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
+Bref, avec Julie, ça groove avec élégance !` },
+      { photo: "Antho.jpeg", text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
+À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
+En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
+Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
+Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
+Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !` },
+      { photo: "Keo Vy.jpeg", text: `Le battement de cœur de Reggae Surprise Kéo Vy 
+Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
+Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
+Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !` },
+      { photo: "jeremy.jpeg", text: `Notre bassiste, Jérémy ! 
+Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
+Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
+Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
+Big up Jérémy !` },
+      { photo: "Thomas.jpeg", text: `Thomas, notre maestro des claviers !
+Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
+Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !` }
+    ];
 
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
@@ -225,16 +264,18 @@
     const hasAnimated = new Set();
 
     const typer = { token: 0, timers: [] };
-    function clearTyper(){ typer.timers.forEach(clearTimeout); typer.timers = []; typer.token++; }
-    function typeLetters(text, el, cps = 48){
+    function clearTyper() { typer.timers.forEach(clearTimeout); typer.timers = []; typer.token++; }
+    function typeLetters(text, el, cps = 48) {
       clearTyper(); const chars = Array.from(text.normalize('NFC')); el.textContent = ""; let i = 0;
       const delay = Math.max(8, Math.floor(1000 / cps)); const token = ++typer.token;
-      (function step(){ if (token !== typer.token) return; if (i < chars.length){ el.textContent += chars[i++]; const t=setTimeout(step, delay); typer.timers.push(t); } })();
+      (function step(){ if (token !== typer.token) return;
+        if (i < chars.length) { el.textContent += chars[i++]; const t=setTimeout(step, delay); typer.timers.push(t); } })();
     }
     function updateMember(){
       clearTyper(); const m = members[currentMember];
       photoEl.src = m.photo; photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
-      if (!hasAnimated.has(currentMember)){ typeLetters(m.text, textEl, 48); hasAnimated.add(currentMember); } else { textEl.textContent = m.text; }
+      if (!hasAnimated.has(currentMember)){ typeLetters(m.text, textEl, 48); hasAnimated.add(currentMember); }
+      else { textEl.textContent = m.text; }
     }
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
@@ -252,7 +293,7 @@
     let dIndex = 0, showingA = true, dTimer = null, dPlaying = true;
     const DURATION = 3200;
 
-    function diapoShow(index){
+    function diapoShow(index) {
       const next = ((index % diapoFiles.length) + diapoFiles.length) % diapoFiles.length;
       const showEl = showingA ? diapoB : diapoA;
       const hideEl = showingA ? diapoA : diapoB;
