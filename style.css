@@ -1,6 +1,7 @@
-/* style.css v25 — Reggae Surprise
+/* style.css v26 — Reggae Surprise
    - Duo gal2/gal3 : petits, côte à côte, hauteur fixe (pas de saut)
    - gal1/gal4/gal5/gal7 : blocs centrés et non trop larges
+   - Texte "Rencontre" un peu plus grand (comme "Souvenirs")
    - Pas d’ellipses décoratives après les titres
 */
 
@@ -112,7 +113,11 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .gallery.single{}
 
 /* ---------- RENCONTRE / CARROUSEL ---------- */
-.rencontre-text{ max-width:70ch; margin:0 auto 16px; }
+.rencontre-text{
+  max-width:70ch;
+  margin:0 auto 16px;
+  font-size:clamp(18px, 2.6vw, 22px); /* même taille que .souvenir-text */
+}
 .carousel{ position:relative; width:min(700px, 100% - 2rem); margin:20px auto; }
 .carousel img{ width:100%; height:auto; border-radius:12px; box-shadow:var(--shadow); display:block; }
 .carousel-btn{
