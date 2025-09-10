@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Google Fonts supprimé : on utilise Helvetica côté CSS -->
-  <link rel="stylesheet" href="style.css?v=24" />
+  <link rel="stylesheet" href="style.css?v=25" />
 </head>
 <body>
 
@@ -84,10 +84,15 @@
     <p id="member-text" class="member-text" aria-live="polite"></p>
   </section>
 
-  <!-- ✅ gal2 + gal3 (centrées et plus petites) -->
-  <div class="gallery two" aria-label="Galerie photos">
+  <!-- ✅ gal2 + gal3 (petits, côte à côte, place stable) -->
+  <div class="gallery duo" aria-label="Galerie photos">
     <img src="gal2.jpg" alt="Galerie 2">
     <img src="gal3.jpg" alt="Galerie 3">
+  </div>
+
+  <!-- ✅ gal1 sous le duo -->
+  <div class="gallery single" aria-label="Galerie photo supplémentaire">
+    <img src="gal1.jpg" alt="Galerie 1">
   </div>
 
   <!-- VIDÉOS -->
@@ -106,11 +111,21 @@
     </div>
   </section>
 
+  <!-- ✅ gal4 sous les vidéos -->
+  <div class="gallery single" aria-label="Galerie photo supplémentaire">
+    <img src="gal4.jpg" alt="Galerie 4">
+  </div>
+
   <!-- CONCERTS -->
   <section id="concerts" class="section">
     <h2 class="section-title">Concerts</h2>
     <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" />
   </section>
+
+  <!-- ✅ gal5 sous le programme concert -->
+  <div class="gallery single" aria-label="Galerie photo supplémentaire">
+    <img src="gal5.jpg" alt="Galerie 5">
+  </div>
 
   <!-- SOUVENIRS -->
   <section id="souvenir" class="section">
@@ -118,6 +133,11 @@
     <p class="souvenir-text">Viens nous voir sur place et repars avec un objet unique.</p>
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
+
+  <!-- ✅ gal7 sous souvenirs -->
+  <div class="gallery single" aria-label="Galerie photo supplémentaire">
+    <img src="gal7.jpg" alt="Galerie 7">
+  </div>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
