@@ -1,7 +1,8 @@
-/* style.css v22 — Reggae Surprise
+/* style.css v23 — Reggae Surprise
    - Lecteur : tout le carré tourne + léger transparent
    - Réseaux : TOP / INSIDE (pleine largeur) / FOOTER avec fond gris
-   - Icônes bien visibles partout
+   - Galeries = DIAPORAMA SLIDES (slide01…slide57) sous la première photo
+   - Ellipses supprimées des titres (pas de "…")
 */
 
 :root{
@@ -74,7 +75,6 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
   text-align:center;
   scroll-margin-top:110px;
 }
-
 .section-title{
   font-size:clamp(26px, 3.2vw, 36px);
   margin:0 0 18px;
@@ -82,20 +82,7 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
   align-items:center;
   gap:10px;
 }
-
-.jamaica-dots{
-  display:inline-flex;
-  gap:6px;
-  vertical-align:middle;
-}
-
-.jamaica-dots i{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  display:inline-block;
-  background:#000; /* points en noir */
-}
+/* (Ellipses supprimées : .jamaica-dots n'est plus utilisé) */
 
 /* ---------- ACCUEIL ---------- */
 .accueil-photo-wrapper{ position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; overflow:hidden; border-radius:16px; }
@@ -111,11 +98,8 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 }
 .social-band.inside.big img{ width: clamp(30px, 5vw, 48px); height: clamp(30px, 5vw, 48px); }
 
-/* ---------- GALERIES ---------- */
-.gallery{ width:min(var(--wrap), 100% - 2rem); margin:18px auto; }
-.gallery img{ width:100%; height:auto; display:block; border-radius:12px; box-shadow:var(--shadow); }
-.gallery.two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-@media (max-width:760px){ .gallery.two{ grid-template-columns:1fr; } }
+/* ---------- (ANCIENNES GALERIES supprimées) ---------- */
+/* .gallery blocks retirés au profit d'un seul diaporama slides */
 
 /* ---------- RENCONTRE / CARROUSEL ---------- */
 .rencontre-text{ max-width:70ch; margin:0 auto 16px; }
@@ -140,11 +124,11 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
 .souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px; }
 
-/* ---------- 🎞️ DIAPORAMA (57 photos) ---------- */
+/* ---------- 🎞️ DIAPORAMA (slides) ---------- */
 .diapo{
   position:relative;
   width:min(var(--wrap), 100% - 2rem);
-  margin:0 auto;
+  margin:18px auto 0;
   aspect-ratio: 16/9;
   border-radius:12px;
   overflow:hidden;
