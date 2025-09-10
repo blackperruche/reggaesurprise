@@ -141,29 +141,7 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
 .souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px; }
 
-/* ---------- CONTACT ---------- */
-form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
-label{ font-weight:600; }
-input, textarea, button{ font:inherit; }
-input, textarea{ padding:12px 14px; border:1px solid #ccc; border-radius:10px; background:#fff; outline:none; }
-input:focus, textarea:focus{ border-color:#999; box-shadow:0 0 0 3px rgba(0,0,0,.05); }
-button#sendBtn{ padding:12px 14px; border:0; border-radius:10px; cursor:pointer; background:#111; color:#fff; font-weight:700; }
-button#sendBtn:hover{ filter:brightness(1.05); }
-#formStatus{ min-height:20px; }
-
-/* ---------- FOOTER (fond gris pour les réseaux) ---------- */
-footer{ padding:28px 0 40px; border-top:1px solid var(--border); text-align:center; }
-.footer-socials{
-  display:inline-flex; gap:18px; justify-content:center; align-items:center;
-  padding:10px 14px; border-radius:999px;
-  background:#e9e9e9; /* gris clair pour contraste */
-}
-.footer-socials img{ width:28px; height:28px; display:block; }
-.footer-meta{
-  width:min(var(--wrap), 100% - 2rem); margin:12px auto 0;
-  display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
-  color:#555; font-size:14px; letter-spacing:.1px;
-}
-.footer-meta .sep::before{ content:"·"; color:#777; }
-.footer-meta a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
-.footer-meta a:hover{ text-decoration-thickness:2px; }
+/* ---------- 🎞️ DIAPORAMA (57 photos) ---------- */
+.diapo{
+  position:relative;
+  width:min(var(--wrap), 100% - 2rem);
