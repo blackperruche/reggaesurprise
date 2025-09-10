@@ -230,7 +230,7 @@
     fabNext.addEventListener('click', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
     audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
 
-    /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE (FIX) ---------- */
+    /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE ---------- */
     const members = [
       { photo: "Julie.jpeg", text: `Notre chanteuse, Julie Marsaud !
 Julie, c’est la touche de classique et de folie du groupe.
@@ -263,17 +263,15 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
 
-    // Timers propres pour éviter tout chevauchement
     const typer = { token: 0, timers: [] };
     function clearTyper() {
       typer.timers.forEach(clearTimeout);
       typer.timers = [];
       typer.token++;
     }
-
     function typeLetters(text, el, cps = 48) {
       clearTyper();
-      const chars = Array.from(text.normalize('NFC')); // accents OK
+      const chars = Array.from(text.normalize('NFC'));
       el.textContent = "";
       let i = 0;
       const delay = Math.max(8, Math.floor(1000 / cps));
@@ -287,7 +285,6 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
         }
       })();
     }
-
     function updateMember(){
       clearTyper();
       const m = members[currentMember];
@@ -300,14 +297,15 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
         textEl.textContent = m.text;
       }
     }
-
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
 
-    /* ---------- DIAPORAMA 57 PHOTOS (auto + crossfade + pause hover + swipe) ---------- */
-    const diapoFiles = [];
-    for (let i=1; i<=57; i++) diapoFiles.push(`gal${i}.jpg`); // gal1.jpg ... gal57.jpg
+    /* ---------- DIAPORAMA (57 photos) — utilise slide01.jpg → slide57.jpg ---------- */
+    // 👉 Pour éviter tout conflit avec gal1…gal7 déjà utilisés,
+    //    place 57 images nommées slide01.jpg, slide02.jpg, … slide57.jpg
+    //    (ou remplace ci-dessous par tes propres noms/fichiers).
+    const diapoFiles = Array.from({length:57}, (_,i) => `slide${String(i+1).padStart(2,'0')}.jpg`);
 
     const diapoA = document.getElementById('diapoA');
     const diapoB = document.getElementById('diapoB');
@@ -322,28 +320,22 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     let dPlaying = true;
     const DURATION = 3200; // ms entre images
 
-    // init
-    function diapoShow(index, direction = 1) {
+    function diapoShow(index) {
       const next = ((index % diapoFiles.length) + diapoFiles.length) % diapoFiles.length;
       const showEl = showingA ? diapoB : diapoA;
       const hideEl = showingA ? diapoA : diapoB;
       showEl.alt = `Photo ${next+1} sur ${diapoFiles.length}`;
       showEl.src = diapoFiles[next];
-      if (showEl.decode) {
-        showEl.decode().catch(()=>{}).finally(()=>swap());
-      } else {
-        // fallback
-        if (showEl.complete) swap(); else showEl.onload = swap;
-      }
-      function swap(){
+      const swap = () => {
         hideEl.classList.remove('show');
         showEl.classList.add('show');
         showingA = !showingA;
         dIndex = next;
-        // précharge l’image suivante pour fluidité
         const preload = new Image();
         preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
-      }
+      };
+      if (showEl.decode) showEl.decode().catch(()=>{}).finally(swap);
+      else { if (showEl.complete) swap(); else showEl.onload = swap; }
     }
 
     function diapoNextFn(){ diapoShow(dIndex + 1); }
@@ -365,12 +357,10 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     }
     function diapoToggle(){ dPlaying ? diapoPause() : diapoStart(); }
 
-    // évènements
     diapoPrev.addEventListener('click', () => { diapoPause(); diapoPrevFn(); });
     diapoNext.addEventListener('click', () => { diapoPause(); diapoNextFn(); });
     diapoPlay.addEventListener('click', diapoToggle);
 
-    // pause au survol / focus
     diapoWrap.addEventListener('mouseenter', diapoPause);
     diapoWrap.addEventListener('mouseleave', diapoStart);
     diapoWrap.addEventListener('focusin', diapoPause);
@@ -379,7 +369,6 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     // swipe mobile
     let sx=0, sy=0, tracking=false;
     diapoWrap.addEventListener('touchstart', (e)=>{ tracking=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
-    diapoWrap.addEventListener('touchmove', (e)=>{}, {passive:true});
     diapoWrap.addEventListener('touchend', (e)=>{
       if(!tracking) return;
       const dx = (e.changedTouches[0].clientX - sx);
@@ -395,7 +384,6 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     diapoA.src = diapoFiles[0];
     diapoA.alt = `Photo 1 sur ${diapoFiles.length}`;
     diapoA.classList.add('show');
-    // précharge la 2e
     const _pre = new Image(); _pre.src = diapoFiles[1];
     diapoStart();
   </script>
