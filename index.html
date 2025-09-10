@@ -5,7 +5,7 @@
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Google Fonts supprimé : on utilise Helvetica côté CSS -->
-  <link rel="stylesheet" href="style.css?v=22" />
+  <link rel="stylesheet" href="style.css?v=23" />
 </head>
 <body>
 
@@ -17,7 +17,7 @@
       <a href="#videos" class="nav-link">Vidéos</a>
       <a href="#concerts" class="nav-link">Concerts</a>
       <a href="#souvenir" class="nav-link">Souvenirs</a>
-      <a href="#galerie" class="nav-link">Galerie</a>
+      <!-- (Galerie retiré) -->
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
@@ -54,14 +54,23 @@
         <a href="https://www.facebook.com/profile.php?id=61567461952336&locale=fr_FR" target="_blank" rel="noopener"><img src="facebook.png" alt="Facebook"></a>
       </div>
     </div>
-  </section>
 
-  <!-- GALERIE (images statiques existantes) -->
-  <div class="gallery"><img src="gal1.jpg" alt=""></div>
+    <!-- 🎞️ DIAPORAMA SLIDES (galeries = slides), placé juste sous la première photo -->
+    <div class="diapo" role="region" aria-label="Diaporama" id="diapo">
+      <img id="diapoA" alt="Photo de la galerie" decoding="async" />
+      <img id="diapoB" alt="" decoding="async" />
+      <div class="diapo-controls">
+        <button class="diapo-btn" id="diapoPrev" aria-label="Image précédente">‹</button>
+        <button class="diapo-btn" id="diapoPlay" aria-label="Mettre en pause">❚❚</button>
+        <button class="diapo-btn" id="diapoNext" aria-label="Image suivante">›</button>
+      </div>
+    </div>
+    <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
+  </section>
 
   <!-- RENCONTRE -->
   <section id="rencontre" class="section">
-    <h2 class="section-title">Rencontre <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <h2 class="section-title">Rencontre</h2>
     <p class="rencontre-text">
       Une histoire de passionnés… Avant la surprise, il y a eu une rencontre.
       Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae.
@@ -77,7 +86,7 @@
 
   <!-- VIDÉOS -->
   <section id="videos" class="section">
-    <h2 class="section-title">Vidéos <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <h2 class="section-title">Vidéos</h2>
     <div class="videos-grid">
       <div class="video">
         <iframe title="Reggae Surprise — Vidéo 1" src="https://www.youtube.com/embed/zKMnLi_MgBU" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -91,55 +100,22 @@
     </div>
   </section>
 
-  <!-- GALERIE -->
-  <div class="gallery two">
-    <img src="gal2.jpg" alt="">
-    <img src="gal3.jpg" alt="">
-  </div>
-
   <!-- CONCERTS -->
   <section id="concerts" class="section">
-    <h2 class="section-title">Concerts <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <h2 class="section-title">Concerts</h2>
     <img src="programme-concerts.jpg" alt="Programme des concerts" class="concert-img" />
   </section>
 
-  <!-- ✅ AJOUT GALERIE gal5 juste après Concerts -->
-  <div class="gallery"><img src="gal5.jpg" alt=""></div>
-
-  <!-- GALERIE -->
-  <div class="gallery"><img src="gal4.jpg" alt=""></div>
-
   <!-- SOUVENIRS -->
   <section id="souvenir" class="section">
-    <h2 class="section-title">Souvenirs <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <h2 class="section-title">Souvenirs</h2>
     <p class="souvenir-text">Viens nous voir sur place et repars avec un objet unique.</p>
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- GALERIE -->
-  <div class="gallery"><img src="gal6.jpg" alt=""></div>
-  <div class="gallery"><img src="gal7.jpg" alt=""></div>
-
-  <!-- 🎞️ GALERIE — DIAPORAMA AUTO (57 photos) -->
-  <section id="galerie" class="section">
-    <h2 class="section-title">Galerie <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
-
-    <div class="diapo" role="region" aria-label="Diaporama de la galerie" id="diapo">
-      <!-- Double calque pour fondu crossfade -->
-      <img id="diapoA" alt="Photo de la galerie" decoding="async" />
-      <img id="diapoB" alt="" decoding="async" />
-      <div class="diapo-controls">
-        <button class="diapo-btn" id="diapoPrev" aria-label="Image précédente">‹</button>
-        <button class="diapo-btn" id="diapoPlay" aria-label="Mettre en pause">❚❚</button>
-        <button class="diapo-btn" id="diapoNext" aria-label="Image suivante">›</button>
-      </div>
-    </div>
-    <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
-  </section>
-
   <!-- CONTACT -->
   <section id="contact" class="section">
-    <h2 class="section-title">Contact <span class="jamaica-dots"><i></i><i></i><i></i></span></h2>
+    <h2 class="section-title">Contact</h2>
     <form id="contactForm" action="https://formspree.io/f/mldlkrov" method="POST" novalidate>
       <label for="name">Nom :</label>
       <input type="text" id="name" name="name" required />
@@ -301,10 +277,7 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
 
-    /* ---------- DIAPORAMA (57 photos) — utilise slide01.jpg → slide57.jpg ---------- */
-    // 👉 Pour éviter tout conflit avec gal1…gal7 déjà utilisés,
-    //    place 57 images nommées slide01.jpg, slide02.jpg, … slide57.jpg
-    //    (ou remplace ci-dessous par tes propres noms/fichiers).
+    /* ---------- DIAPORAMA (57 photos) — slides = slide01.jpg → slide57.jpg ---------- */
     const diapoFiles = Array.from({length:57}, (_,i) => `slide${String(i+1).padStart(2,'0')}.jpg`);
 
     const diapoA = document.getElementById('diapoA');
