@@ -1,8 +1,9 @@
-/* style.css v26 — Reggae Surprise
+/* style.css v27 — Reggae Surprise
    - Duo gal2/gal3 : petits, côte à côte, hauteur fixe (pas de saut)
-   - gal1/gal4/gal5/gal7 : blocs centrés et non trop larges
-   - Texte "Rencontre" un peu plus grand (comme "Souvenirs")
-   - Pas d’ellipses décoratives après les titres
+   - gal1/gal4/gal5 : blocs centrés et non trop larges
+   - Diapo inchangé
+   - NOUVEAU : deux galeries "pleine page" (horizontales sous l’accueil, verticales à la fin),
+               affichage des images en ENTIER (object-fit: contain), fond noir.
 */
 
 :root{
@@ -25,14 +26,17 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
   display:flex; gap:18px; align-items:center; overflow-x:auto; -webkit-overflow-scrolling:touch;
   scrollbar-width: thin; padding:10px 12px; white-space:nowrap;
 }
-.main-nav .nav-link{ text-decoration:none; color:#222; font-weight:600; letter-spacing:.2px; padding:8px 6px; border-radius:8px; }
-.main-nav .nav-link:hover, .main-nav .nav-link.active{ text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px; }
+.main-nav .nav-link{
+  text-decoration:none; color:#222; font-weight:600; letter-spacing:.2px; padding:8px 6px; border-radius:8px;
+}
+.main-nav .nav-link:hover, .main-nav .nav-link.active{
+  text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px;
+}
 
 /* Réseaux TOP — FOND GRIS */
 .social-band.top{
   display:flex; gap:14px; justify-content:center; align-items:center;
-  padding:12px 14px; border-top:1px solid var(--border);
-  background:#e9e9e9;
+  padding:12px 14px; border-top:1px solid var(--border); background:#e9e9e9;
 }
 .social-band img{ width:28px; height:28px; display:block; }
 
@@ -40,22 +44,18 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .audio-fab{ position:fixed; right:18px; bottom:18px; z-index:1200; }
 .logo-box{
   position:relative; width:100px; height:100px; border-radius:22px; overflow:hidden;
-  background: rgba(255,255,255,.78);
-  box-shadow: var(--shadow);
+  background: rgba(255,255,255,.78); box-shadow: var(--shadow);
 }
 .logo-box.spin{ animation: spin 10s linear infinite, glow 2.2s ease-in-out infinite; }
 #logo{ width:100%; height:100%; border-radius:22px; object-fit:cover; display:block; opacity:.9; }
 @keyframes spin{ to{ transform: rotate(360deg); } }
 @keyframes glow{ 0%,100%{ filter:none; } 50%{ filter: brightness(1.06); } }
-
 .fab-btn{
-  position:absolute; right:-6px; bottom:-6px; width:46px; height:46px; border-radius:50%;
-  border:0; cursor:pointer; background:#111; color:#fff; font-size:18px;
-  box-shadow:0 10px 24px rgba(0,0,0,.25);
+  position:absolute; right:-6px; bottom:-6px; width:46px; height:46px; border-radius:50%; border:0; cursor:pointer;
+  background:#111; color:#fff; font-size:18px; box-shadow:0 10px 24px rgba(0,0,0,.25);
 }
 .fab-skip{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:28px; height:28px; border-radius:50%; border:0; cursor:pointer;
+  position:absolute; top:50%; transform:translateY(-50%); width:28px; height:28px; border-radius:50%; border:0; cursor:pointer;
   background:rgba(0,0,0,.55); color:#fff; display:grid; place-items:center; font-size:16px;
 }
 .fab-skip.prev{ left:4px; } .fab-skip.next{ right:4px; }
@@ -64,15 +64,16 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 /* ---------- SECTIONS ---------- */
 .section{ padding:44px 16px; text-align:center; scroll-margin-top:110px; }
 .section-title{
-  font-size:clamp(26px, 3.2vw, 36px);
-  margin:0 0 18px;
-  display:inline-flex; align-items:center; gap:10px;
+  font-size:clamp(26px, 3.2vw, 36px); margin:0 0 18px; display:inline-flex; align-items:center; gap:10px;
 }
 
 /* ---------- ACCUEIL ---------- */
-.accueil-photo-wrapper{ position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; overflow:hidden; border-radius:16px; }
-.photo-accueil{ width:100%; height:auto; display:block; border-radius:16px; box-shadow:var(--shadow); }
-
+.accueil-photo-wrapper{
+  position:relative; width:min(var(--wrap), 100% - 2rem); margin:0 auto; overflow:hidden; border-radius:16px;
+}
+.photo-accueil{
+  width:100%; height:auto; display:block; border-radius:16px; box-shadow:var(--shadow);
+}
 .social-band.inside.full{
   position:absolute; left:0; right:0; bottom:0; transform:none; width:100%;
   padding: clamp(12px, 2.4vw, 22px) clamp(14px, 3vw, 28px);
@@ -82,55 +83,37 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 }
 .social-band.inside.big img{ width: clamp(30px, 5vw, 48px); height: clamp(30px, 5vw, 48px); }
 
-/* ---------- GALERIES ---------- */
-/* Base centrée et pas trop large */
-.gallery{
-  width:min(900px, 100% - 2rem);
-  margin:18px auto;
-}
-.gallery img{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius:12px;
-  box-shadow:var(--shadow);
-}
+/* ---------- GALERIES CLASSIQUES ---------- */
+.gallery{ width:min(900px, 100% - 2rem); margin:18px auto; }
+.gallery img{ width:100%; height:auto; display:block; border-radius:12px; box-shadow:var(--shadow); }
 
 /* Duo : taille stable, côte à côte (gal2/gal3) */
 .gallery.duo{
   width:min(820px, 100% - 2rem);
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  align-items:center;
+  display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:center;
 }
-.gallery.duo img{
-  aspect-ratio: 4 / 3;   /* évite le déplacement pendant le chargement */
-  object-fit: cover;     /* recadre proprement */
-}
+.gallery.duo img{ aspect-ratio: 4 / 3; object-fit: cover; }
 
-/* Single : hérite de .gallery (pas d’aspect-ratio forcé) */
+/* Single : hérite de .gallery */
 .gallery.single{}
 
 /* ---------- RENCONTRE / CARROUSEL ---------- */
-.rencontre-text{
-  max-width:70ch;
-  margin:0 auto 16px;
-  font-size:clamp(18px, 2.6vw, 22px); /* même taille que .souvenir-text */
-}
+.rencontre-text{ max-width:70ch; margin:0 auto 16px; font-size:clamp(18px, 2.6vw, 22px); }
 .carousel{ position:relative; width:min(700px, 100% - 2rem); margin:20px auto; }
 .carousel img{ width:100%; height:auto; border-radius:12px; box-shadow:var(--shadow); display:block; }
 .carousel-btn{
-  position:absolute; top:50%; transform:translateY(-50%);
-  background:rgba(0,0,0,.6); color:#fff; border:0; width:44px; height:44px; border-radius:50%;
-  cursor:pointer; font-size:20px;
+  position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.6); color:#fff; border:0;
+  width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;
 }
 .carousel-btn.left{ left:10px; } .carousel-btn.right{ right:10px; }
 .carousel-btn:hover{ background:rgba(0,0,0,.78); }
 .member-text{ max-width:80ch; margin:10px auto 0; white-space:pre-wrap; padding:0 8px; }
 
 /* ---------- VIDÉOS ---------- */
-.videos-grid{ width:min(var(--wrap), 100% - 2rem); margin:0 auto; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+.videos-grid{
+  width:min(var(--wrap), 100% - 2rem); margin:0 auto;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;
+}
 .video iframe{ width:100%; aspect-ratio:16/9; border:0; border-radius:12px; box-shadow:var(--shadow); }
 @media (max-width:900px){ .videos-grid{ grid-template-columns:repeat(2, 1fr); } }
 @media (max-width:600px){ .videos-grid{ grid-template-columns:1fr; } }
@@ -141,53 +124,86 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 
 /* ---------- 🎞️ DIAPORAMA (slides) ---------- */
 .diapo{
-  position:relative;
-  width:min(var(--wrap), 100% - 2rem);
-  margin:18px auto 0;
-  aspect-ratio: 16/9;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow: var(--shadow);
-  background:#000;
+  position:relative; width:min(var(--wrap), 100% - 2rem); margin:18px auto 0;
+  aspect-ratio: 16/9; border-radius:12px; overflow:hidden; box-shadow: var(--shadow); background:#000;
 }
 .diapo img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition: opacity .8s ease;
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity .8s ease;
   display:block; user-select:none; -webkit-user-drag:none;
 }
 .diapo img.show{ opacity:1; }
 .diapo-controls{
-  position:absolute; left:10px; right:10px; bottom:10px;
-  display:flex; gap:8px; justify-content:flex-end; pointer-events:auto;
+  position:absolute; left:10px; right:10px; bottom:10px; display:flex; gap:8px; justify-content:flex-end; pointer-events:auto;
 }
 .diapo-btn{
-  border:0; border-radius:999px; padding:8px 12px; cursor:pointer;
-  background: rgba(0,0,0,.6); color:#fff; font-weight:700; font-size:16px;
-  backdrop-filter: blur(4px);
+  border:0; border-radius:999px; padding:8px 12px; cursor:pointer; background: rgba(0,0,0,.6); color:#fff; font-weight:700; font-size:16px; backdrop-filter: blur(4px);
 }
 .diapo-btn:hover{ background: rgba(0,0,0,.8); }
 .diapo-tip{ color:#555; font-size:14px; margin:8px 0 0; }
+
+/* ---------- ⭐ GALERIES "PLEINE PAGE" (images entières) ---------- */
+/* Plein écran horizontal (bord à bord), centré */
+.fullpage-gallery{
+  width:100vw; /* pleine page */
+  margin:24px 0; /* vertical rhythm */
+  /* centre le bloc par rapport au contenu */
+  position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
+  background:#000;
+}
+
+/* Chaque image occupe (presque) tout le viewport en hauteur */
+.fp-frame{
+  margin:0 auto; padding:12px 0;
+  display:grid; place-items:center;
+  height: min(86vh, 1000px);
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.fp-frame:last-child{ border-bottom:0; }
+
+/* L'image est affichée en ENTIER (pas de crop) */
+.fp-frame img{
+  max-width:100vw;
+  max-height:calc(86vh - 28px);
+  width:auto; height:auto;
+  object-fit:contain;
+  background:#000;
+  display:block;
+}
+
+/* Légende discrète (peut être masquée si désiré) */
+.fp-cap{
+  color:#bbb; font-size:12px; text-align:center; margin-top:6px;
+}
+
+/* Petites optimisations mobiles */
+@media (max-width:600px){
+  .fp-frame{ height: 78vh; }
+  .fp-frame img{ max-height:calc(78vh - 28px); }
+}
 
 /* ---------- CONTACT ---------- */
 form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
 label{ font-weight:600; }
 input, textarea, button{ font:inherit; }
-input, textarea{ padding:12px 14px; border:1px solid #ccc; border-radius:10px; background:#fff; outline:none; }
+input, textarea{
+  padding:12px 14px; border:1px solid #ccc; border-radius:10px; background:#fff; outline:none;
+}
 input:focus, textarea:focus{ border-color:#999; box-shadow:0 0 0 3px rgba(0,0,0,.05); }
-button#sendBtn{ padding:12px 14px; border:0; border-radius:10px; cursor:pointer; background:#111; color:#fff; font-weight:700; }
+button#sendBtn{
+  padding:12px 14px; border:0; border-radius:10px; cursor:pointer; background:#111; color:#fff; font-weight:700;
+}
 button#sendBtn:hover{ filter:brightness(1.05); }
 #formStatus{ min-height:20px; }
 
 /* ---------- FOOTER ---------- */
 footer{ padding:28px 0 40px; border-top:1px solid var(--border); text-align:center; }
 .footer-socials{
-  display:inline-flex; gap:18px; justify-content:center; align-items:center;
-  padding:10px 14px; border-radius:999px; background:#e9e9e9;
+  display:inline-flex; gap:18px; justify-content:center; align-items:center; padding:10px 14px; border-radius:999px; background:#e9e9e9;
 }
 .footer-socials img{ width:28px; height:28px; display:block; }
 .footer-meta{
-  width:min(var(--wrap), 100% - 2rem); margin:12px auto 0;
-  display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
+  width:min(var(--wrap), 100% - 2rem); margin:12px auto 0; display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
   color:#555; font-size:14px; letter-spacing:.1px;
 }
 .footer-meta .sep::before{ content:"·"; color:#777; }
