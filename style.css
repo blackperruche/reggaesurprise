@@ -1,9 +1,8 @@
-/* style.css v27 — Reggae Surprise
-   - Duo gal2/gal3 : petits, côte à côte, hauteur fixe (pas de saut)
-   - gal1/gal4/gal5 : blocs centrés et non trop larges
-   - Diapo inchangé
-   - NOUVEAU : deux galeries "pleine page" (horizontales sous l’accueil, verticales à la fin),
-               affichage des images en ENTIER (object-fit: contain), fond noir.
+/* style.css v29 — Reggae Surprise
+   - Deux diaporamas PLEIN CADRE :
+     • .diapo.h (horizontales) : aspect 16/9, images ENTIERES (contain)
+     • .diapo.v (verticales)   : aspect 9/16, images ENTIERES (contain)
+   - Reste du site inchangé.
 */
 
 :root{
@@ -122,65 +121,35 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
 .souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px; }
 
-/* ---------- 🎞️ DIAPORAMA (slides) ---------- */
+/* ---------- 🎞️ DIAPORAMAS (images ENTIERES) ---------- */
 .diapo{
   position:relative; width:min(var(--wrap), 100% - 2rem); margin:18px auto 0;
-  aspect-ratio: 16/9; border-radius:12px; overflow:hidden; box-shadow: var(--shadow); background:#000;
+  border-radius:12px; overflow:hidden; box-shadow: var(--shadow); background:#000;
 }
+
+/* Aspect fixe pour "même dimension" */
+.diapo.h{ aspect-ratio: 16/9; }   /* horizontales */
+.diapo.v{ aspect-ratio: 9/16; }   /* verticales */
+
+/* Images en ENTIER (contain) + crossfade */
 .diapo img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity .8s ease;
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit: contain; background:#000; /* letter/pillar box */
+  opacity:0; transition: opacity .8s ease;
   display:block; user-select:none; -webkit-user-drag:none;
 }
 .diapo img.show{ opacity:1; }
+
 .diapo-controls{
-  position:absolute; left:10px; right:10px; bottom:10px; display:flex; gap:8px; justify-content:flex-end; pointer-events:auto;
+  position:absolute; left:10px; right:10px; bottom:10px;
+  display:flex; gap:8px; justify-content:flex-end; pointer-events:auto;
 }
 .diapo-btn{
-  border:0; border-radius:999px; padding:8px 12px; cursor:pointer; background: rgba(0,0,0,.6); color:#fff; font-weight:700; font-size:16px; backdrop-filter: blur(4px);
+  border:0; border-radius:999px; padding:8px 12px; cursor:pointer;
+  background: rgba(0,0,0,.6); color:#fff; font-weight:700; font-size:16px; backdrop-filter: blur(4px);
 }
 .diapo-btn:hover{ background: rgba(0,0,0,.8); }
 .diapo-tip{ color:#555; font-size:14px; margin:8px 0 0; }
-
-/* ---------- ⭐ GALERIES "PLEINE PAGE" (images entières) ---------- */
-/* Plein écran horizontal (bord à bord), centré */
-.fullpage-gallery{
-  width:100vw; /* pleine page */
-  margin:24px 0; /* vertical rhythm */
-  /* centre le bloc par rapport au contenu */
-  position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
-  background:#000;
-}
-
-/* Chaque image occupe (presque) tout le viewport en hauteur */
-.fp-frame{
-  margin:0 auto; padding:12px 0;
-  display:grid; place-items:center;
-  height: min(86vh, 1000px);
-  background:#000;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.fp-frame:last-child{ border-bottom:0; }
-
-/* L'image est affichée en ENTIER (pas de crop) */
-.fp-frame img{
-  max-width:100vw;
-  max-height:calc(86vh - 28px);
-  width:auto; height:auto;
-  object-fit:contain;
-  background:#000;
-  display:block;
-}
-
-/* Légende discrète (peut être masquée si désiré) */
-.fp-cap{
-  color:#bbb; font-size:12px; text-align:center; margin-top:6px;
-}
-
-/* Petites optimisations mobiles */
-@media (max-width:600px){
-  .fp-frame{ height: 78vh; }
-  .fp-frame img{ max-height:calc(78vh - 28px); }
-}
 
 /* ---------- CONTACT ---------- */
 form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
