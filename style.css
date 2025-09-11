@@ -1,8 +1,7 @@
-/* style.css v29 — Reggae Surprise
-   - Deux diaporamas PLEIN CADRE :
-     • .diapo.h (horizontales) : aspect 16/9, images ENTIERES (contain)
-     • .diapo.v (verticales)   : aspect 9/16, images ENTIERES (contain)
-   - Reste du site inchangé.
+/* style.css v30 — Reggae Surprise
+   - Deux diaporamas seulement (horizontales sous la 1ère photo, verticales avant Contact)
+   - Images affichées EN ENTIER (object-fit: contain) avec aspect fixe
+   - Le reste du site inchangé
 */
 
 :root{
@@ -121,20 +120,20 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
 .concert-img, .merch-img{ width:min(var(--wrap), 100% - 2rem); display:block; margin:0 auto; border-radius:12px; box-shadow:var(--shadow); }
 .souvenir-text{ font-size:clamp(18px, 2.6vw, 22px); margin:0 0 12px; }
 
-/* ---------- 🎞️ DIAPORAMAS (images ENTIERES) ---------- */
+/* ---------- 🎞️ DIAPORAMAS (images ENTIERES, dimension fixe) ---------- */
 .diapo{
   position:relative; width:min(var(--wrap), 100% - 2rem); margin:18px auto 0;
   border-radius:12px; overflow:hidden; box-shadow: var(--shadow); background:#000;
 }
 
-/* Aspect fixe pour "même dimension" */
+/* “même dimension” fixe */
 .diapo.h{ aspect-ratio: 16/9; }   /* horizontales */
 .diapo.v{ aspect-ratio: 9/16; }   /* verticales */
 
-/* Images en ENTIER (contain) + crossfade */
+/* Images en ENTIER + fondu */
 .diapo img{
   position:absolute; inset:0; width:100%; height:100%;
-  object-fit: contain; background:#000; /* letter/pillar box */
+  object-fit: contain; background:#000; /* letter/pillar box propre */
   opacity:0; transition: opacity .8s ease;
   display:block; user-select:none; -webkit-user-drag:none;
 }
