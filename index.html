@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- On garde v=30 comme demandé -->
   <link rel="stylesheet" href="style.css?v=30" />
 </head>
 <body>
@@ -52,17 +53,24 @@
       </div>
     </div>
 
-    <!-- 🎞️ DIAPORAMA HORIZONTALES (images ENTIERES, dimension fixe) -->
+    <!-- 🎞️ DIAPORAMA HORIZONTALES -->
     <div class="diapo h" role="region" aria-label="Diaporama horizontales" id="diapoH">
+      <!-- grosses flèches latérales -->
+      <button class="diapo-arrow left" id="hLeft" aria-label="Image précédente">‹</button>
+
       <img id="diapoHA" alt="Photo horizontale" decoding="async" />
       <img id="diapoHB" alt="" decoding="async" />
-      <div class="diapo-controls">
+
+      <button class="diapo-arrow right" id="hRight" aria-label="Image suivante">›</button>
+
+      <!-- anciens petits contrôles : gardés mais masqués -->
+      <div class="diapo-controls" hidden>
         <button class="diapo-btn" id="hPrev" aria-label="Image précédente">‹</button>
         <button class="diapo-btn" id="hPlay" aria-label="Mettre en pause">❚❚</button>
         <button class="diapo-btn" id="hNext" aria-label="Image suivante">›</button>
       </div>
     </div>
-    <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
+    <p class="diapo-tip">Astuce : cliquez sur la photo pour lecture/pause • Glissez au doigt sur mobile</p>
   </section>
 
   <!-- RENCONTRE -->
@@ -131,11 +139,17 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- 🎞️ DIAPORAMA VERTICALES (images ENTIERES, dimension fixe) — juste avant le formulaire -->
+  <!-- 🎞️ DIAPORAMA VERTICALES — juste avant le formulaire -->
   <div class="diapo v" role="region" aria-label="Diaporama verticales" id="diapoV">
+    <button class="diapo-arrow left" id="vLeft" aria-label="Image précédente">‹</button>
+
     <img id="diapoVA" alt="Photo verticale" decoding="async" />
     <img id="diapoVB" alt="" decoding="async" />
-    <div class="diapo-controls">
+
+    <button class="diapo-arrow right" id="vRight" aria-label="Image suivante">›</button>
+
+    <!-- anciens petits contrôles : gardés mais masqués -->
+    <div class="diapo-controls" hidden>
       <button class="diapo-btn" id="vPrev" aria-label="Image précédente">‹</button>
       <button class="diapo-btn" id="vPlay" aria-label="Mettre en pause">❚❚</button>
       <button class="diapo-btn" id="vNext" aria-label="Image suivante">›</button>
@@ -320,9 +334,11 @@
       const wrap = document.getElementById(wrapId);
       const A = document.getElementById(aId);
       const B = document.getElementById(bId);
+
+      // On utilise les grosses flèches latérales
       const btnPrev = document.getElementById(prevId);
       const btnNext = document.getElementById(nextId);
-      const btnPlay = document.getElementById(playId);
+      const btnPlay = document.getElementById(playId); // existe mais masqué
 
       let index = 0, showingA = true, timer = null, playing = true;
 
@@ -345,18 +361,29 @@
       }
       const nextFn = () => show(index+1);
       const prevFn = () => show(index-1);
-      function start(){ if (timer) clearInterval(timer); timer = setInterval(nextFn, duration); playing = true; btnPlay.textContent='❚❚'; }
-      function pause(){ if (timer) clearInterval(timer); timer = null; playing = false; btnPlay.textContent='▶'; }
+
+      function start(){ if (timer) clearInterval(timer); timer = setInterval(nextFn, duration); playing = true; if(btnPlay) btnPlay.textContent='❚❚'; }
+      function pause(){ if (timer) clearInterval(timer); timer = null; playing = false; if(btnPlay) btnPlay.textContent='▶'; }
       function toggle(){ playing ? pause() : start(); }
 
-      btnPrev.addEventListener('click', () => { pause(); prevFn(); });
-      btnNext.addEventListener('click', () => { pause(); nextFn(); });
-      btnPlay.addEventListener('click', toggle);
+      // Gros boutons latéraux
+      btnPrev.addEventListener('click', (e) => { e.stopPropagation(); pause(); prevFn(); });
+      btnNext.addEventListener('click', (e) => { e.stopPropagation(); pause(); nextFn(); });
+
+      // Clic sur la photo = Play/Pause (comme le lecteur audio)
+      wrap.addEventListener('click', (e) => {
+        // si on clique sur une flèche on ne toggle pas
+        if (e.target.closest('.diapo-arrow')) return;
+        toggle();
+      });
+
+      // Pause au survol / focus (optionnel, on garde)
       wrap.addEventListener('mouseenter', pause);
       wrap.addEventListener('mouseleave', start);
       wrap.addEventListener('focusin', pause);
       wrap.addEventListener('focusout', start);
 
+      // Init + AUTOSTART (comportement v30 conservé)
       A.src = files[0].name;
       A.alt = `Photo ${String(files[0].idx).padStart(2,'0')}/${files.length}`;
       A.classList.add('show');
@@ -367,15 +394,15 @@
       return { start, pause, next: nextFn, prev: prevFn };
     }
 
-    // Instancie les deux diapos
+    // Instancie les deux diapos en utilisant les nouvelles flèches latérales
     makeDiapo({
       wrapId:'diapoH', aId:'diapoHA', bId:'diapoHB',
-      prevId:'hPrev', playId:'hPlay', nextId:'hNext',
+      prevId:'hLeft', playId:'hPlay', nextId:'hRight',
       files: horizontals, duration: 3200
     });
     makeDiapo({
       wrapId:'diapoV', aId:'diapoVA', bId:'diapoVB',
-      prevId:'vPrev', playId:'vPlay', nextId:'vNext',
+      prevId:'vLeft', playId:'vPlay', nextId:'vRight',
       files: verticals, duration: 3200
     });
 
