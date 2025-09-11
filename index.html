@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css?v=27" />
+  <link rel="stylesheet" href="style.css?v=30" />
 </head>
 <body>
 
@@ -52,20 +52,17 @@
       </div>
     </div>
 
-    <!-- 🎞️ DIAPORAMA SLIDES -->
-    <div class="diapo" role="region" aria-label="Diaporama" id="diapo">
-      <img id="diapoA" alt="Photo de la galerie" decoding="async" />
-      <img id="diapoB" alt="" decoding="async" />
+    <!-- 🎞️ DIAPORAMA HORIZONTALES (images ENTIERES, dimension fixe) -->
+    <div class="diapo h" role="region" aria-label="Diaporama horizontales" id="diapoH">
+      <img id="diapoHA" alt="Photo horizontale" decoding="async" />
+      <img id="diapoHB" alt="" decoding="async" />
       <div class="diapo-controls">
-        <button class="diapo-btn" id="diapoPrev" aria-label="Image précédente">‹</button>
-        <button class="diapo-btn" id="diapoPlay" aria-label="Mettre en pause">❚❚</button>
-        <button class="diapo-btn" id="diapoNext" aria-label="Image suivante">›</button>
+        <button class="diapo-btn" id="hPrev" aria-label="Image précédente">‹</button>
+        <button class="diapo-btn" id="hPlay" aria-label="Mettre en pause">❚❚</button>
+        <button class="diapo-btn" id="hNext" aria-label="Image suivante">›</button>
       </div>
     </div>
     <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
-
-    <!-- ⬇️ GALERIE HORIZONTALE PLEINE PAGE (en entier, fixe sous la 1ère photo) -->
-    <div id="hGallery" class="fullpage-gallery" aria-label="Galerie horizontale pleine page (images entières)"></div>
   </section>
 
   <!-- RENCONTRE -->
@@ -134,8 +131,16 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- ⬇️ GALERIE VERTICALE PLEINE PAGE (remplace l'ancienne gal7) -->
-  <div id="vGallery" class="fullpage-gallery" aria-label="Galerie verticale pleine page (images entières)"></div>
+  <!-- 🎞️ DIAPORAMA VERTICALES (images ENTIERES, dimension fixe) — juste avant le formulaire -->
+  <div class="diapo v" role="region" aria-label="Diaporama verticales" id="diapoV">
+    <img id="diapoVA" alt="Photo verticale" decoding="async" />
+    <img id="diapoVB" alt="" decoding="async" />
+    <div class="diapo-controls">
+      <button class="diapo-btn" id="vPrev" aria-label="Image précédente">‹</button>
+      <button class="diapo-btn" id="vPlay" aria-label="Mettre en pause">❚❚</button>
+      <button class="diapo-btn" id="vNext" aria-label="Image suivante">›</button>
+    </div>
+  </div>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
@@ -290,7 +295,7 @@
       clearTyper();
       const m = members[currentMember];
       photoEl.src = m.photo;
-      photoEl.alt = `Photo de ${m.photo.replace(/\\.\w+$/, '')}`;
+      photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
       if (!hasAnimated.has(currentMember)){
         typeLetters(m.text, textEl, 48);
         hasAnimated.add(currentMember);
@@ -302,88 +307,77 @@
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
     updateMember();
 
-    /* ---------- DIAPORAMA slides ---------- */
-    const diapoFiles = Array.from({length:57}, (_,i) => `slide${String(i+1).padStart(2,'0')}.jpg`);
-    const diapoA = document.getElementById('diapoA');
-    const diapoB = document.getElementById('diapoB');
-    const diapoPrev = document.getElementById('diapoPrev');
-    const diapoNext = document.getElementById('diapoNext');
-    const diapoPlay = document.getElementById('diapoPlay');
-    const diapoWrap = document.getElementById('diapo');
-    let dIndex = 0, showingA = true, dTimer = null, dPlaying = true;
-    const DURATION = 3200;
+    /* ---------- FICHIERS SLIDES ---------- */
+    const allSlides = Array.from({length:57}, (_,i) => ({ idx: i+1, name: `slide${String(i+1).padStart(2,'0')}.jpg` }));
+    // Indices VERTICAUX (corrigés) : 01 retirée -> horizontale
+    const verticalIndices = new Set([2,9,13,15,18,20,21,29,32,33,34,35,37,39,42,44,50,55,57]);
+    const verticals = allSlides.filter(s => verticalIndices.has(s.idx));
+    const horizontals = allSlides.filter(s => !verticalIndices.has(s.idx));
 
-    function diapoShow(index) {
-      const next = ((index % diapoFiles.length) + diapoFiles.length) % diapoFiles.length;
-      const showEl = showingA ? diapoB : diapoA;
-      const hideEl = showingA ? diapoA : diapoB;
-      showEl.alt = `Photo ${next+1} sur ${diapoFiles.length}`;
-      showEl.src = diapoFiles[next];
-      const swap = () => {
-        hideEl.classList.remove('show');
-        showEl.classList.add('show');
-        showingA = !showingA;
-        dIndex = next;
-        const preload = new Image();
-        preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
-      };
-      if (showEl.decode) showEl.decode().catch(()=>{}).finally(swap);
-      else { if (showEl.complete) swap(); else showEl.onload = swap; }
-    }
-    const diapoNextFn = () => diapoShow(dIndex + 1);
-    const diapoPrevFn = () => diapoShow(dIndex - 1);
-    function diapoStart(){ if (dTimer) clearInterval(dTimer); dTimer = setInterval(diapoNextFn, DURATION); dPlaying = true; diapoPlay.textContent='❚❚'; }
-    function diapoPause(){ if (dTimer) clearInterval(dTimer); dTimer = null; dPlaying = false; diapoPlay.textContent='▶'; }
-    function diapoToggle(){ dPlaying ? diapoPause() : diapoStart(); }
-    diapoPrev.addEventListener('click', () => { diapoPause(); diapoPrevFn(); });
-    diapoNext.addEventListener('click', () => { diapoPause(); diapoNextFn(); });
-    diapoPlay.addEventListener('click', diapoToggle);
-    diapoWrap.addEventListener('mouseenter', diapoPause);
-    diapoWrap.addEventListener('mouseleave', diapoStart);
-    diapoWrap.addEventListener('focusin', diapoPause);
-    diapoWrap.addEventListener('focusout', diapoStart);
-    diapoA.src = diapoFiles[0];
-    diapoA.alt = `Photo 1 sur ${diapoFiles.length}`;
-    diapoA.classList.add('show');
-    const _pre = new Image();
-    _pre.src = diapoFiles[1];
-    diapoStart();
+    /* ---------- CONSTRUCTEUR DE DIAPO (réutilisable) ---------- */
+    function makeDiapo(opts){
+      const { wrapId, aId, bId, prevId, playId, nextId, files, duration=3200 } = opts;
+      const wrap = document.getElementById(wrapId);
+      const A = document.getElementById(aId);
+      const B = document.getElementById(bId);
+      const btnPrev = document.getElementById(prevId);
+      const btnNext = document.getElementById(nextId);
+      const btnPlay = document.getElementById(playId);
 
-    /* ---------- GALERIES PLEINE PAGE (images entières) ---------- */
-    // Indices VERTICALES fournis : 01 02 09 13 15 18 20 21 29 32 33 34 35 37 39 42 44 50 55 57
-    const verticalIndices = new Set([1,2,9,13,15,18,20,21,29,32,33,34,35,37,39,42,44,50,55,57]);
-    // Fichiers avec indices 1..57
-    const files = Array.from({length:57}, (_,i) => ({ idx: i+1, name: `slide${String(i+1).padStart(2,'0')}.jpg` }));
-    const verticals = files.filter(f => verticalIndices.has(f.idx));
-    const horizontals = files.filter(f => !verticalIndices.has(f.idx));
+      let index = 0, showingA = true, timer = null, playing = true;
 
-    function buildFullpageGallery(containerId, list){
-      const wrap = document.getElementById(containerId);
-      if (!wrap) return;
-      const frag = document.createDocumentFragment();
-      list.forEach((f, k) => {
-        const frame = document.createElement('figure');
-        frame.className = 'fp-frame';
-        const img = document.createElement('img');
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.src = f.name;
-        img.alt = `Photo ${String(f.idx).padStart(2,'0')} — ${containerId === 'hGallery' ? 'horizontale' : 'verticale'}`;
-        frame.appendChild(img);
+      function show(i){
+        const next = ((i % files.length)+files.length)%files.length;
+        const showEl = showingA ? B : A;
+        const hideEl = showingA ? A : B;
+        showEl.alt = `Photo ${String(files[next].idx).padStart(2,'0')}/${files.length}`;
+        showEl.src = files[next].name;
+        const swap = () => {
+          hideEl.classList.remove('show');
+          showEl.classList.add('show');
+          showingA = !showingA;
+          index = next;
+          const preload = new Image();
+          preload.src = files[(index+1)%files.length].name;
+        };
+        if (showEl.decode) showEl.decode().catch(()=>{}).finally(swap);
+        else { if (showEl.complete) swap(); else showEl.onload = swap; }
+      }
+      const nextFn = () => show(index+1);
+      const prevFn = () => show(index-1);
+      function start(){ if (timer) clearInterval(timer); timer = setInterval(nextFn, duration); playing = true; btnPlay.textContent='❚❚'; }
+      function pause(){ if (timer) clearInterval(timer); timer = null; playing = false; btnPlay.textContent='▶'; }
+      function toggle(){ playing ? pause() : start(); }
 
-        const cap = document.createElement('figcaption');
-        cap.className = 'fp-cap';
-        cap.textContent = `Slide ${String(f.idx).padStart(2,'0')}`;
-        frame.appendChild(cap);
+      btnPrev.addEventListener('click', () => { pause(); prevFn(); });
+      btnNext.addEventListener('click', () => { pause(); nextFn(); });
+      btnPlay.addEventListener('click', toggle);
+      wrap.addEventListener('mouseenter', pause);
+      wrap.addEventListener('mouseleave', start);
+      wrap.addEventListener('focusin', pause);
+      wrap.addEventListener('focusout', start);
 
-        frag.appendChild(frame);
-      });
-      wrap.appendChild(frag);
+      A.src = files[0].name;
+      A.alt = `Photo ${String(files[0].idx).padStart(2,'0')}/${files.length}`;
+      A.classList.add('show');
+      const _pre = new Image();
+      _pre.src = files[1 % files.length].name;
+      start();
+
+      return { start, pause, next: nextFn, prev: prevFn };
     }
 
-    // Construit les deux galeries
-    buildFullpageGallery('hGallery', horizontals);
-    buildFullpageGallery('vGallery', verticals);
+    // Instancie les deux diapos
+    makeDiapo({
+      wrapId:'diapoH', aId:'diapoHA', bId:'diapoHB',
+      prevId:'hPrev', playId:'hPlay', nextId:'hNext',
+      files: horizontals, duration: 3200
+    });
+    makeDiapo({
+      wrapId:'diapoV', aId:'diapoVA', bId:'diapoVB',
+      prevId:'vPrev', playId:'vPlay', nextId:'vNext',
+      files: verticals, duration: 3200
+    });
 
   </script>
 </body>
