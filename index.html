@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Reggae Surprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css?v=26" />
+  <link rel="stylesheet" href="style.css?v=27" />
 </head>
 <body>
 
@@ -63,6 +63,9 @@
       </div>
     </div>
     <p class="diapo-tip">Astuce : survolez pour mettre en pause • Glissez au doigt sur mobile</p>
+
+    <!-- ⬇️ GALERIE HORIZONTALE PLEINE PAGE (en entier, fixe sous la 1ère photo) -->
+    <div id="hGallery" class="fullpage-gallery" aria-label="Galerie horizontale pleine page (images entières)"></div>
   </section>
 
   <!-- RENCONTRE -->
@@ -75,8 +78,7 @@
     </div>
 
     <p class="rencontre-text">
-      Une histoire de passionnés… Avant la surprise, il y a eu une rencontre.
-      Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae.
+      Une histoire de passionnés… Avant la surprise, il y a eu une rencontre. Cinq musiciens aux univers différents, réunis par l'amour du groove et du reggae.
     </p>
 
     <div class="carousel" role="region" aria-label="Carrousel membres">
@@ -132,10 +134,8 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- ✅ gal7 sous souvenirs -->
-  <div class="gallery single" aria-label="Galerie photo supplémentaire">
-    <img src="gal7.jpg" alt="Galerie 7">
-  </div>
+  <!-- ⬇️ GALERIE VERTICALE PLEINE PAGE (remplace l'ancienne gal7) -->
+  <div id="vGallery" class="fullpage-gallery" aria-label="Galerie verticale pleine page (images entières)"></div>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
@@ -188,7 +188,8 @@
     onScroll();
 
     /* ---------- AUDIO (fab) ---------- */
-    const audioFiles = []; for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
+    const audioFiles = [];
+    for (let i=1;i<=20;i++) audioFiles.push(`audio${i}.mp3`);
     let currentTrack = 0;
     const audio = document.getElementById('audioElement');
     const logoBox = document.getElementById('logoBox');
@@ -213,69 +214,89 @@
 
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.addEventListener('click', () => {
-      if (clickTimeout){ clearTimeout(clickTimeout); clickTimeout = null;
-        currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); return; }
+      if (clickTimeout){
+        clearTimeout(clickTimeout);
+        clickTimeout = null;
+        currentTrack = (currentTrack + 1) % audioFiles.length;
+        playTrack(currentTrack);
+        return;
+      }
       clickTimeout = setTimeout(() => {
         if (!isPlaying){
-          if (firstPlay){ playTrack(currentTrack); firstPlay = false; }
-          else { audio.play().then(()=>{ isPlaying = true; logoBox.classList.add('spin'); playFab.textContent='❚❚'; }).catch(()=>{}); }
-        } else { pauseTrack(); }
+          if (firstPlay){
+            playTrack(currentTrack);
+            firstPlay = false;
+          } else {
+            audio.play().then(()=>{
+              isPlaying = true;
+              logoBox.classList.add('spin');
+              playFab.textContent='❚❚';
+            }).catch(()=>{});
+          }
+        } else {
+          pauseTrack();
+        }
         clickTimeout = null;
       }, 250);
     });
-
     [playFab, fabPrev, fabNext].forEach(btn => btn.addEventListener('click', e => e.stopPropagation()));
-    playFab.addEventListener('click', () => { (!isPlaying) ? (firstPlay ? (firstPlay=false, playTrack(currentTrack)) : (audio.play(), isPlaying=true, logoBox.classList.add('spin'), playFab.textContent='❚❚')) : pauseTrack(); });
-    fabPrev.addEventListener('click', () => { currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length; playTrack(currentTrack); });
-    fabNext.addEventListener('click', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
-    audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % audioFiles.length; playTrack(currentTrack); });
+    playFab.addEventListener('click', () => {
+      (!isPlaying) ? (firstPlay ? (firstPlay=false, playTrack(currentTrack)) : (audio.play(), isPlaying=true, logoBox.classList.add('spin'), playFab.textContent='❚❚')) : pauseTrack();
+    });
+    fabPrev.addEventListener('click', () => {
+      currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length;
+      playTrack(currentTrack);
+    });
+    fabNext.addEventListener('click', () => {
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      playTrack(currentTrack);
+    });
+    audio.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % audioFiles.length;
+      playTrack(currentTrack);
+    });
 
     /* ---------- CARROUSEL + ANIMATION LETTRE PAR LETTRE ---------- */
     const members = [
-      { photo: "Julie.jpeg", text: `Notre chanteuse, Julie Marsaud !
-Julie, c’est la touche de classique et de folie du groupe.
-Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. 
-Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois.
-Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks).
-Bref, avec Julie, ça groove avec élégance !` },
-      { photo: "Antho.jpeg", text: `Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! 
-À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré.
-En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise !
-Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!!
-Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! 
-Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !` },
-      { photo: "Keo Vy.jpeg", text: `Le battement de cœur de Reggae Surprise Kéo Vy 
-Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France.
-Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes.
-Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !` },
-      { photo: "jeremy.jpeg", text: `Notre bassiste, Jérémy ! 
-Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! 
-Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! 
-Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe !
-Big up Jérémy !` },
-      { photo: "Thomas.jpeg", text: `Thomas, notre maestro des claviers !
-Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae !
-Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !` }
+      { photo: "Julie.jpeg", text: "Notre chanteuse, Julie Marsaud ! Julie, c’est la touche de classique et de folie du groupe. Elle joue du piano depuis qu’elle est assez grande pour grimper sur le tabouret, et elle chante comme si elle avait avalé un micro en naissant. Spécialisée dans la variété française, elle glisse souvent un petit clin d’œil classique dans les morceaux, histoire de montrer qu’on peut être chic et cool à la fois. Le reggae ? À la base ce n’est pas son domaine… mais elle reste toujours partante pour expérimenter de nouvelles choses ! (sauf si ça implique des dreadlocks). Bref, avec Julie, ça groove avec élégance !" },
+      { photo: "Antho.jpeg", text: "Voici l’homme à la guitare magique, le créateur de grooves, le capitaine de notre navire : ANTHONY ! À 16 ans, il chope une guitare, l’accorde comme il peut, et bim, c’est parti en mode autodidacte avec les copains. En 2000, il lance son premier groupe, La Skarmaï, avec lequel il enchaîne les concerts et les albums jusqu’en 2005. La scène devient vite son terrain de jeu préféré. En 2014 il décide non seulement de partager son savoir en donnant des cours, mais aussi de remettre le feu aux planches ! Résultat : Sticky Socks, Two Hot Chili Peppers, Bristol, Onix, Horizon, Memory… et aujourd’hui, le bouquet final : Reggae Surprise ! Intermittent du spectacle et marathonien de la scène, il frôle aujourd’hui les 1000 concerts!!! Toujours souriant, toujours inspiré, il est notre moteur, notre maestro !!! Un tonnerre d’applaudissements pour Anthony, l’homme qui a le reggae dans les veines et la guitare greffée au cœur !" },
+      { photo: "Keo Vy.jpeg", text: "Le battement de cœur de Reggae Surprise Kéo Vy Batteur et percussionniste depuis des années, il a joué avec une multitude de groupes et a fait résonner ses baguettes sur des scènes aux quatre coins de la France. Passé par Mystical Faya, The Soul Sonics et Frenchtown dans les années 2000, il a le rythme dans la peau et une frappe qui ne laisse personne indifférent. Toujours prêt à envoyer du lourd, il apporte à Reggae Surprise une énergie contagieuse et une bonne dose de vibes. Avec Kéo Vy, pas de place pour l’ennui : ça joue, ça groove et surtout… ça vit !" },
+      { photo: "jeremy.jpeg", text: "Notre bassiste, Jérémy ! Jeremy c’est un peu comme du rhum dans un cocktail … on le remarque pas tout de suite, mais sans lui ça a tout de suite moins de saveur et de fun ! Après des études en musicologie à Besançon et Nancy (Music Academy International), il a fait vibrer les scènes avec plein de groupes pop rock, funk et métal… mais c’est dans le Reggae qu’il pose maintenant ses lignes de basse bien FAT ! Des tournées, des vibes, du bon son… et toujours un feeling sympa qui fait groover le groupe ! Big up Jérémy !" },
+      { photo: "Thomas.jpeg", text: "Thomas, notre maestro des claviers ! Il a commencé le piano à 7 ans, a exploré tous les styles (du funk au hip-hop en passant par le jazz et la musique latine), et aujourd’hui, il met sa vibe magique au service de notre reggae ! Avec lui, les touches noires et blanches prennent des couleurs tropicales et nous font voyager à chaque note. Didgeridoo, handpan, synthés cosmiques… il touche à tout et groove comme jamais !" }
     ];
-
     let currentMember = 0;
     const photoEl = document.getElementById('member-photo');
     const textEl = document.getElementById('member-text');
     const hasAnimated = new Set();
-
     const typer = { token: 0, timers: [] };
     function clearTyper() { typer.timers.forEach(clearTimeout); typer.timers = []; typer.token++; }
     function typeLetters(text, el, cps = 48) {
-      clearTyper(); const chars = Array.from(text.normalize('NFC')); el.textContent = ""; let i = 0;
-      const delay = Math.max(8, Math.floor(1000 / cps)); const token = ++typer.token;
-      (function step(){ if (token !== typer.token) return;
-        if (i < chars.length) { el.textContent += chars[i++]; const t=setTimeout(step, delay); typer.timers.push(t); } })();
+      clearTyper();
+      const chars = Array.from(text.normalize('NFC'));
+      el.textContent = "";
+      let i = 0;
+      const delay = Math.max(8, Math.floor(1000 / cps));
+      const token = ++typer.token;
+      (function step(){
+        if (token !== typer.token) return;
+        if (i < chars.length) {
+          el.textContent += chars[i++];
+          const t=setTimeout(step, delay);
+          typer.timers.push(t);
+        }
+      })();
     }
     function updateMember(){
-      clearTyper(); const m = members[currentMember];
-      photoEl.src = m.photo; photoEl.alt = `Photo de ${m.photo.replace(/\.\w+$/, '')}`;
-      if (!hasAnimated.has(currentMember)){ typeLetters(m.text, textEl, 48); hasAnimated.add(currentMember); }
-      else { textEl.textContent = m.text; }
+      clearTyper();
+      const m = members[currentMember];
+      photoEl.src = m.photo;
+      photoEl.alt = `Photo de ${m.photo.replace(/\\.\w+$/, '')}`;
+      if (!hasAnimated.has(currentMember)){
+        typeLetters(m.text, textEl, 48);
+        hasAnimated.add(currentMember);
+      } else {
+        textEl.textContent = m.text;
+      }
     }
     function prevMember(){ currentMember=(currentMember-1+members.length)%members.length; updateMember(); }
     function nextMember(){ currentMember=(currentMember+1)%members.length; updateMember(); }
@@ -289,7 +310,6 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     const diapoNext = document.getElementById('diapoNext');
     const diapoPlay = document.getElementById('diapoPlay');
     const diapoWrap = document.getElementById('diapo');
-
     let dIndex = 0, showingA = true, dTimer = null, dPlaying = true;
     const DURATION = 3200;
 
@@ -300,9 +320,12 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
       showEl.alt = `Photo ${next+1} sur ${diapoFiles.length}`;
       showEl.src = diapoFiles[next];
       const swap = () => {
-        hideEl.classList.remove('show'); showEl.classList.add('show');
-        showingA = !showingA; dIndex = next;
-        const preload = new Image(); preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
+        hideEl.classList.remove('show');
+        showEl.classList.add('show');
+        showingA = !showingA;
+        dIndex = next;
+        const preload = new Image();
+        preload.src = diapoFiles[(dIndex + 1) % diapoFiles.length];
       };
       if (showEl.decode) showEl.decode().catch(()=>{}).finally(swap);
       else { if (showEl.complete) swap(); else showEl.onload = swap; }
@@ -312,7 +335,6 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     function diapoStart(){ if (dTimer) clearInterval(dTimer); dTimer = setInterval(diapoNextFn, DURATION); dPlaying = true; diapoPlay.textContent='❚❚'; }
     function diapoPause(){ if (dTimer) clearInterval(dTimer); dTimer = null; dPlaying = false; diapoPlay.textContent='▶'; }
     function diapoToggle(){ dPlaying ? diapoPause() : diapoStart(); }
-
     diapoPrev.addEventListener('click', () => { diapoPause(); diapoPrevFn(); });
     diapoNext.addEventListener('click', () => { diapoPause(); diapoNextFn(); });
     diapoPlay.addEventListener('click', diapoToggle);
@@ -320,12 +342,49 @@ Avec lui, les touches noires et blanches prennent des couleurs tropicales et nou
     diapoWrap.addEventListener('mouseleave', diapoStart);
     diapoWrap.addEventListener('focusin', diapoPause);
     diapoWrap.addEventListener('focusout', diapoStart);
-
     diapoA.src = diapoFiles[0];
     diapoA.alt = `Photo 1 sur ${diapoFiles.length}`;
     diapoA.classList.add('show');
-    const _pre = new Image(); _pre.src = diapoFiles[1];
+    const _pre = new Image();
+    _pre.src = diapoFiles[1];
     diapoStart();
+
+    /* ---------- GALERIES PLEINE PAGE (images entières) ---------- */
+    // Indices VERTICALES fournis : 01 02 09 13 15 18 20 21 29 32 33 34 35 37 39 42 44 50 55 57
+    const verticalIndices = new Set([1,2,9,13,15,18,20,21,29,32,33,34,35,37,39,42,44,50,55,57]);
+    // Fichiers avec indices 1..57
+    const files = Array.from({length:57}, (_,i) => ({ idx: i+1, name: `slide${String(i+1).padStart(2,'0')}.jpg` }));
+    const verticals = files.filter(f => verticalIndices.has(f.idx));
+    const horizontals = files.filter(f => !verticalIndices.has(f.idx));
+
+    function buildFullpageGallery(containerId, list){
+      const wrap = document.getElementById(containerId);
+      if (!wrap) return;
+      const frag = document.createDocumentFragment();
+      list.forEach((f, k) => {
+        const frame = document.createElement('figure');
+        frame.className = 'fp-frame';
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.src = f.name;
+        img.alt = `Photo ${String(f.idx).padStart(2,'0')} — ${containerId === 'hGallery' ? 'horizontale' : 'verticale'}`;
+        frame.appendChild(img);
+
+        const cap = document.createElement('figcaption');
+        cap.className = 'fp-cap';
+        cap.textContent = `Slide ${String(f.idx).padStart(2,'0')}`;
+        frame.appendChild(cap);
+
+        frag.appendChild(frame);
+      });
+      wrap.appendChild(frag);
+    }
+
+    // Construit les deux galeries
+    buildFullpageGallery('hGallery', horizontals);
+    buildFullpageGallery('vGallery', verticals);
+
   </script>
 </body>
 </html>
