@@ -53,24 +53,11 @@
       </div>
     </div>
 
-    <!-- 🎞️ DIAPORAMA HORIZONTALES -->
-    <div class="diapo h" role="region" aria-label="Diaporama horizontales" id="diapoH">
-      <!-- grosses flèches latérales -->
-      <button class="diapo-arrow left" id="hLeft" aria-label="Image précédente">‹</button>
-
+    <!-- 🎞️ DIAPORAMA HORIZONTALES — MODE DÉCOR (autoplay, aucune interaction) -->
+    <div class="diapo h" role="region" aria-label="Diaporama horizontales" id="diapoH" data-decor="true" aria-hidden="true">
       <img id="diapoHA" alt="Photo horizontale" decoding="async" />
       <img id="diapoHB" alt="" decoding="async" />
-
-      <button class="diapo-arrow right" id="hRight" aria-label="Image suivante">›</button>
-
-      <!-- anciens petits contrôles : gardés mais masqués -->
-      <div class="diapo-controls" hidden>
-        <button class="diapo-btn" id="hPrev" aria-label="Image précédente">‹</button>
-        <button class="diapo-btn" id="hPlay" aria-label="Mettre en pause">❚❚</button>
-        <button class="diapo-btn" id="hNext" aria-label="Image suivante">›</button>
-      </div>
     </div>
-    <p class="diapo-tip">Astuce : cliquez sur la photo pour lecture/pause • Glissez au doigt sur mobile</p>
   </section>
 
   <!-- RENCONTRE -->
@@ -139,21 +126,10 @@
     <img class="merch-img" src="merch.jpg" alt="Aperçu des objets">
   </section>
 
-  <!-- 🎞️ DIAPORAMA VERTICALES — juste avant le formulaire -->
-  <div class="diapo v" role="region" aria-label="Diaporama verticales" id="diapoV">
-    <button class="diapo-arrow left" id="vLeft" aria-label="Image précédente">‹</button>
-
+  <!-- 🎞️ DIAPORAMA VERTICALES — MODE DÉCOR (autoplay, aucune interaction) -->
+  <div class="diapo v" role="region" aria-label="Diaporama verticales" id="diapoV" data-decor="true" aria-hidden="true">
     <img id="diapoVA" alt="Photo verticale" decoding="async" />
     <img id="diapoVB" alt="" decoding="async" />
-
-    <button class="diapo-arrow right" id="vRight" aria-label="Image suivante">›</button>
-
-    <!-- anciens petits contrôles : gardés mais masqués -->
-    <div class="diapo-controls" hidden>
-      <button class="diapo-btn" id="vPrev" aria-label="Image précédente">‹</button>
-      <button class="diapo-btn" id="vPlay" aria-label="Mettre en pause">❚❚</button>
-      <button class="diapo-btn" id="vNext" aria-label="Image suivante">›</button>
-    </div>
   </div>
 
   <!-- CONTACT -->
@@ -323,24 +299,20 @@
 
     /* ---------- FICHIERS SLIDES ---------- */
     const allSlides = Array.from({length:57}, (_,i) => ({ idx: i+1, name: `slide${String(i+1).padStart(2,'0')}.jpg` }));
-    // Indices VERTICAUX (corrigés) : 01 retirée -> horizontale
+    // Indices VERTICAUX
     const verticalIndices = new Set([2,9,13,15,18,20,21,29,32,33,34,35,37,39,42,44,50,55,57]);
     const verticals = allSlides.filter(s => verticalIndices.has(s.idx));
     const horizontals = allSlides.filter(s => !verticalIndices.has(s.idx));
 
     /* ---------- CONSTRUCTEUR DE DIAPO (réutilisable) ---------- */
     function makeDiapo(opts){
-      const { wrapId, aId, bId, prevId, playId, nextId, files, duration=3200 } = opts;
+      const { wrapId, aId, bId, files, duration=3200 } = opts;
       const wrap = document.getElementById(wrapId);
       const A = document.getElementById(aId);
       const B = document.getElementById(bId);
+      const isDecor = wrap?.dataset.decor === 'true'; // mode décor = pas d'interaction
 
-      // On utilise les grosses flèches latérales
-      const btnPrev = document.getElementById(prevId);
-      const btnNext = document.getElementById(nextId);
-      const btnPlay = document.getElementById(playId); // existe mais masqué
-
-      let index = 0, showingA = true, timer = null, playing = true;
+      let index = 0, showingA = true, timer = null;
 
       function show(i){
         const next = ((i % files.length)+files.length)%files.length;
@@ -360,30 +332,20 @@
         else { if (showEl.complete) swap(); else showEl.onload = swap; }
       }
       const nextFn = () => show(index+1);
-      const prevFn = () => show(index-1);
 
-      function start(){ if (timer) clearInterval(timer); timer = setInterval(nextFn, duration); playing = true; if(btnPlay) btnPlay.textContent='❚❚'; }
-      function pause(){ if (timer) clearInterval(timer); timer = null; playing = false; if(btnPlay) btnPlay.textContent='▶'; }
-      function toggle(){ playing ? pause() : start(); }
+      function start(){ if (timer) clearInterval(timer); timer = setInterval(nextFn, duration); }
+      function pause(){ if (timer) clearInterval(timer); timer = null; }
 
-      // Gros boutons latéraux
-      btnPrev.addEventListener('click', (e) => { e.stopPropagation(); pause(); prevFn(); });
-      btnNext.addEventListener('click', (e) => { e.stopPropagation(); pause(); nextFn(); });
+      // En mode décor : aucune interaction, pas de pause au survol, pas de clic.
+      if (!isDecor){
+        wrap.addEventListener('click', () => { if (timer) pause(); else start(); });
+        wrap.addEventListener('mouseenter', pause);
+        wrap.addEventListener('mouseleave', start);
+        wrap.addEventListener('focusin', pause);
+        wrap.addEventListener('focusout', start);
+      }
 
-      // Clic sur la photo = Play/Pause (comme le lecteur audio)
-      wrap.addEventListener('click', (e) => {
-        // si on clique sur une flèche on ne toggle pas
-        if (e.target.closest('.diapo-arrow')) return;
-        toggle();
-      });
-
-      // Pause au survol / focus (optionnel, on garde)
-      wrap.addEventListener('mouseenter', pause);
-      wrap.addEventListener('mouseleave', start);
-      wrap.addEventListener('focusin', pause);
-      wrap.addEventListener('focusout', start);
-
-      // Init + AUTOSTART (comportement v30 conservé)
+      // Init + AUTOSTART
       A.src = files[0].name;
       A.alt = `Photo ${String(files[0].idx).padStart(2,'0')}/${files.length}`;
       A.classList.add('show');
@@ -391,18 +353,16 @@
       _pre.src = files[1 % files.length].name;
       start();
 
-      return { start, pause, next: nextFn, prev: prevFn };
+      return { start, pause, next: nextFn };
     }
 
-    // Instancie les deux diapos en utilisant les nouvelles flèches latérales
+    // Instancie les deux diapos en MODE DÉCOR (autoplay sans contrôles)
     makeDiapo({
       wrapId:'diapoH', aId:'diapoHA', bId:'diapoHB',
-      prevId:'hLeft', playId:'hPlay', nextId:'hRight',
       files: horizontals, duration: 3200
     });
     makeDiapo({
       wrapId:'diapoV', aId:'diapoVA', bId:'diapoVB',
-      prevId:'vLeft', playId:'vPlay', nextId:'vRight',
       files: verticals, duration: 3200
     });
 
