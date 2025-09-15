@@ -1,9 +1,7 @@
 /* style.css v30 — Reggae Surprise
-   - Deux diaporamas seulement (horizontales sous la 1ère photo, verticales avant Contact)
+   - Deux diaporamas en MODE DÉCOR : autoplay, aucune interaction/contrôle
    - Images affichées EN ENTIER (object-fit: contain)
-   - Enlève les bandes noires autour des images
-   - Diapo horizontale un peu plus grande, verticale un peu plus petite
-   - Grosses flèches sur les côtés + bouton Play/Pause centré
+   - Diapo horizontale plus grande, verticale plus petite
 */
 
 :root{
@@ -134,63 +132,27 @@ body{ font-family: Helvetica, Arial, sans-serif; color:var(--text); background:v
   border-radius:12px;
   overflow:hidden;
   box-shadow: var(--shadow);
-  background: transparent;             /* enlève les bandes noires */
+  background: transparent;
 }
 
 /* tailles : horizontale plus grande, verticale plus petite */
 .diapo.h{ width:min(var(--h-max-w), 100% - 1rem); aspect-ratio: 16/9; }
 .diapo.v{ width:min(var(--v-max-w), 100% - 2rem); aspect-ratio: 9/16; }
 
-/* Images en ENTIER + fondu, sans fond noir */
+/* Images en ENTIER + fondu */
 .diapo img{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit: contain;
-  background: transparent;             /* pas de fond noir sous l'image */
   opacity:0; transition: opacity .8s ease;
   display:block; user-select:none; -webkit-user-drag:none;
+  background: transparent;
 }
 .diapo img.show{ opacity:1; }
 
-/* --- GROSSES COMMANDES SUR LES CÔTÉS + PLAY CENTRE --- */
-.diapo-controls{
-  position:absolute; inset:0;          /* couvre toute la diapo */
-  pointer-events:none;                  /* pour n'activer que les boutons */
-}
-
-/* Boutons génériques */
-.diapo-btn{
-  pointer-events:auto;
-  border:0; border-radius:999px;
-  width:64px; height:64px;             /* plus gros */
-  display:grid; place-items:center;
-  cursor:pointer;
-  background: rgba(0,0,0,.62);
-  color:#fff; font-weight:900; font-size:28px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.35);
-  transition: transform .12s ease, background .12s ease;
-}
-.diapo-btn:hover{ background: rgba(0,0,0,.85); transform: scale(1.04); }
-
-/* Flèches gauche/droite (IDs existants) */
-#hPrev, #vPrev, #hNext, #vNext{ position:absolute; top:50%; transform:translateY(-50%); }
-#hPrev, #vPrev{ left:10px; }
-#hNext, #vNext{ right:10px; }
-
-/* Play/Pause bien visible au CENTRE */
-#hPlay, #vPlay{
-  position:absolute; left:50%; top:50%;
-  transform:translate(-50%, -50%);
-  width:74px; height:74px; font-size:30px;
-  backdrop-filter: blur(4px);
-}
-
-/* Version mobile : boutons un peu plus petits */
-@media (max-width:600px){
-  .diapo-btn{ width:56px; height:56px; font-size:24px; }
-  #hPlay, #vPlay{ width:64px; height:64px; font-size:26px; }
-}
-
-.diapo-tip{ color:#555; font-size:14px; margin:8px 0 0; }
+/* MODE DÉCOR : pas de contrôles ni d’interactions */
+.diapo[data-decor="true"]{ pointer-events:none; }
+.diapo[data-decor="true"] .diapo-arrow,
+.diapo[data-decor="true"] .diapo-controls{ display:none !important; }
 
 /* ---------- CONTACT ---------- */
 form{ width:min(680px, 100% - 2rem); margin:0 auto; display:grid; gap:12px; text-align:left; }
